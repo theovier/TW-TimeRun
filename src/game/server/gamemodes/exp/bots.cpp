@@ -164,7 +164,7 @@ void CGameControllerEXP::BotSpawn(CBotSpawn *pSpawn)
 	
 	GameServer()->OnBotClientConnected(BID);
 	CBotPlayer* botPlayer = (CBotPlayer*) GameServer()->m_apPlayers[BID];
-	botPlayer->MakeBot(pSpawn);
+	botPlayer->InitBot(pSpawn);
 
 
 	//GameServer()->m_apPlayers[BID]->SetTeam(0);
