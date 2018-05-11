@@ -101,7 +101,6 @@ public:
 	struct CBotSpawn *m_pBotSpawn;
 	int m_BotType;
 	inline bool IsBot() { return m_Team == 1; };
-	void MakeBot(struct CBotSpawn *pSpawn);
 	void DestroyBot();
 	int MaxHealth();
 	int MaxArmor();
@@ -143,7 +142,7 @@ public:
 
 	CCharacter *m_pCharacter;
 
-private:
+protected:
 	CGameContext *m_pGameServer;
 
 	CGameContext *GameServer() const { return m_pGameServer; }

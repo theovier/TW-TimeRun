@@ -5,6 +5,7 @@
 #include <game/server/entities/character.h>
 #include <game/server/entities/pickup.h>
 #include "exp.h"
+#include "../../botplayer.h"
 #include "bots.h"
 
 void CGameControllerEXP::TickBots()
@@ -161,8 +162,11 @@ void CGameControllerEXP::BotSpawn(CBotSpawn *pSpawn)
 	int BID = BotCanSpawn();
 	if(BID == -1) return;
 	
-	GameServer()->OnClientConnected(BID, true);
-	GameServer()->m_apPlayers[BID]->MakeBot(pSpawn);
+	GameServer()->OnBotClientConnected(BID);
+	CBotPlayer* botPlayer = (CBotPlayer*) GameServer()->m_apPlayers[BID];
+	botPlayer->MakeBot(pSpawn);
+
+
 	//GameServer()->m_apPlayers[BID]->SetTeam(0);
 	pSpawn->m_Spawned = true;
 	

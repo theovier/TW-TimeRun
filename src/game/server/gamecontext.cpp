@@ -14,6 +14,7 @@
 #include "gamemodes/ctf.h"
 #include "gamemodes/mod.h"
 #include "gamemodes/exp/exp.h"
+#include "botplayer.h"
 
 void CQueryTop5::OnData()
 {
@@ -615,6 +616,12 @@ void CGameContext::OnClientEnter(int ClientID)
 	Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
 
 	m_VoteUpdate = true;
+}
+
+void CGameContext::OnBotClientConnected(int ClientID) {
+	const int StartTeam = g_Config.m_SvTournamentMode ? TEAM_SPECTATORS : m_pController->GetAutoTeam(ClientID);
+	m_apPlayers[ClientID] = new(ClientID) CBotPlayer(this, ClientID, StartTeam);
+	dbg_msg("DEBUG", "BOT-CLIENT CONNECTED: bot player added.");
 }
 
 void CGameContext::OnClientConnected(int ClientID, bool Bot)
