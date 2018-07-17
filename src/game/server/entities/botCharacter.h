@@ -7,9 +7,10 @@ class CBotCharacter : public CCharacter {
 public:
 	CBotCharacter(CGameWorld *pWorld);
 	void Tick() override;
+protected:
+	virtual void Handle();
 private:
 	void OnBotDeath(CPlayer* Killer, int Weapon);
-	void Handle();
 	void Aim(vec2 Target);
 };
 

@@ -8,15 +8,9 @@ class CBotPlayer : public CPlayer {
 public:
 	CBotPlayer(CGameContext *pGameServer, int ClientID, int Team);
 
-
 	void InitBot(struct CBotSpawn *pSpawn);
-	int MaxHealth();
-	int MaxArmor();
-
 	int m_BotType;
 	struct CBotSpawn *m_BotSpawn;
-	
-
 };
 
 #endif
