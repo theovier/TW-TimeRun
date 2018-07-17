@@ -105,7 +105,7 @@ public:
 	int m_LastWeapon;
 	int m_QueuedWeapon;
 
-private:
+protected:
 	// player controlling this character
 	class CPlayer *m_pPlayer;
 

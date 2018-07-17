@@ -5,7 +5,7 @@ CBotPlayer::CBotPlayer(CGameContext *pGameServer, int ClientID, int Team) : CPla
 }
 
 void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
-	m_pCharacter = new(m_ClientID) CCharacter(&GameServer()->m_World);
+	m_pCharacter = new(m_ClientID) CBotCharacter(&GameServer()->m_World);
 	m_Team = 1;
 	m_pCharacter->Spawn(GameServer()->m_apPlayers[m_ClientID], pSpawn->m_Pos);
 	GameServer()->CreatePlayerSpawn(pSpawn->m_Pos);
