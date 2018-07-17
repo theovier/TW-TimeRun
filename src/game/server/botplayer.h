@@ -8,6 +8,8 @@ class CBotPlayer : public CPlayer {
 public:
 	CBotPlayer(CGameContext *pGameServer, int ClientID, int Team);
 
+	void Tick() override;
+
 	void InitBot(struct CBotSpawn *pSpawn);
 	int m_BotType;
 	struct CBotSpawn *m_BotSpawn;

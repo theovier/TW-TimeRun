@@ -9,9 +9,9 @@ public:
 	void Tick() override;
 protected:
 	virtual void Handle();
+	void Aim(vec2 Target);
 private:
 	void OnBotDeath(CPlayer* Killer, int Weapon);
-	void Aim(vec2 Target);
 };
 
 #endif

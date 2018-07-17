@@ -588,9 +588,6 @@ void CCharacter::Tick()
 		m_QueuedWeapon = -1;
 	}
 
-	if(m_pPlayer->IsBot())
-		HandleBot();
-
 	m_Core.m_Input = m_Input;
 	m_Core.Tick(true);
 

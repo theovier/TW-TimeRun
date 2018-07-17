@@ -6,6 +6,12 @@ CBotPlayer::CBotPlayer(CGameContext *pGameServer, int ClientID, int Team) : CPla
 	CPlayer::CPlayer(pGameServer, ClientID, Team);
 }
 
+void CBotPlayer::Tick() {
+	m_Latency.m_Avg = 42;
+	m_Latency.m_Max = 42;
+	m_Latency.m_Min = 42;
+}
+
 void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 	m_Team = 1;
 	GameServer()->CreatePlayerSpawn(pSpawn->m_Pos);
