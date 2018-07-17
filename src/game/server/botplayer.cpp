@@ -1,5 +1,6 @@
 #include "botplayer.h"
 #include <game/server/entities/bots/hammerbot.h>
+#include <game/server/entities/bots/gunbot.h>
 
 CBotPlayer::CBotPlayer(CGameContext *pGameServer, int ClientID, int Team) : CPlayer(pGameServer, ClientID, Team) {
 	CPlayer::CPlayer(pGameServer, ClientID, Team);
@@ -18,6 +19,7 @@ void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 			break;
 
 		case BOTTYPE_GUN:
+			m_pCharacter = new(m_ClientID) CGunbot(&GameServer()->m_World);
 			str_copy(m_TeeInfos.m_SkinName, "brownbear", sizeof(m_TeeInfos.m_SkinName));
 			break;
 
