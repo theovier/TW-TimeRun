@@ -27,7 +27,7 @@ public:
 
 	virtual void Tick();
 	void PostTick();
-	void Snap(int SnappingClient);
+	virtual void Snap(int SnappingClient);
 
 	void OnDirectInput(CNetObj_PlayerInput *NewInput);
 	void OnPredictedInput(CNetObj_PlayerInput *NewInput);
@@ -152,6 +152,8 @@ protected:
 	bool m_Spawning;
 	int m_ClientID;
 	int m_Team;
+
+	void SnapIngame(int SnappingClient);
 };
 
 #endif

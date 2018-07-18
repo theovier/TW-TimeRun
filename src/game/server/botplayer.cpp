@@ -15,6 +15,10 @@ void CBotPlayer::Tick() {
 	m_Latency.m_Min = 42;
 }
 
+void CBotPlayer::Snap(int SnappingClient) {
+	CPlayer::SnapIngame(SnappingClient);
+}
+
 void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 	m_Team = 1;
 	GameServer()->CreatePlayerSpawn(pSpawn->m_Pos);
