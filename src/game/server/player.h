@@ -101,7 +101,6 @@ public:
 	struct CBotSpawn *m_pBotSpawn;
 	int m_BotType;
 	inline bool IsBot() { return m_Team == 1; };
-	void DestroyBot();
 	const char *GetMonsterName();
 	bool m_MustRemoveBot;
 	vec2 m_LastPos;
