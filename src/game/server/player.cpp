@@ -9,6 +9,8 @@
 #include <game/server/gamemodes/exp/bots.h>
 #include <game/server/gamemodes/exp/environment.h>
 
+MACRO_ALLOC_POOL_ID_IMPL(CPlayer, MAX_CLIENTS)
+
 IServer *CPlayer::Server() const { return m_pGameServer->Server(); }
 
 CPlayer::CPlayer(CGameContext *pGameServer, int ClientID, int Team)

@@ -11,10 +11,11 @@
 // player object
 class CPlayer
 {
+	MACRO_ALLOC_POOL_ID()
 
 public:
 	CPlayer(CGameContext *pGameServer, int ClientID, int Team);
-	~CPlayer();
+	virtual ~CPlayer();
 
 	void Init(int CID);
 
