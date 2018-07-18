@@ -73,10 +73,6 @@ public:
 	int DoorCollision();
 	void Teleport(vec2 To);
 
-	float m_AttackTimer;
-	void HandleBot();
-	void Aim(vec2 Target);
-
 	void SetEmoteType(int EmoteType) { m_EmoteType = EmoteType; };
 	void SetEmoteStop(int EmoteStop) { m_EmoteStop = EmoteStop; };
 

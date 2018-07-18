@@ -3,6 +3,7 @@
 #include "botCharacter.h"
 #include "botcharacter.h"
 
+MACRO_ALLOC_POOL_ID_IMPL(CBotCharacter, MAX_CLIENTS)
 
 CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 	CCharacter::CCharacter(pWorld);
