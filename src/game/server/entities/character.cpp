@@ -1095,7 +1095,7 @@ void CCharacter::HandleBot()
 	m_LatestInput.m_Fire = 0;
 	m_Input.m_Fire = 0;
 	
-	CCharacter * TargetChr = GameServer()->m_World.ClosestCharacter(m_Pos, 700.0f, NULL, true);
+	CCharacter * TargetChr = GameServer()->m_World.ClosestCharacter(m_Pos, 700.0f, NULL);
 	if(!TargetChr)
 		return;
 	

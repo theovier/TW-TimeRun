@@ -108,7 +108,7 @@ void CGameControllerEXP::TickMines() {
 		else
 		{
 			//create tic-tic
-			CCharacter *pClosest = GameServer()->m_World.ClosestCharacter(m_aMines[m].m_Pos, 400, NULL, true);
+			CCharacter *pClosest = GameServer()->m_World.ClosestCharacter(m_aMines[m].m_Pos, 400, NULL);
 			if (pClosest)
 			{
 				int Mod = (int)(distance(pClosest->GetPos(), m_aMines[m].m_Pos) / 8);

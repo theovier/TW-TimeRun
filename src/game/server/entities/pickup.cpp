@@ -85,8 +85,6 @@ void CPickup::TickPickup() {
 	if (pChr && pChr->IsAlive())
 	{
 		CPlayer *pPlayer = pChr->GetPlayer();
-		bool isBot = pPlayer->IsBot();
-		if (isBot) return;
 
 		// player picked us up, is someone was hooking us, let them go
 		int RespawnTime = -1;
