@@ -151,6 +151,9 @@ protected:
 	int m_Team;
 
 	void SnapIngame(int SnappingClient);
+
+	virtual const char *GetDisplayName();
+
 };
 
 #endif

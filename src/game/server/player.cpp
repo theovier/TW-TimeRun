@@ -129,7 +129,7 @@ void CPlayer::SnapIngame(int SnappingClient) {
 	if (!pClientInfo)
 		return;
 
-	StrToInts(&pClientInfo->m_Name0, 4, IsBot() ? GetMonsterName() : Server()->ClientName(m_ClientID));
+	StrToInts(&pClientInfo->m_Name0, 4, GetDisplayName());
 	StrToInts(&pClientInfo->m_Clan0, 3, Server()->ClientClan(m_ClientID));
 	pClientInfo->m_Country = Server()->ClientCountry(m_ClientID);
 	StrToInts(&pClientInfo->m_Skin0, 6, m_TeeInfos.m_SkinName);
@@ -303,25 +303,8 @@ void CPlayer::TryRespawn()
 	}
 }
 
-const char *CPlayer::GetMonsterName()
-{
-	if(!m_pCharacter)
-		return "R.I.P.";
-
-	int Life = m_pCharacter->m_Health;
-	int MaxLife = m_pCharacter->m_MaxHealth;
-	float coef = (float)Life / (float)MaxLife;
-	
-	if(coef > 0.8f)
-		return "|-----|";
-	else if(coef > 0.6f)
-		return "|----|";
-	else if(coef > 0.4f)
-		return "|---|";
-	else if(coef > 0.2f)
-		return "|--|";
-	else
-		return "|-|";
+const char *CPlayer::GetDisplayName() {
+	return Server()->ClientName(m_ClientID);
 }
 
 void CPlayer::LoadNewGame(vec2 SpawnPos)

@@ -14,6 +14,10 @@ public:
 	void InitBot(struct CBotSpawn *pSpawn);
 	int m_BotType;
 	struct CBotSpawn *m_BotSpawn;
+
+private:
+	const char *GetDisplayName() override;
+
 };
 
 #endif
