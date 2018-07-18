@@ -40,37 +40,28 @@ void CPlayer::Tick()
 #ifdef CONF_DEBUG
 	if(!g_Config.m_DbgDummies || m_ClientID < MAX_CLIENTS-g_Config.m_DbgDummies)
 #endif
-	if(!IsBot() && !Server()->ClientIngame(m_ClientID))
+	if(!Server()->ClientIngame(m_ClientID))
 		return;
 
 	Server()->SetClientScore(m_ClientID, m_Score);
 
 	// do latency stuff
-	if(!IsBot())
+	IServer::CClientInfo Info;
+	if(Server()->GetClientInfo(m_ClientID, &Info))
 	{
-		IServer::CClientInfo Info;
-		if(Server()->GetClientInfo(m_ClientID, &Info))
-		{
-			m_Latency.m_Accum += Info.m_Latency;
-			m_Latency.m_AccumMax = max(m_Latency.m_AccumMax, Info.m_Latency);
-			m_Latency.m_AccumMin = min(m_Latency.m_AccumMin, Info.m_Latency);
-		}
-		// each second
-		if(Server()->Tick()%Server()->TickSpeed() == 0)
-		{
-			m_Latency.m_Avg = m_Latency.m_Accum/Server()->TickSpeed();
-			m_Latency.m_Max = m_Latency.m_AccumMax;
-			m_Latency.m_Min = m_Latency.m_AccumMin;
-			m_Latency.m_Accum = 0;
-			m_Latency.m_AccumMin = 1000;
-			m_Latency.m_AccumMax = 0;
-		}
+		m_Latency.m_Accum += Info.m_Latency;
+		m_Latency.m_AccumMax = max(m_Latency.m_AccumMax, Info.m_Latency);
+		m_Latency.m_AccumMin = min(m_Latency.m_AccumMin, Info.m_Latency);
 	}
-	else
+	// each second
+	if(Server()->Tick()%Server()->TickSpeed() == 0)
 	{
-		m_Latency.m_Avg = 42;
-		m_Latency.m_Max = 42;
-		m_Latency.m_Min = 42;
+		m_Latency.m_Avg = m_Latency.m_Accum/Server()->TickSpeed();
+		m_Latency.m_Max = m_Latency.m_AccumMax;
+		m_Latency.m_Min = m_Latency.m_AccumMin;
+		m_Latency.m_Accum = 0;
+		m_Latency.m_AccumMin = 1000;
+		m_Latency.m_AccumMax = 0;
 	}
 
 	if(!GameServer()->m_World.m_Paused)
