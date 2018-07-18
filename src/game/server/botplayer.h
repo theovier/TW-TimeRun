@@ -14,6 +14,7 @@ public:
 	void InitBot(struct CBotSpawn *pSpawn);
 	int m_BotType;
 	struct CBotSpawn *m_BotSpawn;
+	bool m_MarkedForDestroy;
 
 private:
 	const char *GetDisplayName() override;

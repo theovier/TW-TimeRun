@@ -10,12 +10,7 @@
 
 void CGameControllerEXP::TickBots()
 {
-	// REMOVE DEAD BOTS
-	for(int b = g_Config.m_SvMaxClients; b < MAX_CLIENTS; b++)
-	{
-		if(GameServer()->m_apPlayers[b] && GameServer()->m_apPlayers[b]->m_MustRemoveBot)
-			RemoveBot(b, true);
-	}
+	RemoveFlaggedBots();
 
 	// CHECK FOR NOBODY
 	for(int b = g_Config.m_SvMaxClients; b < MAX_CLIENTS; b++)
@@ -140,6 +135,21 @@ void CGameControllerEXP::TickBots()
 					BotSpawn(&m_Boss.m_Spawn);
 					break;
 				}
+			}
+		}
+	}
+}
+
+void CGameControllerEXP::RemoveFlaggedBots() {
+	for (int i = g_Config.m_SvMaxClients; i < MAX_CLIENTS; i++) {
+		CPlayer* Player = GameServer()->m_apPlayers[i];
+		
+		//too expensive to dyncast all the time?
+		bool IsBot = dynamic_cast<const CBotPlayer*>(Player) != nullptr;
+		if (IsBot) {
+			CBotPlayer* botPlayer = (CBotPlayer*)Player;
+			if (botPlayer && botPlayer->m_MarkedForDestroy) {
+				RemoveBot(i, true);
 			}
 		}
 	}

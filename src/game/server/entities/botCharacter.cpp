@@ -1,3 +1,5 @@
+#include <game/server/botplayer.h>
+#include "botCharacter.h"
 #include "botcharacter.h"
 
 
@@ -9,6 +11,12 @@ CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 void CBotCharacter::Tick() {
 	CCharacter::Tick();
 	Handle();
+}
+
+void CBotCharacter::Die(int Killer, int Weapon) {
+	CCharacter::Die(Killer, Weapon);
+	CBotPlayer* botController = (CBotPlayer*) m_pPlayer;
+	botController->m_MarkedForDestroy = true;
 }
 
 void CBotCharacter::OnBotDeath(CPlayer* Killer, int Weapon) {

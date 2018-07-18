@@ -62,6 +62,7 @@ public:
 	void TickLaserTurrets();
 	void TickGunTurrets();
 	void TickBots();
+	void RemoveFlaggedBots();
 
 	// bots functions
 	int BotCanSpawn();
