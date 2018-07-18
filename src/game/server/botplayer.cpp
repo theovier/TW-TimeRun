@@ -2,6 +2,8 @@
 #include <game/server/entities/bots/hammerbot.h>
 #include <game/server/entities/bots/gunbot.h>
 
+MACRO_ALLOC_POOL_ID_IMPL(CBotPlayer, MAX_CLIENTS)
+
 CBotPlayer::CBotPlayer(CGameContext *pGameServer, int ClientID, int Team) : CPlayer(pGameServer, ClientID, Team) {
 	CPlayer::CPlayer(pGameServer, ClientID, Team);
 }

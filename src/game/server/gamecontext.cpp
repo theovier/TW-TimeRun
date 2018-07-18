@@ -620,7 +620,7 @@ void CGameContext::OnClientEnter(int ClientID)
 
 void CGameContext::OnBotClientConnected(int ClientID) {
 	const int StartTeam = g_Config.m_SvTournamentMode ? TEAM_SPECTATORS : m_pController->GetAutoTeam(ClientID);
-	m_apPlayers[ClientID] = new(ClientID) CPlayer(this, ClientID, StartTeam);
+	m_apPlayers[ClientID] = new(ClientID) CBotPlayer(this, ClientID, StartTeam);
 	dbg_msg("DEBUG", "BOT-CLIENT CONNECTED: bot player added.");
 }
 
