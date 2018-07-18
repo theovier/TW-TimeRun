@@ -581,8 +581,6 @@ void IGameController::Snap(int SnappingClient)
 
 int IGameController::GetAutoTeam(int NotThisID)
 {
-	return TEAM_RED;
-
 	// this will force the auto balancer to work overtime aswell
 	if(g_Config.m_DbgStress)
 		return 0;
@@ -626,8 +624,6 @@ bool IGameController::CanJoinTeam(int Team, int NotThisID)
 
 bool IGameController::CheckTeamBalance()
 {
-	return true;
-
 	if(!IsTeamplay() || !g_Config.m_SvTeambalanceTime)
 		return true;
 
