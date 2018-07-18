@@ -8,7 +8,6 @@
 #include <game/server/gamemodes/exp/exp.h>
 #include <game/server/gamemodes/exp/environment.h>
 #include <game/server/gamemodes/exp/bots.h>
-#include <game/server/gamemodes/exp/loothandler.h>
 
 #include "character.h"
 #include "door.h"
@@ -782,27 +781,6 @@ void CCharacter::Die(int Killer, int Weapon)
 	CPlayer* KillerPlayer = GameServer()->m_apPlayers[Killer];
 	if (KillerPlayer) {
 		KillerPlayer->m_Score++;
-		if (m_pPlayer->IsBot()) {
-			OnBotDeath(KillerPlayer, Weapon);
-		}
-	}
-}
-
-void CCharacter::OnBotDeath(CPlayer* Killer, int Weapon) {
-	if (Killer && !Killer->IsBot()) {
-		CLootHandler::HandleLoot(&GameServer()->m_World, m_Pos, m_pPlayer->m_BotType);
-	}
-
-	if (m_pPlayer->m_BotType == 4) {
-		OnBossBotDeath();
-	}
-}
-
-void CCharacter::OnBossBotDeath() {
-	for (int i = 0; i < g_Config.m_SvMaxClients; i++)
-	{
-		if (GameServer()->m_apPlayers[i] && GameServer()->m_apPlayers[i]->m_GameExp.m_BossHitter)
-			GameServer()->m_apPlayers[i]->m_GameExp.m_BossKiller = true;
 	}
 }
 

@@ -1,4 +1,5 @@
 #include <game/server/botplayer.h>
+#include <game/server/gamemodes/exp/loothandler.h>
 #include "botCharacter.h"
 #include "botcharacter.h"
 
@@ -7,7 +8,6 @@ CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 	CCharacter::CCharacter(pWorld);
 }
 
-
 void CBotCharacter::Tick() {
 	CCharacter::Tick();
 	Handle();
@@ -15,12 +15,20 @@ void CBotCharacter::Tick() {
 
 void CBotCharacter::Die(int Killer, int Weapon) {
 	CCharacter::Die(Killer, Weapon);
+	MarkControllerForDestroy();
+	OnDeath(GameServer()->m_apPlayers[Killer]);
+}
+
+void CBotCharacter::MarkControllerForDestroy() {
 	CBotPlayer* botController = (CBotPlayer*) m_pPlayer;
 	botController->m_MarkedForDestroy = true;
 }
 
-void CBotCharacter::OnBotDeath(CPlayer* Killer, int Weapon) {
-	dbg_msg("DEBUG", "bot character died.");
+void CBotCharacter::OnDeath(CPlayer* Killer) {	
+	if (Killer) {
+		CLootHandler::HandleLoot(&GameServer()->m_World, m_Pos, m_pPlayer->m_BotType);
+	}
+	dbg_msg("DEBUG", "bot OnDeath.");
 }
 
 void CBotCharacter::Handle() {
