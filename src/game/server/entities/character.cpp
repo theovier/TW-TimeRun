@@ -579,7 +579,6 @@ void CCharacter::Tick()
 		m_pPlayer->m_ForceBalanced = false;
 	}
 
-	m_pPlayer->m_LastPos = m_Pos;
 	if(m_Frozen && Server()->Tick() > m_FrozenTimer)
 	{
 		m_Frozen = false;
