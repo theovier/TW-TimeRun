@@ -98,7 +98,6 @@ public:
 	} m_Latency;
 
 	// bots
-	struct CBotSpawn *m_pBotSpawn;
 	int m_BotType;
 	inline bool IsBot() { return m_Team == 1; };
 	bool m_MustRemoveBot;

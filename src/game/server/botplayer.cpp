@@ -23,7 +23,7 @@ void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 	m_Team = 1;
 	GameServer()->CreatePlayerSpawn(pSpawn->m_Pos);
 	m_BotType = pSpawn->m_BotType;
-	m_pBotSpawn = pSpawn;
+	m_BotSpawn = pSpawn;
 
 	switch (m_BotType) {
 		case BOTTYPE_HAMMER:

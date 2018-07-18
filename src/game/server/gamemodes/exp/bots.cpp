@@ -178,14 +178,16 @@ void CGameControllerEXP::BotSpawn(CBotSpawn *pSpawn)
 	}
 }
 
-void CGameControllerEXP::RemoveBot(int ID, bool Killed)
-{
-	GameServer()->m_apPlayers[ID]->m_pBotSpawn->m_Spawned = false;
+void CGameControllerEXP::RemoveBot(int ID, bool Killed) {
+	CBotPlayer* Bot = (CBotPlayer*)GameServer()->m_apPlayers[ID];
+	CBotSpawn* Spawn = Bot->m_BotSpawn;
+	Spawn->m_Spawned = false;
+
 	if(Killed)
-		GameServer()->m_apPlayers[ID]->m_pBotSpawn->m_RespawnTimer = Server()->Tick();
+		Spawn->m_RespawnTimer = Server()->Tick();
 		
-	delete GameServer()->m_apPlayers[ID]->m_pCharacter;
-	GameServer()->m_apPlayers[ID]->m_pCharacter = NULL;
+	delete Bot->m_pCharacter;
+	Bot->m_pCharacter = NULL;
 	delete GameServer()->m_apPlayers[ID];
 	GameServer()->m_apPlayers[ID] = NULL;
 }
