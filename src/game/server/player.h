@@ -102,8 +102,6 @@ public:
 	int m_BotType;
 	inline bool IsBot() { return m_Team == 1; };
 	void DestroyBot();
-	int MaxHealth();
-	int MaxArmor();
 	const char *GetMonsterName();
 	bool m_MustRemoveBot;
 	vec2 m_LastPos;

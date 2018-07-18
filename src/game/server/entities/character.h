@@ -85,6 +85,7 @@ public:
 	// moved to public
 	int m_Health;
 	int m_Armor;
+	int m_MaxHealth;
 
 	int m_EmoteType;
 	int m_EmoteStop;

@@ -303,39 +303,13 @@ void CPlayer::TryRespawn()
 	}
 }
 
-int CPlayer::MaxHealth()
-{
-	if(m_BotType == 1)
-		return 10;
-	else if(m_BotType == 2)
-		return 8;
-	else if(m_BotType == 3)
-		return 10;
-	else if(m_BotType == 4)
-		return 200;
-	return 10;
-}
-
-int CPlayer::MaxArmor()
-{
-	if(m_BotType == 1)
-		return 0;
-	else if(m_BotType == 2)
-		return 0;
-	else if(m_BotType == 3)
-		return 5;
-	else if(m_BotType == 4)
-		return 0;
-	return 10;
-}
-
 const char *CPlayer::GetMonsterName()
 {
 	if(!m_pCharacter)
 		return "R.I.P.";
 
-	int Life = m_pCharacter->m_Health + m_pCharacter->m_Armor;
-	int MaxLife = MaxHealth() + MaxArmor();
+	int Life = m_pCharacter->m_Health;
+	int MaxLife = m_pCharacter->m_MaxHealth;
 	float coef = (float)Life / (float)MaxLife;
 	
 	if(coef > 0.8f)

@@ -52,6 +52,7 @@ CCharacter::CCharacter(CGameWorld *pWorld)
 	m_ProximityRadius = ms_PhysSize;
 	m_Health = 0;
 	m_Armor = 0;
+	m_MaxHealth = 10;
 }
 
 void CCharacter::Reset()
@@ -729,9 +730,9 @@ void CCharacter::TickPaused()
 
 bool CCharacter::IncreaseHealth(int Amount)
 {
-	if(m_Health >= m_pPlayer->MaxHealth())
+	if(m_Health >= m_MaxHealth)
 		return false;
-	m_Health = clamp(m_Health+Amount, 0, m_pPlayer->MaxHealth());
+	m_Health = clamp(m_Health+Amount, 0, m_MaxHealth);
 	return true;
 }
 
