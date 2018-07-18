@@ -14,8 +14,16 @@ public:
 
 protected:
 	virtual void Handle();
+	virtual vec2 FindTarget();
+	virtual void Move(vec2 Target);
+	virtual void SelectWeapon(float distanceToTarget);
+	virtual void Fire(vec2 Target);
 	void Aim(vec2 Target);
 
+	vec2 FindNearestTarget();
+
+	const float m_MeeleRange = 64.0f;
+	float m_AggroRadius;
 	float m_AttackTimer;
 
 private:

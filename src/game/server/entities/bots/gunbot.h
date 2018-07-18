@@ -4,5 +4,7 @@ class CGunbot : public CBotCharacter {
 public:
 	CGunbot(CGameWorld *pWorld);
 protected:
-	void Handle() override;
+	void Move(vec2 Target) override;
+	void SelectWeapon(float distanceToTarget) override;
+	void Fire(vec2 Target) override;
 };

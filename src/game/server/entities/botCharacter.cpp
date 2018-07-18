@@ -7,6 +7,7 @@ MACRO_ALLOC_POOL_ID_IMPL(CBotCharacter, MAX_CLIENTS)
 
 CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 	CCharacter::CCharacter(pWorld);
+	m_AggroRadius = 700.0f;
 }
 
 void CBotCharacter::Tick() {
@@ -32,7 +33,33 @@ void CBotCharacter::OnDeath(CPlayer* Killer) {
 }
 
 void CBotCharacter::Handle() {
-	
+	vec2 Target = FindTarget();
+	if (!Target) return;
+	Move(Target);
+	SelectWeapon(distance(Target, m_Pos));
+	Aim(Target);
+	Fire(Target);
+}
+
+void CBotCharacter::Move(vec2 Target) {
+	// implement in subclass
+}
+
+vec2 CBotCharacter::FindTarget() {
+	//default implementation
+	return FindNearestTarget();
+}
+
+vec2 CBotCharacter::FindNearestTarget() {
+	CCharacter* TargetChr = GameServer()->m_World.ClosestCharacter(m_Pos, m_AggroRadius, NULL);
+	if (TargetChr)
+		return TargetChr->m_Pos;
+	else
+		NULL;
+}
+
+void CBotCharacter::SelectWeapon(float distanceToTarget) {
+	// implement in subclass
 }
 
 void CBotCharacter::Aim(vec2 Target) {
@@ -42,4 +69,10 @@ void CBotCharacter::Aim(vec2 Target) {
 	m_Input.m_TargetX = Target.x;
 	m_Input.m_TargetY = Target.y;
 }
+
+void CBotCharacter::Fire(vec2 Target) {
+	// implement in subclass
+}
+
+
 
