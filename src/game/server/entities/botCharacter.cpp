@@ -71,7 +71,13 @@ void CBotCharacter::Aim(vec2 Target) {
 }
 
 void CBotCharacter::Fire(vec2 Target) {
+	StopFire();
 	// implement in subclass
+}
+
+void CBotCharacter::StopFire() {
+	m_LatestInput.m_Fire = 0;
+	m_Input.m_Fire = 0;
 }
 
 

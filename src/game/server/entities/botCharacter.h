@@ -19,7 +19,7 @@ protected:
 	virtual void SelectAppropriateWeapon(float distanceToTarget);
 	virtual void Fire(vec2 Target);
 	void Aim(vec2 Target);
-
+	void StopFire();
 	vec2 FindNearestTarget();
 
 	const float m_MeeleRange = 64.0f;
