@@ -5,4 +5,6 @@ public:
 	CHammerbot(CGameWorld *pWorld);
 protected:
 	void Handle() override;
+
+	const int GetBotType() { return BOTTYPE_HAMMER; };
 };

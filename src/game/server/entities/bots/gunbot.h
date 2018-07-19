@@ -11,4 +11,6 @@ private:
 	void Move(vec2 Target) override;
 	void SelectAppropriateWeapon(float distanceToTarget) override;
 	void Fire(vec2 Target) override;
+
+	const int GetBotType() { return BOTTYPE_GUN; };
 };

@@ -26,6 +26,8 @@ protected:
 	float m_AggroRadius;
 	float m_AttackTimer;
 
+	const virtual int GetBotType() { return BOTTYPE_HAMMER; };
+
 private:
 	void MarkControllerForDestroy();
 	void OnDeath(CPlayer* Killer);
