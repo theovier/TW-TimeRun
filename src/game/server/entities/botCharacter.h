@@ -16,7 +16,7 @@ protected:
 	virtual void Handle();
 	virtual vec2 FindTarget();
 	virtual void Move(vec2 Target);
-	virtual void SelectWeapon(float distanceToTarget);
+	virtual void SelectAppropriateWeapon(float distanceToTarget);
 	virtual void Fire(vec2 Target);
 	void Aim(vec2 Target);
 

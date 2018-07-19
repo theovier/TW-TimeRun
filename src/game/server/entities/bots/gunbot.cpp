@@ -27,7 +27,7 @@ void CGunbot::Move(vec2 Target) {
 	}
 }
 
-void CGunbot::SelectWeapon(float distanceToTarget) {
+void CGunbot::SelectAppropriateWeapon(float distanceToTarget) {
 	if (distanceToTarget < m_MeeleRange)
 		m_QueuedWeapon = WEAPON_HAMMER;
 	else

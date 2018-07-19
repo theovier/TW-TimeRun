@@ -36,7 +36,7 @@ void CBotCharacter::Handle() {
 	vec2 Target = FindTarget();
 	if (!Target) return;
 	Move(Target);
-	SelectWeapon(distance(Target, m_Pos));
+	SelectAppropriateWeapon(distance(Target, m_Pos));
 	Aim(Target);
 	Fire(Target);
 }
@@ -58,7 +58,7 @@ vec2 CBotCharacter::FindNearestTarget() {
 		NULL;
 }
 
-void CBotCharacter::SelectWeapon(float distanceToTarget) {
+void CBotCharacter::SelectAppropriateWeapon(float distanceToTarget) {
 	// implement in subclass
 }
 
