@@ -1,3 +1,4 @@
+#include <game/server/gamecontext.h>
 #include <game/server/entities/botcharacter.h>
 
 class CHammerbot : public CBotCharacter {
