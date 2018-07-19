@@ -35,6 +35,8 @@ void CGunbot::SelectAppropriateWeapon(float distanceToTarget) {
 }
 
 void CGunbot::Fire(vec2 Target) {
+	m_LatestInput.m_Fire = 0;
+	m_Input.m_Fire = 0;
 	if (!GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL, false))
 	{
 		if (m_QueuedWeapon != m_ActiveWeapon)
