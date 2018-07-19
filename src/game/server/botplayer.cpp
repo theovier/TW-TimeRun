@@ -28,7 +28,6 @@ void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 	switch (m_BotType) {
 		case BOTTYPE_HAMMER:
 			m_pCharacter = new(m_ClientID) CHammerbot(&GameServer()->m_World);
-			m_pCharacter->m_aWeapons[WEAPON_GUN].m_Got = false;
 			break;
 
 		case BOTTYPE_GUN:
