@@ -3,7 +3,7 @@
 class CGunbot : public CBotCharacter {
 public:
 	CGunbot(CGameWorld *pWorld);
-protected:
+private:
 	void Move(vec2 Target) override;
 	void SelectWeapon(float distanceToTarget) override;
 	void Fire(vec2 Target) override;

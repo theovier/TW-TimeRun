@@ -10,8 +10,6 @@ void CGunbot::Move(vec2 Target) {
 	bool Jumping = (bool)m_Input.m_Jump;
 	m_Input.m_Direction = 0;
 	m_Input.m_Jump = 0;
-	m_LatestInput.m_Fire = 0;
-	m_Input.m_Fire = 0;
 
 	if (m_Pos.x < Target.x)
 		m_Input.m_Direction = 1;
