@@ -98,7 +98,6 @@ public:
 	} m_Latency;
 
 	// bots
-	int m_BotType;
 	inline bool IsBot() { return m_Team == 1; };
 	float m_NobodyTimer;
 

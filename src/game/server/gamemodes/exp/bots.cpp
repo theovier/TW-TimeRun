@@ -18,8 +18,6 @@ void CGameControllerEXP::TickBots()
 		CPlayer *p = GameServer()->m_apPlayers[b];
 		if(!p || !p->GetCharacter())
 			continue;
-		if(p->m_BotType == 4)
-			continue;
 		
 		bool Nobody = true;
 		for(int i = 0; i < g_Config.m_SvMaxClients; i++)

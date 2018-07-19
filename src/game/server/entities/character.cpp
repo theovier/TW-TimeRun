@@ -786,15 +786,6 @@ void CCharacter::Die(int Killer, int Weapon)
 
 bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon)
 {
-	// debug...
-	//if(!m_pPlayer->IsBot())
-	//	return false;
-	if(m_pPlayer->IsBot() && m_pPlayer->m_BotType == 4)
-	{
-		if(From >= 0 && GameServer()->m_apPlayers[From])
-			GameServer()->m_apPlayers[From]->m_GameExp.m_BossHitter = true;
-	}
-
 	m_Core.m_Vel += Force;
 
 	if(GameServer()->m_pController->IsFriendlyFire(m_pPlayer->GetCID(), From) && !g_Config.m_SvTeamdamage)
@@ -930,9 +921,6 @@ void CCharacter::Snap(int SnappingClient)
 	else
 		pCharacter->m_Weapon = m_ActiveWeapon;
 
-	if(m_pPlayer->m_BotType == 2 && !m_Frozen)
-		m_AttackTick = Server()->Tick();
-
 	pCharacter->m_AttackTick = m_AttackTick;
 
 	pCharacter->m_Direction = m_Input.m_Direction;
@@ -965,16 +953,7 @@ void CCharacter::Freeze()
 	m_aWeapons[WEAPON_NINJA].m_Ammo = -1;
 	m_LastWeapon = m_ActiveWeapon;
 	m_ActiveWeapon = WEAPON_NINJA;
-	
-	if(m_pPlayer->m_BotType == 4)
-	{
-		CBoss *pBoss = &((CGameControllerEXP*)GameServer()->m_pController)->m_Boss;
-		pBoss->m_ShieldHealth = 0;
-		pBoss->m_ShieldTimer = Server()->Tick() + 15.0f*Server()->TickSpeed();
-		GameServer()->CreateSound(m_Pos, SOUND_GRENADE_EXPLODE);
-		GameServer()->CreateExplosion(m_Pos, -1, WEAPON_WORLD, 5);
 	}
-}
 
 bool CCharacter::DoorOpen()
 {
