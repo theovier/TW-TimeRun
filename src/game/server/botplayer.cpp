@@ -42,22 +42,10 @@ void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 	m_pCharacter->Spawn(GameServer()->m_apPlayers[m_ClientID], pSpawn->m_Pos);
 }
 
-const char * CBotPlayer::GetDisplayName() {
+const char* CBotPlayer::GetDisplayName() {
 	if (!m_pCharacter)
 		return "R.I.P.";
-
-	int Life = m_pCharacter->m_Health;
-	int MaxLife = m_pCharacter->m_MaxHealth;
-	float coef = (float)Life / (float)MaxLife;
-
-	if (coef > 0.8f)
-		return "|-----|";
-	else if (coef > 0.6f)
-		return "|----|";
-	else if (coef > 0.4f)
-		return "|---|";
-	else if (coef > 0.2f)
-		return "|--|";
-	else
-		return "|-|";
+	char numstr[21]; // enough to hold all numbers up to 64-bits
+	return itoa(m_pCharacter->m_Health, numstr, 10);
 }
+
