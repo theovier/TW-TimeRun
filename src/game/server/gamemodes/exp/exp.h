@@ -39,7 +39,6 @@ public:
 
 	CTurret m_aTurrets[MAX_TURRETS];
 	CMine m_aMines[MAX_MINES];
-	CTrapStruct m_aTraps[MAX_TRAPS];
 	CDoor m_aDoors[MAX_DOORS];
 
 
@@ -52,7 +51,6 @@ public:
 	void FreezeTurret(int t);
 	void BuildMine(int m);
 	void DestroyMine(int m);
-	void BuildTrap(int t);
 	void BuildDoor(int d);
 
 	void TickEnvironment();

@@ -39,11 +39,6 @@ struct CMine : CExplorerEntity
 	float m_TimerRespawn;
 };
 
-struct CTrapStruct : CExplorerEntity
-{
-	float m_Timer;
-};
-
 struct CDoor : CExplorerEntity
 {
 	int m_Type;
