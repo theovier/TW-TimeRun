@@ -142,7 +142,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if(m_CurTurret < MAX_TURRETS)
 		{
-			dbg_msg("exp", "laser turret added (%d)", m_CurTurret);
 			m_aTurrets[m_CurTurret].m_Used = true;
 			m_aTurrets[m_CurTurret].m_Pos = Pos;
 			m_aTurrets[m_CurTurret].m_Type = TURRET_TYPE_LASER;
@@ -156,7 +155,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if(m_CurTurret < MAX_TURRETS)
 		{
-			dbg_msg("exp", "gun turret added (%d)", m_CurTurret);
 			m_aTurrets[m_CurTurret].m_Used = true;
 			m_aTurrets[m_CurTurret].m_Pos = Pos;
 			m_aTurrets[m_CurTurret].m_Type = TURRET_TYPE_GUN;
@@ -170,7 +168,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if(m_CurMine < MAX_MINES)
 		{
-			dbg_msg("exp", "mine added (%d)", m_CurMine);
 			m_aMines[m_CurMine].m_Used = true;
 			m_aMines[m_CurMine].m_Pos = vec2(Pos.x, Pos.y+14);
 			BuildMine(m_CurMine++);
@@ -183,7 +180,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if(m_CurTrap < MAX_TRAPS)
 		{
-			dbg_msg("exp", "down trap added (%d)", m_CurTrap);
 			m_Traps[m_CurTrap++] = new CTrap(&GameServer()->m_World, Pos);
 		}
 		else
@@ -194,7 +190,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if (m_CurTrap < MAX_TRAPS)
 		{
-			dbg_msg("exp", "up trap added (%d)", m_CurTrap);
 			m_Traps[m_CurTrap++] = new CUpwardsTrap(&GameServer()->m_World, Pos);
 		}
 		else
@@ -205,7 +200,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if(m_CurDoor < MAX_DOORS)
 		{
-			dbg_msg("exp", "vertical door added (%d)", m_CurDoor);
 			m_aDoors[m_CurDoor].m_Used = true;
 			m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x, Pos.y-16);
 			m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_VERTICAL;
@@ -219,7 +213,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if(m_CurDoor < MAX_DOORS)
 		{
-			dbg_msg("exp", "horizontal door added (%d)", m_CurDoor);
 			m_aDoors[m_CurDoor].m_Used = true;
 			m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x-16, Pos.y);
 			m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_HORIZONTAL;
@@ -233,7 +226,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if(m_CurFlag < MAX_CHECKPOINTS)
 		{
-			dbg_msg("exp", "checkpoint added (%d)", m_CurFlag);
 			CFlag *f = new CFlag(&GameServer()->m_World, 0, Pos);
 			f->m_Pos = Pos;
 			m_aFlagsCP[m_CurFlag++] = f;
