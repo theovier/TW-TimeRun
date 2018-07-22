@@ -620,7 +620,6 @@ void CGameContext::OnClientEnter(int ClientID)
 
 void CGameContext::OnBotClientConnected(int ClientID) {
 	m_apPlayers[ClientID] = new (ClientID) CBotPlayer(this, ClientID, TEAM_BLUE);
-	dbg_msg("DEBUG", "BOT-CLIENT CONNECTED: bot player added.");
 }
 
 void CGameContext::OnClientConnected(int ClientID) {
