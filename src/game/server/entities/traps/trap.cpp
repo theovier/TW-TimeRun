@@ -39,10 +39,14 @@ bool CTrap::Triggered(CCharacter* victim) {
 }
 
 bool CTrap::VictimInRange(vec2 victimPos) {
-	bool hasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, victimPos, NULL, NULL, false);
+	bool hasLineOfSight = HasLineOfSight(victimPos);
 	bool characterBelowTrap = victimPos.y > m_Pos.y;
 	bool characterInHorizontalRange = (victimPos.x > m_Pos.x - 64) && (victimPos.x < m_Pos.x + 64);
 	return hasLineOfSight && characterBelowTrap && characterInHorizontalRange;
+}
+
+bool CTrap::HasLineOfSight(vec2 victimPos) {
+	return !GameServer()->Collision()->IntersectLine(m_Pos, victimPos, NULL, NULL, false);
 }
 
 void CTrap::Fire() {

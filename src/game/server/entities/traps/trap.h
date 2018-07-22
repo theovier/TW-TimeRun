@@ -23,6 +23,7 @@ protected:
 	virtual void Arm();
 	virtual bool Triggered(CCharacter* victim);
 	virtual bool VictimInRange(vec2 victimPos);
+	virtual bool HasLineOfSight(vec2 victimPos);
 	virtual void Fire();
 };
 #endif
