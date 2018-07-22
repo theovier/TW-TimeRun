@@ -39,7 +39,7 @@ struct CMine : CExplorerEntity
 	float m_TimerRespawn;
 };
 
-struct CTrap : CExplorerEntity
+struct CTrapStruct : CExplorerEntity
 {
 	float m_Timer;
 };

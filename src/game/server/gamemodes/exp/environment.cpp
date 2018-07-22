@@ -148,7 +148,7 @@ void CGameControllerEXP::TickMines() {
 //todo refactor
 void CGameControllerEXP::TickTraps() {	
 	for (int t = 0; t < m_CurTrap; t++) {
-		CTrap *trap = &m_aTraps[t];
+		CTrapStruct *trap = &m_aTraps[t];
 		bool isOnCooldown = Server()->Tick() < trap->m_Timer;
 		if (!trap->m_Used || isOnCooldown) {
 			continue;

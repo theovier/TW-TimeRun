@@ -36,7 +36,7 @@ public:
 	int m_CurDoor;
 	CTurret m_aTurrets[MAX_TURRETS];
 	CMine m_aMines[MAX_MINES];
-	CTrap m_aTraps[MAX_TRAPS];
+	CTrapStruct m_aTraps[MAX_TRAPS];
 	CDoor m_aDoors[MAX_DOORS];
 
 	void BuildTurret(int t);
