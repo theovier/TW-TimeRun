@@ -40,9 +40,17 @@ bool CTrap::Triggered(CCharacter* victim) {
 
 bool CTrap::VictimInRange(vec2 victimPos) {
 	bool hasLineOfSight = HasLineOfSight(victimPos);
-	bool characterBelowTrap = victimPos.y > m_Pos.y;
-	bool characterInHorizontalRange = (victimPos.x > m_Pos.x - 64) && (victimPos.x < m_Pos.x + 64);
-	return hasLineOfSight && characterBelowTrap && characterInHorizontalRange;
+	bool victimInVerticalRange = VictimInVerticalRange(victimPos);
+	bool victimInHorizontalRange = VictimInHorizontalRange(victimPos);
+	return hasLineOfSight && victimInVerticalRange && victimInHorizontalRange;
+}
+
+bool CTrap::VictimInVerticalRange(vec2 victimPos) {
+	return victimPos.y > m_Pos.y;	
+}
+
+bool CTrap::VictimInHorizontalRange(vec2 victimPos) {
+	return (victimPos.x > m_Pos.x - 64) && (victimPos.x < m_Pos.x + 64);
 }
 
 bool CTrap::HasLineOfSight(vec2 victimPos) {

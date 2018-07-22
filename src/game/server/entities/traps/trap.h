@@ -24,6 +24,8 @@ protected:
 	virtual bool Triggered(CCharacter* victim);
 	virtual bool VictimInRange(vec2 victimPos);
 	virtual bool HasLineOfSight(vec2 victimPos);
+	virtual bool VictimInVerticalRange(vec2 victimPos);
+	virtual bool VictimInHorizontalRange(vec2 victimPos);
 	virtual void Fire();
 };
 #endif
