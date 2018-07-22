@@ -306,11 +306,6 @@ void CGameControllerEXP::DestroyMine(int m)
 	GameServer()->CreateSound(m_aMines[m].m_Pos, SOUND_GRENADE_EXPLODE);
 }
 
-void CGameControllerEXP::BuildTrap(int t)
-{
-	m_aTraps[t].m_Timer = 0.0f;
-}
-
 void CGameControllerEXP::BuildDoor(int d)
 {
 	m_aDoors[d].m_CreateLaser = false;
