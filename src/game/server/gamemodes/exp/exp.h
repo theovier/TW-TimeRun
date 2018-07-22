@@ -5,6 +5,7 @@
 #include <game/server/gamecontroller.h>
 #include <game/server/entities/flag.h>
 #include <game/server/entities/traps/trap.h>
+#include <game/server/entities/traps/upwardstrap.h>
 #include <engine/console.h>
 
 #include "environment.h"

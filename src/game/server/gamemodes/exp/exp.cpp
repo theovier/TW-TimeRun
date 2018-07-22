@@ -179,12 +179,23 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 			dbg_msg("exp", "can't create mine: too many mines");
 		return true;
 	}
-	else if(Index == ENTITY_TRAP)
+	else if(Index == ENTITY_TRAP_DOWN)
 	{
 		if(m_CurTrap < MAX_TRAPS)
 		{
-			dbg_msg("exp", "trap added (%d)", m_CurTrap);
+			dbg_msg("exp", "down trap added (%d)", m_CurTrap);
 			m_Traps[m_CurTrap++] = new CTrap(&GameServer()->m_World, Pos);
+		}
+		else
+			dbg_msg("exp", "can't create trap: too many traps");
+		return true;
+	}
+	else if (Index == ENTITY_TRAP_UP)
+	{
+		if (m_CurTrap < MAX_TRAPS)
+		{
+			dbg_msg("exp", "up trap added (%d)", m_CurTrap);
+			m_Traps[m_CurTrap++] = new CUpwardsTrap(&GameServer()->m_World, Pos);
 		}
 		else
 			dbg_msg("exp", "can't create trap: too many traps");
