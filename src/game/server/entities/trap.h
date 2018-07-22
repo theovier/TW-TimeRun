@@ -12,8 +12,17 @@ public:
 
 protected:
 	vec2 m_Offset = vec2(0, -14.0f);
+	vec2 m_Dir = vec2(0, 1);
 	bool m_Active;
-	float m_AttackSpeed;
+	bool m_IgnoreBots = true;
+	float m_FireTick;
 	float m_Range = 600.0f;
+	int m_Damage = 5;
+	bool m_Explosive = true;
+
+	virtual void Arm();
+	virtual bool Triggered(CCharacter* victim);
+	virtual bool VictimInRange(vec2 victimPos);
+	virtual void Fire();
 };
 #endif
