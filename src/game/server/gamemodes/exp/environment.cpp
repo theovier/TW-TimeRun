@@ -29,7 +29,6 @@ void CGameControllerEXP::TickPlayerRelatedEnvironment() {
 
 void CGameControllerEXP::TickPlayerUnrelatedEnvironment() {
 	TickMines();
-	TickTraps();
 	TickTurrets();
 }
 
@@ -144,50 +143,6 @@ void CGameControllerEXP::TickMines() {
 		}
 	}
 }
-
-//todo refactor
-void CGameControllerEXP::TickTraps() {	
-	for (int t = 0; t < m_CurTrap; t++) {
-		CTrapStruct *trap = &m_aTraps[t];
-		bool isOnCooldown = Server()->Tick() < trap->m_Timer;
-		if (!trap->m_Used || isOnCooldown) {
-			continue;
-		}
-
-		float maxRange = 600.0f;
-		vec2 trapPos = trap->m_Pos;
-		CCharacter* closestChars[MAX_CLIENTS];
-		int amountPlayersCloseBy = GameServer()->m_World.FindEntities(trapPos, maxRange, (CEntity**)closestChars, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);
-
-		for (int i = 0; i < amountPlayersCloseBy; i++) {
-			CCharacter* character = closestChars[i];
-			vec2 charPos = character->GetPos();
-
-			bool isBot = character->GetPlayer()->IsBot();
-			bool hasNoLineOfSight = GameServer()->Collision()->IntersectLine(trapPos, charPos, NULL, NULL, false);
-
-			if (isBot || hasNoLineOfSight) {
-				continue;
-			}
-			
-			//todo built traps that shoot up, left, right?
-			bool characterBelowTrap = charPos.y > trapPos.y;
-			bool characterInHorizontalRange = (charPos.x > trapPos.x - 64) && (charPos.x < trapPos.x + 64);
-
-			if (characterBelowTrap && characterInHorizontalRange) {
-				vec2 dir = vec2(0, 1);
-				int lifeSpan = (int)(Server()->TickSpeed()*GameServer()->Tuning()->m_GrenadeLifetime);
-				int dmg = 5;
-				bool isExplosive = true;
-				new CProjectile(&GameServer()->m_World,	WEAPON_GRENADE,	-1, trapPos, dir, lifeSpan,	dmg, isExplosive, 0, SOUND_GRENADE_EXPLODE, WEAPON_GRENADE);
-				trap->m_Timer = Server()->Tick() + g_pData->m_Weapons.m_aId[WEAPON_GRENADE].m_Firedelay * Server()->TickSpeed() / 1000.0f;
-				GameServer()->CreateSound(trapPos, SOUND_GRENADE_FIRE);
-				break;
-			}
-		}
-	}
-}
-
 
 //todo refactor
 void CGameControllerEXP::TickTurrets() {

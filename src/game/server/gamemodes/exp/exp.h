@@ -4,6 +4,7 @@
 #define GAME_SERVER_GAMEMODES_EXP_H
 #include <game/server/gamecontroller.h>
 #include <game/server/entities/flag.h>
+#include <game/server/entities/trap.h>
 #include <engine/console.h>
 
 #include "environment.h"
@@ -29,15 +30,20 @@ public:
 	bool OnBotEntity(int BotType, vec2 pos);
 	bool CheckCommand(int ClientID, int Team, const char *pMsg);
 
-	int m_CurTurret;
-	int m_CurFlag;
-	int m_CurMine;
-	int m_CurTrap;
-	int m_CurDoor;
+	int m_CurTurret = 0;
+	int m_CurFlag = 0;
+	int m_CurMine = 0;
+	int m_CurTrap = 0;
+	int m_CurDoor = 0;
+
 	CTurret m_aTurrets[MAX_TURRETS];
 	CMine m_aMines[MAX_MINES];
 	CTrapStruct m_aTraps[MAX_TRAPS];
 	CDoor m_aDoors[MAX_DOORS];
+
+
+	CTrap *m_Traps[MAX_TRAPS];
+
 
 	void BuildTurret(int t);
 	void HitTurret(int t, int Owner, int Dmg);
@@ -57,7 +63,6 @@ public:
 	void TickHealingZone(CCharacter* character, CPlayer* player);
 	void TickPoisonZone(CCharacter* character, CPlayer* player);
 	void TickMines();
-	void TickTraps();
 	void TickTurrets();
 	void TickLaserTurrets();
 	void TickGunTurrets();

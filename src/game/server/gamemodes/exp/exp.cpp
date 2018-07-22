@@ -18,12 +18,6 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 	m_pGameType = "EXP";
 	m_GameFlags = GAMEFLAG_TEAMS|GAMEFLAG_FLAGS;
 
-	m_CurFlag = 0;
-	m_CurTurret = 0;
-	m_CurDoor = 0;
-	m_CurMine = 0;
-	m_CurTrap = 0;
-
 	for(int i = 0; i < NUM_BOTTYPES; i++)
 		m_aNumBotSpawns[i] = 0;
 	
@@ -34,6 +28,9 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 	m_Boss.m_Exist = false;
 	for(int i = 0; i < 3; i++)
 		m_Boss.m_apShieldIcons[i] = NULL;
+
+	for (int i = 0; i < MAX_TRAPS; i++)
+		m_Traps[i] = 0;
 
 	// force config
 	g_Config.m_SvMaxClients = 6;
@@ -187,9 +184,7 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 		if(m_CurTrap < MAX_TRAPS)
 		{
 			dbg_msg("exp", "trap added (%d)", m_CurTrap);
-			m_aTraps[m_CurTrap].m_Used = true;
-			m_aTraps[m_CurTrap].m_Pos = vec2(Pos.x, Pos.y-14);
-			BuildTrap(m_CurTrap++);
+			m_Traps[m_CurTrap++] = new CTrap(&GameServer()->m_World, Pos);
 		}
 		else
 			dbg_msg("exp", "can't create trap: too many traps");
