@@ -4,7 +4,7 @@
 #define GAME_SERVER_GAMEMODES_EXP_H
 #include <game/server/gamecontroller.h>
 #include <game/server/entities/flag.h>
-#include <game/server/entities/trap.h>
+#include <game/server/entities/traps/trap.h>
 #include <engine/console.h>
 
 #include "environment.h"
