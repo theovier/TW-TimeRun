@@ -33,7 +33,7 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 		m_Traps[i] = 0;
 
 	for (int i = 0; i < MAX_TURRETS; i++)
-		m_Traps[i] = 0;
+		m_Turrets[i] = 0;
 
 	// force config
 	g_Config.m_SvMaxClients = 6;
