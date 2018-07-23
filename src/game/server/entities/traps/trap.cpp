@@ -23,7 +23,7 @@ void CTrap::Arm() {
 	for (int i = 0; i < amountPlayersCloseBy; i++) {
 		CCharacter* possibleVictim = closestChars[i];
 		if (Triggered(possibleVictim)) {
-			Fire();
+			Fire(possibleVictim);
 			break;
 		}
 	}
@@ -57,7 +57,7 @@ bool CTrap::HasLineOfSight(vec2 victimPos) {
 	return !GameServer()->Collision()->IntersectLine(m_Pos, victimPos, NULL, NULL, false);
 }
 
-void CTrap::Fire() {
+void CTrap::Fire(CCharacter* at) {
 	float lifeSpan = Server()->TickSpeed() * GameServer()->Tuning()->m_GrenadeLifetime;
 	new CProjectile(&GameServer()->m_World, WEAPON_GRENADE, -1, m_Pos, m_Dir, lifeSpan, m_Damage, m_Explosive, 0, SOUND_GRENADE_EXPLODE, WEAPON_GRENADE);
 	GameServer()->CreateSound(m_Pos, SOUND_GRENADE_FIRE);

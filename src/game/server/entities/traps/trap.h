@@ -26,6 +26,6 @@ protected:
 	virtual bool HasLineOfSight(vec2 victimPos);
 	virtual bool VictimInVerticalRange(vec2 victimPos);
 	virtual bool VictimInHorizontalRange(vec2 victimPos);
-	virtual void Fire();
+	virtual void Fire(CCharacter* at);
 };
 #endif
