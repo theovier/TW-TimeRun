@@ -14,12 +14,6 @@ struct CExplorerEntity
 	CExplorerEntity() { m_Used = false; }
 };
 
-struct CMine : CExplorerEntity
-{
-	bool m_Dead;
-	float m_TimerRespawn;
-};
-
 struct CDoor : CExplorerEntity
 {
 	int m_Type;

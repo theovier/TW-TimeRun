@@ -9,6 +9,7 @@
 #include <game/server/entities/turrets/turret.h>
 #include <game/server/entities/turrets/gunturret.h>
 #include <game/server/entities/turrets/laserturret.h>
+#include <game/server/entities/mines/mine.h>
 #include <engine/console.h>
 
 #include "environment.h"
@@ -40,26 +41,22 @@ public:
 	int m_CurTrap = 0;
 	int m_CurDoor = 0;
 
-	CMine m_aMines[MAX_MINES];
 	CDoor m_aDoors[MAX_DOORS];
 
 	CTurret *m_Turrets[MAX_TURRETS];
 	CTrap *m_Traps[MAX_TRAPS];
+	CMine *m_Mines[MAX_MINES];
 
 
-	void BuildMine(int m);
-	void DestroyMine(int m);
 	void BuildDoor(int d);
 
 	void TickEnvironment();
 	void TickPlayerRelatedEnvironment();
-	void TickPlayerUnrelatedEnvironment();
 	void TickTeleport(CPlayer* player);
 	void TickWeaponStrip(CPlayer* player);
 	void TickZones(CPlayer* player);
 	void TickHealingZone(CCharacter* character, CPlayer* player);
 	void TickPoisonZone(CCharacter* character, CPlayer* player);
-	void TickMines();
 	void TickBots();
 	void RemoveFlaggedBots();
 

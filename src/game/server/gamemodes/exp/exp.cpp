@@ -35,6 +35,9 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 	for (int i = 0; i < MAX_TURRETS; i++)
 		m_Turrets[i] = 0;
 
+	for (int i = 0; i < MAX_MINES; i++)
+		m_Mines[i] = 0;
+
 	// force config
 	g_Config.m_SvMaxClients = 6;
 	g_Config.m_SvScorelimit = 1;
@@ -165,9 +168,7 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if(m_CurMine < MAX_MINES)
 		{
-			m_aMines[m_CurMine].m_Used = true;
-			m_aMines[m_CurMine].m_Pos = vec2(Pos.x, Pos.y+14);
-			BuildMine(m_CurMine++);
+			m_Mines[m_CurMine++] = new CMine(&GameServer()->m_World, Pos);
 		}
 		else
 			dbg_msg("exp", "can't create mine: too many mines");
