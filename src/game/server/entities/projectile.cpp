@@ -77,13 +77,13 @@ void CProjectile::Tick()
 	{
 		for(int b = 0; b < MAX_TURRETS; b++)
 		{
-			CTurretStruct *t = &(((CGameControllerEXP*)GameServer()->m_pController)->m_aTurrets[b]);
-			if(!t->m_Used || t->m_Dead)
+			CTurret *t = ((CGameControllerEXP*)GameServer()->m_pController)->m_Turrets[b];
+			if (!t || !t->IsAlive())
 				continue;
 			
 			float CloestLen = distance(PrevPos, CurPos) * 100.0f;
-			vec2 IntersectPos = closest_point_on_line(PrevPos, CurPos, t->m_Pos);
-			float Len = distance(t->m_Pos, IntersectPos);
+			vec2 IntersectPos = closest_point_on_line(PrevPos, CurPos, t->GetPos());
+			float Len = distance(t->GetPos(), IntersectPos);
 			
 			if(Len < 32.0f && Len < CloestLen)
 			{
@@ -91,7 +91,7 @@ void CProjectile::Tick()
 				{
 					int Dmg = m_Damage+m_Force;
 					if(Dmg)
-						((CGameControllerEXP*)GameServer()->m_pController)->HitTurret(b, m_Owner, (int)(m_Damage+m_Force));
+						t->TakeDamage((int)(m_Damage+m_Force), m_Owner);
 				}
 				TurretColl = true;
 			}

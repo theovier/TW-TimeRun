@@ -339,17 +339,16 @@ void CCharacter::FireWeapon()
 			{
 				for(int b = 0; b < MAX_TURRETS; b++)
 				{
-					CTurretStruct *t = &(((CGameControllerEXP*)GameServer()->m_pController)->m_aTurrets[b]);
-					if(!t->m_Used || t->m_Dead)
+					CTurret *t = ((CGameControllerEXP*)GameServer()->m_pController)->m_Turrets[b];
+					if (!t || !t->IsAlive())
 						continue;
 					
-					float Len = distance(t->m_Pos, m_Pos+Direction*ms_PhysSize*0.75f);
-					
+					float Len = distance(t->GetPos(), m_Pos+Direction*ms_PhysSize*0.75f);
 					if(Len < ms_PhysSize*0.5f)
 					{
 						GameServer()->CreateHammerHit(m_Pos);
-						if(g_pData->m_Weapons.m_Hammer.m_pBase->m_Damage)
-							((CGameControllerEXP*)GameServer()->m_pController)->HitTurret(b, m_pPlayer->GetCID(), g_pData->m_Weapons.m_Hammer.m_pBase->m_Damage);
+						if (g_pData->m_Weapons.m_Hammer.m_pBase->m_Damage)
+							t->TakeDamage(g_pData->m_Weapons.m_Hammer.m_pBase->m_Damage, m_pPlayer->GetCID());
 						Hits++;
 					}
 				}

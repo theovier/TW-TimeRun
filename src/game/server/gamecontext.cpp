@@ -185,19 +185,19 @@ void CGameContext::CreateExplosion(vec2 Pos, int Owner, int Weapon, bool NoDamag
 		{
 			for(int b = 0; b < MAX_TURRETS; b++)
 			{
-				CTurretStruct *t = &(((CGameControllerEXP*)m_pController)->m_aTurrets[b]);
-				if(!t->m_Used || t->m_Dead)
+				CTurret *t = ((CGameControllerEXP*)m_pController)->m_Turrets[b];
+				if(!t || !t->IsAlive())
 					continue;
 				
-				vec2 Diff = t->m_Pos - Pos;
+				vec2 Diff = t->GetPos() - Pos;
 				vec2 ForceDir(0, 1);
 				float l = length(Diff);
 				if(l) ForceDir = normalize(Diff);
 				l = 1-clamp((l-InnerRadius)/(Radius-InnerRadius), 0.0f, 1.0f);
 				
 				int Dmg = (int)(6 * l);
-				if(Dmg)
-					((CGameControllerEXP*)m_pController)->HitTurret(b, Owner, Dmg);
+				if (Dmg)
+					t->TakeDamage(Dmg, Owner);
 			}
 		}
 	}

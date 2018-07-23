@@ -6,6 +6,9 @@
 #include <game/server/entities/flag.h>
 #include <game/server/entities/traps/trap.h>
 #include <game/server/entities/traps/upwardstrap.h>
+#include <game/server/entities/turrets/turret.h>
+#include <game/server/entities/turrets/gunturret.h>
+#include <game/server/entities/turrets/laserturret.h>
 #include <engine/console.h>
 
 #include "environment.h"
@@ -37,18 +40,13 @@ public:
 	int m_CurTrap = 0;
 	int m_CurDoor = 0;
 
-	CTurretStruct m_aTurrets[MAX_TURRETS];
 	CMine m_aMines[MAX_MINES];
 	CDoor m_aDoors[MAX_DOORS];
 
-
+	CTurret *m_Turrets[MAX_TURRETS];
 	CTrap *m_Traps[MAX_TRAPS];
 
 
-	void BuildTurret(int t);
-	void HitTurret(int t, int Owner, int Dmg);
-	void DestroyTurret(int t, int Killer);
-	void FreezeTurret(int t);
 	void BuildMine(int m);
 	void DestroyMine(int m);
 	void BuildDoor(int d);
@@ -62,9 +60,6 @@ public:
 	void TickHealingZone(CCharacter* character, CPlayer* player);
 	void TickPoisonZone(CCharacter* character, CPlayer* player);
 	void TickMines();
-	void TickTurrets();
-	void TickLaserTurrets();
-	void TickGunTurrets();
 	void TickBots();
 	void RemoveFlaggedBots();
 

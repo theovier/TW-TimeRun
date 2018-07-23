@@ -20,19 +20,6 @@ struct CExplorerEntity
 	CExplorerEntity() { m_Used = false; }
 };
 
-struct CTurretStruct : CExplorerEntity
-{
-	int m_Type;
-	bool m_Dead;
-	int m_Life;
-	float m_Timer;
-	float m_TimerRespawn;
-	int m_DamageTaken;
-	float m_DamageTakenTick;
-	bool m_Frozen;
-	float m_FrozenTimer;
-};
-
 struct CMine : CExplorerEntity
 {
 	bool m_Dead;

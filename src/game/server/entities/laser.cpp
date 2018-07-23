@@ -4,7 +4,7 @@
 #include <game/server/gamecontext.h>
 #include <game/server/gamecontroller.h>
 #include <game/server/player.h>
-
+#include <game/server/entities/turrets/turret.h>
 #include "laser.h"
 
 CLaser::CLaser(CGameWorld *pGameWorld, vec2 Pos, vec2 Direction, float StartEnergy, int Owner, bool Turret, bool Freezer)
@@ -111,22 +111,20 @@ void CLaser::Tick()
 	{
 		for(int b = 0; b < MAX_TURRETS; b++)
 		{
-			CTurretStruct *t = &(((CGameControllerEXP*)GameServer()->m_pController)->m_aTurrets[b]);
-			if(!t->m_Used || t->m_Dead)
+			CTurret *t = (((CGameControllerEXP*)GameServer()->m_pController)->m_Turrets[b]);
+			if(!t || !t->IsAlive())
 				continue;
 			
 			float ClosestLen = distance(m_From, m_Pos) * 100.0f;
-			vec2 IntersectPos = closest_point_on_line(m_From, m_Pos, t->m_Pos);
-			float Len = distance(t->m_Pos, IntersectPos);
+			vec2 IntersectPos = closest_point_on_line(m_From, m_Pos, t->GetPos());
+			float Len = distance(t->GetPos(), IntersectPos);
 			if(Len < 32.0f && Len < ClosestLen)
 			{
-				if(m_IsFreezer)
-					((CGameControllerEXP*)GameServer()->m_pController)->FreezeTurret(b);
-				else
-					((CGameControllerEXP*)GameServer()->m_pController)->HitTurret(b, m_Owner, 5);
-				m_Pos = t->m_Pos;
+				t->TakeDamage(5, m_Owner);
+				m_Pos = t->GetPos();
 				m_TurretCollision = true;
 			}
+			
 		}
 	}
 	

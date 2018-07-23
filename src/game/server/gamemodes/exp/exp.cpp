@@ -32,6 +32,9 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 	for (int i = 0; i < MAX_TRAPS; i++)
 		m_Traps[i] = 0;
 
+	for (int i = 0; i < MAX_TURRETS; i++)
+		m_Traps[i] = 0;
+
 	// force config
 	g_Config.m_SvMaxClients = 6;
 	g_Config.m_SvScorelimit = 1;
@@ -142,10 +145,7 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if(m_CurTurret < MAX_TURRETS)
 		{
-			m_aTurrets[m_CurTurret].m_Used = true;
-			m_aTurrets[m_CurTurret].m_Pos = Pos;
-			m_aTurrets[m_CurTurret].m_Type = TURRET_TYPE_LASER;
-			BuildTurret(m_CurTurret++);
+			m_Turrets[m_CurTurret++] = new CLaserTurret(&GameServer()->m_World, Pos);
 		}
 		else
 			dbg_msg("exp", "can't create laser turret: too many turrets");
@@ -155,10 +155,7 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	{
 		if(m_CurTurret < MAX_TURRETS)
 		{
-			m_aTurrets[m_CurTurret].m_Used = true;
-			m_aTurrets[m_CurTurret].m_Pos = Pos;
-			m_aTurrets[m_CurTurret].m_Type = TURRET_TYPE_GUN;
-			BuildTurret(m_CurTurret++);
+			m_Turrets[m_CurTurret++] = new CGunTurret(&GameServer()->m_World, Pos);
 		}
 		else
 			dbg_msg("exp", "can't create gun turret: too many turrets");
