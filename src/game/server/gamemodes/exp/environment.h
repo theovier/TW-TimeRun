@@ -1,12 +1,6 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
 
-enum CTurretTypes
-{
-	TURRET_TYPE_LASER=0,
-	TURRET_TYPE_GUN
-};
-
 enum CDoorTypes
 {
 	DOOR_TYPE_VERTICAL=0,
