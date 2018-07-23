@@ -46,10 +46,7 @@ MACRO_TUNING_PARAM(LaserDamage, laser_damage, 5)
 MACRO_TUNING_PARAM(PlayerCollision, player_collision, 1)
 MACRO_TUNING_PARAM(PlayerHooking, player_hooking, 1)
 
-// EXPlorer tunings
-//	All timer/reload/lifespan tunings are in seconds.
-//	If a timer is from a tuning, it will be set to "server_tick()", and it will be checked with "server_tick() > timer + tuning.timer*server_tickspeed()"
-//	Else it will be set to "server_tick() + seconds*server_tickspeed()", and it will be checked with "server_tick() > timer"
+// custom
 
 // misc
 MACRO_TUNING_PARAM(RespawnTimer, respawn_timer, 20.0f)
@@ -58,10 +55,16 @@ MACRO_TUNING_PARAM(PoisonTimer, poison_timer, 1.0f)
 MACRO_TUNING_PARAM(PickupLifetime, pickup_lifetime, 20.0f)
 
 // turrets
-MACRO_TUNING_PARAM(TurretLife,turret_life, 20)
-MACRO_TUNING_PARAM(TurretReload, turret_reload, 0.5f)
+MACRO_TUNING_PARAM(TurretGunLife, turret_gun_life, 10)
+MACRO_TUNING_PARAM(TurretGunDamage, turret_gun_damage, 1)
+MACRO_TUNING_PARAM(TurretGunAttackSpeed, turret_gun_attack_speed, 0.5f)
+MACRO_TUNING_PARAM(TurretGunRespawnTime, turret_gun_respawn_time, 10)
+
+MACRO_TUNING_PARAM(TurretLaserLife, turret_laser_life, 10)
 MACRO_TUNING_PARAM(TurretLaserDamage, turret_laser_damage, 3)
-MACRO_TUNING_PARAM(TurretLaserRadius, turret_laser_radius, 160)
+MACRO_TUNING_PARAM(TurretLaserAttackSpeed, turret_laser_attack_speed, 1.5f)
+MACRO_TUNING_PARAM(TurretLaserReach, turret_laser_reach, 800.0f)
+MACRO_TUNING_PARAM(TurretLaserRespawnTime, turret_laser_respawn_time, 10)
 
 // boss
 MACRO_TUNING_PARAM(BossLife, boss_life, 200)
