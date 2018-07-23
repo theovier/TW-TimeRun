@@ -4,6 +4,8 @@
 
 CLaserTurret::CLaserTurret(CGameWorld *pGameWorld, vec2 Pos) : CTurret(pGameWorld, Pos) {
 	m_Health = 10;
+	m_MaxHealth = 10;
+	m_RespawnTime = 15;
 }
 
 void CLaserTurret::Fire(CCharacter* at) {

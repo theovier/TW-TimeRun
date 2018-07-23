@@ -8,19 +8,20 @@ class CTurret : public CTrap {
 public:
 	CTurret(CGameWorld *pWorld, vec2 Pos);
 
-	bool IsAlive() const { return m_Alive; }
+	bool IsAlive() const { return m_Active; }
+	virtual void Tick() override;
 	virtual void TakeDamage(int Damage, int From);
 
 protected:
 	int m_Health;
-	bool m_Alive;
+	int m_MaxHealth;
 	int m_DamageTakenTick;
 	int m_DamageTaken;
-	int m_RespawnTick;
+	int m_RespawnTick = -1;
+	int m_RespawnTime = 5;
 	
 	
 	virtual void Die(int Killer);
-	virtual void TryRespawn();
 	virtual void Respawn();
 };
 #endif
