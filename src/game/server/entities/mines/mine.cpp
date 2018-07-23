@@ -4,7 +4,8 @@
 #include "mine.h"
 
 CMine::CMine(CGameWorld *pGameWorld, vec2 Pos) : CTrap(pGameWorld, Pos) {
-	m_RespawnTime = 5.0f;
+	m_RespawnTime = GameServer()->Tuning()->m_MineRespawnTime;
+	m_WarnRadius = GameServer()->Tuning()->m_MineWarnRadius;
 }
 
 void CMine::Tick() {
@@ -24,7 +25,7 @@ void CMine::WarnNearbyPlayers() {
 }
 
 void CMine::MakeTickingNoise() {
-	CCharacter *pClosest = GameServer()->m_World.ClosestCharacter(m_Pos, m_RadiusSound, NULL);
+	CCharacter *pClosest = GameServer()->m_World.ClosestCharacter(m_Pos, m_WarnRadius, NULL);
 	if (pClosest) {
 		int Mod = (int)(distance(pClosest->GetPos(), m_Pos) / 8);
 		if (Mod == 0 || Server()->Tick() % Mod == 0) {
@@ -35,7 +36,7 @@ void CMine::MakeTickingNoise() {
 
 void CMine::SetEmotes() {
 	CCharacter *apCloseChars[MAX_CLIENTS];
-	int closestChars = GameServer()->m_World.FindEntities(m_Pos, m_RadiusEmote, (CEntity**)apCloseChars, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);
+	int closestChars = GameServer()->m_World.FindEntities(m_Pos, m_WarnRadius, (CEntity**)apCloseChars, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);
 	for (int i = 0; i < closestChars; i++) {
 		CCharacter* possibleVictim = apCloseChars[i];
 		SetEmote(possibleVictim);
@@ -63,4 +64,5 @@ void CMine::Fire(CCharacter* at) {
 
 void CMine::Respawn() {
 	m_Active = true;
+	GameServer()->CreatePlayerSpawn(m_Pos);
 }

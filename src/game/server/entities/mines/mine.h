@@ -12,9 +12,8 @@ public:
 
 protected:
 	int m_RespawnTick = -1;
-	float m_RespawnTime = 5.0f;
-	float m_RadiusEmote = 300.0f;
-	float m_RadiusSound = 400.0f;
+	float m_RespawnTime;
+	float m_WarnRadius;
 
 	virtual void WarnNearbyPlayers();
 	virtual void MakeTickingNoise();

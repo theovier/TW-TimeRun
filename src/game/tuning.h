@@ -66,6 +66,10 @@ MACRO_TUNING_PARAM(TurretLaserAttackSpeed, turret_laser_attack_speed, 1.5f)
 MACRO_TUNING_PARAM(TurretLaserReach, turret_laser_reach, 800.0f)
 MACRO_TUNING_PARAM(TurretLaserRespawnTime, turret_laser_respawn_time, 10)
 
+// mines
+MACRO_TUNING_PARAM(MineRespawnTime, mine_respawn_time, 15)
+MACRO_TUNING_PARAM(MineWarnRadius, mine_warn_radius, 400.0f)
+
 // boss
 MACRO_TUNING_PARAM(BossLife, boss_life, 200)
 MACRO_TUNING_PARAM(BossDistancelimit, boss_distancelimit, 1000.0f)
