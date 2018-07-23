@@ -77,7 +77,7 @@ void CProjectile::Tick()
 	{
 		for(int b = 0; b < MAX_TURRETS; b++)
 		{
-			CTurret *t = &(((CGameControllerEXP*)GameServer()->m_pController)->m_aTurrets[b]);
+			CTurretStruct *t = &(((CGameControllerEXP*)GameServer()->m_pController)->m_aTurrets[b]);
 			if(!t->m_Used || t->m_Dead)
 				continue;
 			

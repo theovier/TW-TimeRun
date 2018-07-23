@@ -20,7 +20,7 @@ struct CExplorerEntity
 	CExplorerEntity() { m_Used = false; }
 };
 
-struct CTurret : CExplorerEntity
+struct CTurretStruct : CExplorerEntity
 {
 	int m_Type;
 	bool m_Dead;
