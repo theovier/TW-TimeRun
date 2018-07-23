@@ -2,7 +2,7 @@
 #define GAME_SERVER_BOTPLAYER_H
 
 #include "player.h"
-#include "entities/botcharacter.h"
+#include "entities/bots/botcharacter.h"
 
 class CBotPlayer : public CPlayer {
 	MACRO_ALLOC_POOL_ID()

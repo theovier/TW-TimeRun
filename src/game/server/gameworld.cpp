@@ -5,7 +5,7 @@
 #include "entity.h"
 #include "gamecontext.h"
 #include "player.h"
-#include <game/server/entities/botCharacter.h>
+#include <game/server/entities/bots/botCharacter.h>
 
 //////////////////////////////////////////////////
 // game world

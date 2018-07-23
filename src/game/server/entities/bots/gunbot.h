@@ -1,4 +1,4 @@
-#include <game/server/entities/botcharacter.h>
+#include <game/server/entities/bots/botcharacter.h>
 
 class CGunbot : public CBotCharacter {
 	MACRO_ALLOC_POOL_ID()

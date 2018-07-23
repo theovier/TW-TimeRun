@@ -2,7 +2,7 @@
 #define GAME_SERVER_BOTCHARACTER_H
 
 #include <game/server/gamecontext.h>
-#include "character.h"
+#include <game/server/entities/character.h>
 
 class CBotCharacter : public CCharacter {
 
