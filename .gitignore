@@ -25,10 +25,8 @@ versionsrv*
 
 .idea
 .vs
-cmake-build-debug
 Debug
-CMakeLists.txt
-EXP.*
-exp_config.cfg
+TimeRun.*
+sv_config.cfg
 exp_srv.lnk
 
