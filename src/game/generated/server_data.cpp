@@ -259,7 +259,7 @@ static CDataPickupspec x19[] = {
 	/* x19[0] */ {  "health",  15,  0, },
 	/* x19[1] */ {  "armor",  15,  0, },
 	/* x19[2] */ {  "weapon",  15,  0, },
-	/* x19[3] */ {  "ninja",  90,  0, },
+	/* x19[3] */ {  "ninja",  90,  90, },
 };
 static CDataSpriteset x28[] = {
 	/* x28[0] */ {  &x14[2],  8,  8, },
