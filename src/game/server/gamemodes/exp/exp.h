@@ -55,6 +55,9 @@ public:
 	
 	virtual void Tick();
 	virtual bool OnEntity(int Index, vec2 Pos);
+
+	virtual void DoWincheck() override;
+
 	bool OnBotEntity(int BotType, vec2 pos);
 	void BuildDoor(int d);
 	void TickEnvironment();

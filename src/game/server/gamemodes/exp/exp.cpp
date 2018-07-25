@@ -207,6 +207,10 @@ void CGameControllerEXP::Tick() {
 	}
 }
 
+void CGameControllerEXP::DoWincheck() {
+	//TODO
+}
+
 void CGameControllerEXP::StartClient(int ID)
 {
 	GameServer()->m_apPlayers[ID]->KillCharacter(WEAPON_GAME);
