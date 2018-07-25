@@ -104,7 +104,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	
 	case ENTITY_FLAGSTAND_RED: {
 		CFlag * flagRed = new CFlag(&GameServer()->m_World, 0, Pos);
-		flagRed->m_Pos = Pos;
 		m_aFlagsCP[m_CurFlag++] = flagRed;
 		g_Config.m_SvScorelimit++;
 		return true;
@@ -112,7 +111,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 		
 	case ENTITY_FLAGSTAND_BLUE: {
 		CFlag * flagBlue = new CFlag(&GameServer()->m_World, 1, Pos);
-		flagBlue->m_Pos = Pos;
 		m_FlagEnd = flagBlue;
 		return true;
 	}
@@ -209,9 +207,8 @@ int CGameControllerEXP::OnCharacterDeath(class CCharacter *pVictim, class CPlaye
 	if (pKiller && pKiller->GetTeam() != pVictim->GetPlayer()->GetTeam()) {
 		pKiller->m_Score++;
 	}
-
-	CBossBot* boss = (CBossBot*)pVictim;
-	if (boss) {
+	bool isBoss = dynamic_cast<const CBossBot*>(pVictim) != nullptr;
+	if (isBoss) {
 		m_BossDefeated = true;
 	}
 	return 0;
