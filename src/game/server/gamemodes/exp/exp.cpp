@@ -9,6 +9,7 @@
 #include <game/server/entities/character.h>
 #include <game/server/entities/flag.h>
 #include <game/server/entities/pickup.h>
+#include <game/server/entities/bots/bossbot.h>
 
 #include "exp.h"
 
@@ -208,14 +209,22 @@ void CGameControllerEXP::Tick() {
 }
 
 void CGameControllerEXP::DoWincheck() {
-	IGameController::DoWincheck();
-	//TODO
+	if (m_BossDefeated) {
+		GameServer()->SendBroadcast("The Boss has been defeated!", -1);
+		//todo EndRound properly here and display winning message
+	}
 }
 
 int CGameControllerEXP::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) {
 	IGameController::OnCharacterDeath(pVictim, pKiller, Weapon);	
+	
 	if (pKiller && pKiller->GetTeam() != pVictim->GetPlayer()->GetTeam()) {
 		pKiller->m_Score++;
+	}
+
+	CBossBot* boss = (CBossBot*)pVictim;
+	if (boss) {
+		m_BossDefeated = true;
 	}
 	return 0;
 }
