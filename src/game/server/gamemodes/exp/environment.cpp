@@ -35,8 +35,6 @@ void CGameControllerEXP::TickTeleport(CPlayer* player) {
 }
 
 void CGameControllerEXP::TickWeaponStrip(CPlayer* player) {
-	if (player->IsBot()) return;
-
 	CCharacter* character = player->GetCharacter();
 	if (character) {
 		vec2 pos = character->GetPos();

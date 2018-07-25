@@ -12,6 +12,7 @@ public:
 	void Tick() override;
 	void Snap(int SnappingClient) override;
 	void InitBot(struct CBotSpawn *pSpawn);
+	void RemovePermaWeapons() override {};
 	int m_BotType;
 	struct CBotSpawn *m_BotSpawn;
 	bool m_MarkedForDestroy;
