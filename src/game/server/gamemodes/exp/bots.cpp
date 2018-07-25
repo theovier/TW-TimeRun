@@ -79,9 +79,7 @@ void CGameControllerEXP::RemoveBotsMarkedForDestroy() {
 	for (int i = g_Config.m_SvMaxClients; i < MAX_CLIENTS; i++) {
 		CPlayer* Player = GameServer()->m_apPlayers[i];
 		
-		//too expensive to dyncast all the time?
-		bool IsBot = dynamic_cast<const CBotPlayer*>(Player) != nullptr;
-		if (IsBot) {
+		if (Player && Player->IsBot()) {
 			CBotPlayer* botPlayer = (CBotPlayer*)Player;
 			if (botPlayer && botPlayer->m_MarkedForDestroy) {
 				RemoveBot(i, true);
@@ -111,8 +109,6 @@ void CGameControllerEXP::BotSpawn(CBotSpawn *pSpawn)
 	CBotPlayer* botPlayer = (CBotPlayer*) GameServer()->m_apPlayers[BID];
 	botPlayer->InitBot(pSpawn);
 
-
-	//GameServer()->m_apPlayers[BID]->SetTeam(0);
 	pSpawn->m_Spawned = true;
 }
 
