@@ -59,7 +59,7 @@ bool CTrap::HasLineOfSight(vec2 victimPos) {
 
 void CTrap::Fire(CCharacter* at) {
 	float lifeSpan = Server()->TickSpeed() * GameServer()->Tuning()->m_GrenadeLifetime;
-	new CProjectile(&GameServer()->m_World, WEAPON_GRENADE, 0, m_Pos, m_Dir, lifeSpan, m_Damage, m_Explosive, 0, SOUND_GRENADE_EXPLODE, WEAPON_GRENADE);
+	new CProjectile(&GameServer()->m_World, WEAPON_GRENADE, -1, m_Pos, m_Dir, lifeSpan, m_Damage, m_Explosive, 0, SOUND_GRENADE_EXPLODE, WEAPON_GRENADE);
 	GameServer()->CreateSound(m_Pos, SOUND_GRENADE_FIRE);
 	m_FireTick = Server()->Tick() + Server()->TickSpeed() * g_pData->m_Weapons.m_aId[WEAPON_GRENADE].m_Firedelay / 1000.0f;
 }
