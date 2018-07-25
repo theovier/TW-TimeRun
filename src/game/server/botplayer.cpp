@@ -51,7 +51,6 @@ void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 const char* CBotPlayer::GetDisplayName() {
 	if (!m_pCharacter)
 		return "R.I.P.";
-	char numstr[21]; // enough to hold all numbers up to 64-bits
-	return itoa(m_pCharacter->m_Health, numstr, 10);
+	return ((CBotCharacter*)m_pCharacter)->GetDisplayName();
 }
 

@@ -12,6 +12,7 @@ public:
 	CBotCharacter(CGameWorld *pWorld);
 	void Tick() override;
 	void Die(int Killer, int Weapon) override;
+	virtual const char *GetDisplayName();
 
 protected:
 	virtual void Handle();

@@ -80,5 +80,10 @@ void CBotCharacter::StopFire() {
 	m_Input.m_Fire = 0;
 }
 
+const char* CBotCharacter::GetDisplayName() {
+	char numstr[21]; // enough to hold all numbers up to 64-bits
+	return itoa(m_Health, numstr, 10);
+}
+
 
 
