@@ -128,8 +128,8 @@ public:
 	bool HasWeaponPermanently(int Weapon);
 	virtual void RemovePermaWeapons();
 	
-	virtual bool UseItem(int Item, int myClientID);
-	virtual bool UsePotion(int myClientID);
+	virtual bool UseItem(int Item);
+	virtual bool UsePotion();
 
 	// lil hack
 	CFlag *m_pClosestFlag;

@@ -351,32 +351,32 @@ void CPlayer::RemovePermaWeapons() {
 	}
 }
 
-bool CPlayer::UseItem(int Item, int myClientID) {
+bool CPlayer::UseItem(int Item) {
 	if (!m_pCharacter) return false;
 
 	switch (Item) {
 		case POTION:
-			return UsePotion(myClientID);
+			return UsePotion();
 		default:
 			return false;
 	}
 }
 
-bool CPlayer::UsePotion(int myClientID) {
+bool CPlayer::UsePotion() {
 	if (m_GameExp.m_Items.m_Potions > 0) {
 		if (m_pCharacter->m_Health < m_pCharacter->m_MaxHealth) {
 			m_GameExp.m_Items.m_Potions--;
 			m_pCharacter->m_Health = m_pCharacter->m_MaxHealth;
 			char aBuf[256];
 			str_format(aBuf, sizeof(aBuf), "<Potion> used. You have %d <Potions> left.", m_GameExp.m_Items.m_Potions);
-			GameServer()->SendChatTarget(myClientID, aBuf);
+			GameServer()->SendChatTarget(m_ClientID, aBuf);
 			return true;
 		}
 		else
-			GameServer()->SendChatTarget(myClientID, "You don't need to use that now!");
+			GameServer()->SendChatTarget(m_ClientID, "You don't need to use that now!");
 	}
 	else
-		GameServer()->SendChatTarget(myClientID, "You haven't got a <Potion>!");
+		GameServer()->SendChatTarget(m_ClientID, "You haven't got a <Potion>!");
 
 	return false;
 }
