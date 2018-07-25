@@ -771,16 +771,6 @@ void CCharacter::Die(int Killer, int Weapon)
 	GameServer()->m_World.RemoveEntity(this);
 	GameServer()->m_World.m_Core.m_apCharacters[m_pPlayer->GetCID()] = 0;
 	GameServer()->CreateDeath(m_Pos, m_pPlayer->GetCID());
-
-	//we don't want to cast to CPlayer if this fails
-	if (Killer < 0 || Killer > MAX_CLIENTS) {
-		return;
-	}
-
-	CPlayer* KillerPlayer = GameServer()->m_apPlayers[Killer];
-	if (KillerPlayer) {
-		KillerPlayer->m_Score++;
-	}
 }
 
 bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon)

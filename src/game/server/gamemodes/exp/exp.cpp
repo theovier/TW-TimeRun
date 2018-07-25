@@ -211,6 +211,14 @@ void CGameControllerEXP::DoWincheck() {
 	//TODO
 }
 
+int CGameControllerEXP::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) {
+	IGameController::OnCharacterDeath(pVictim, pKiller, Weapon);
+	if (pKiller && pKiller->GetTeam() != pVictim->GetPlayer()->GetTeam()) {
+		pKiller->m_Score++;
+	}
+	return 0;
+}
+
 void CGameControllerEXP::StartClient(int ID)
 {
 	GameServer()->m_apPlayers[ID]->KillCharacter(WEAPON_GAME);
