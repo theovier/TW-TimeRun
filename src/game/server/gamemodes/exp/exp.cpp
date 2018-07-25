@@ -17,7 +17,6 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 : IGameController(pGameServer) {
 	m_pGameType = "EXP";
 	m_GameFlags = GAMEFLAG_TEAMS|GAMEFLAG_FLAGS;
-	m_FlagEnd = NULL;
 
 	// force config
 	g_Config.m_SvMaxClients = 6;
@@ -111,7 +110,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 		
 	case ENTITY_FLAGSTAND_BLUE: {
 		CFlag * flagBlue = new CFlag(&GameServer()->m_World, 1, Pos);
-		m_FlagEnd = flagBlue;
 		return true;
 	}
 		
@@ -138,11 +136,7 @@ void CGameControllerEXP::Tick() {
 
 	for(int fi = 0; fi < m_CurFlag+1; fi++)
 	{
-		CFlag *f = NULL;
-		if(fi == m_CurFlag)
-			f = m_FlagEnd;
-		else
-			f = m_aFlagsCP[fi];
+		CFlag *f = m_aFlagsCP[fi];
 		if(!f) // if there isn't flag end
 			continue;
 		

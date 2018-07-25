@@ -45,14 +45,11 @@ public:
 	CTrap *m_Traps[256];
 	CMine *m_Mines[MAX_MINES];
 	CDoor m_aDoors[MAX_DOORS];
+	CFlag *m_aFlagsCP[MAX_CHECKPOINTS];
 	
 	// bots variables
 	CBotSpawn m_aaBotSpawns[NUM_BOTTYPES][MAX_BOT_SPAWNS];
 	int m_aNumBotSpawns[NUM_BOTTYPES];
-
-	//flags
-	CFlag *m_aFlagsCP[MAX_CHECKPOINTS];
-	CFlag *m_FlagEnd;
 	
 	virtual void Tick();
 	virtual void Snap(int SnappingClient);
