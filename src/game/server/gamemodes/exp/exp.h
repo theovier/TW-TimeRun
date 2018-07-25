@@ -49,7 +49,6 @@ public:
 	// bots variables
 	CBotSpawn m_aaBotSpawns[NUM_BOTTYPES][MAX_BOT_SPAWNS];
 	int m_aNumBotSpawns[NUM_BOTTYPES];
-	CBoss m_Boss;
 
 	//flags
 	CFlag *m_aFlagsCP[MAX_CHECKPOINTS];

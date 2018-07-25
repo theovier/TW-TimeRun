@@ -24,19 +24,4 @@ struct CBotSpawn
 	int m_RespawnTimer;
 };
 
-struct CBoss
-{
-	bool m_Exist;
-	CBotSpawn m_Spawn;
-	int m_ClientID;
-	
-	bool m_ShieldActive;
-	int m_ShieldHealth;
-	float m_ShieldTimer;
-	float m_RegenTimer;
-	
-	float m_FreezerTimer;
-	
-	class CPickup *m_apShieldIcons[3];
-};
 #endif

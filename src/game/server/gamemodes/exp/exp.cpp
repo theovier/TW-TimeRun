@@ -18,7 +18,6 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 	m_pGameType = "EXP";
 	m_GameFlags = GAMEFLAG_TEAMS|GAMEFLAG_FLAGS;
 	m_FlagEnd = NULL;
-	m_Boss.m_Exist = false;
 
 	// force config
 	g_Config.m_SvMaxClients = 6;
@@ -30,9 +29,6 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 	
 	for(int i = 0; i < MAX_CHECKPOINTS; i++)
 		m_aFlagsCP[i] = NULL;
-
-	for(int i = 0; i < 3; i++)
-		m_Boss.m_apShieldIcons[i] = NULL;
 
 	for (int i = 0; i < MAX_TRAPS; i++)
 		m_Traps[i] = 0;
@@ -68,13 +64,7 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 		return OnBotEntity(BOTTYPE_SHOTGUN, Pos);
 
 	case ENTITY_SPAWN_BOT_ENDBOSS:
-		if (m_Boss.m_Exist) {
-			dbg_msg("exp", "there can't be 2 boss entities on one map");
-			return false;
-		}
-		else {
-			return OnBotEntity(BOTTYPE_ENDBOSS, Pos);
-		}
+		return OnBotEntity(BOTTYPE_ENDBOSS, Pos);
 
 	case ENTITY_TURRET_LASER:
 		m_Turrets[m_CurTurret++] = new CLaserTurret(&GameServer()->m_World, Pos);
@@ -168,9 +158,7 @@ void CGameControllerEXP::Tick() {
 			
 			if(fi == m_CurFlag)
 			{
-				// END
-				if(!m_Boss.m_Exist)
-					StopClient(id);
+				
 			}
 			else
 			{
