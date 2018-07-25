@@ -13,6 +13,7 @@ public:
 	void Tick() override;
 	void Die(int Killer, int Weapon) override;
 	virtual const char *GetDisplayName();
+	const virtual char* GetSkinName() { return m_Skin; };
 
 protected:
 	virtual void Handle();
@@ -28,6 +29,7 @@ protected:
 	float m_AggroRadius;
 	float m_AttackTimer;
 
+	const char* m_Skin = "default";
 	const virtual int GetBotType() { return BOTTYPE_HAMMER; };
 
 private:

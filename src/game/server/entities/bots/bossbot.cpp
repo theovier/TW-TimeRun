@@ -4,6 +4,7 @@
 CBossBot::CBossBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	CBotCharacter::CBotCharacter(pWorld);
 	m_MaxHealth = m_Health = GameServer()->Tuning()->m_BossLife;
+	m_Skin = "twinbop";
 }
 
 const char* CBossBot::GetDisplayName() {

@@ -33,18 +33,17 @@ void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 
 		case BOTTYPE_GUN:
 			m_pCharacter = new(m_ClientID) CGunbot(&GameServer()->m_World);
-			str_copy(m_TeeInfos.m_SkinName, "brownbear", sizeof(m_TeeInfos.m_SkinName));
 			break;
 
 		case BOTTYPE_ENDBOSS:
 			m_pCharacter = new(m_ClientID) CBossBot(&GameServer()->m_World);
-			str_copy(m_TeeInfos.m_SkinName, "twinbop", sizeof(m_TeeInfos.m_SkinName));
 			break;
 
 		default:
 			break;
 		};
 
+	str_copy(m_TeeInfos.m_SkinName, ((CBotCharacter*)m_pCharacter)->GetSkinName(), sizeof(m_TeeInfos.m_SkinName));
 	m_pCharacter->Spawn(GameServer()->m_apPlayers[m_ClientID], pSpawn->m_Pos);
 }
 
