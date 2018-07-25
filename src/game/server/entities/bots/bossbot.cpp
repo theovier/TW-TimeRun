@@ -3,7 +3,7 @@
 
 CBossBot::CBossBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	CBotCharacter::CBotCharacter(pWorld);
-	m_MaxHealth = m_Health = 100;
+	m_MaxHealth = m_Health = GameServer()->Tuning()->m_BossLife;
 }
 
 const char* CBossBot::GetDisplayName() {
