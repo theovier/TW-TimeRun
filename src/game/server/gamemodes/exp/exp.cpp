@@ -208,11 +208,12 @@ void CGameControllerEXP::Tick() {
 }
 
 void CGameControllerEXP::DoWincheck() {
+	IGameController::DoWincheck();
 	//TODO
 }
 
 int CGameControllerEXP::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) {
-	IGameController::OnCharacterDeath(pVictim, pKiller, Weapon);
+	IGameController::OnCharacterDeath(pVictim, pKiller, Weapon);	
 	if (pKiller && pKiller->GetTeam() != pVictim->GetPlayer()->GetTeam()) {
 		pKiller->m_Score++;
 	}
@@ -290,3 +291,6 @@ void CGameControllerEXP::Use(int ClientID, const char *aCommand) {
 	}
 }
 
+void CGameControllerEXP::Snap(int SnappingClient) {
+	IGameController::Snap(SnappingClient);
+}

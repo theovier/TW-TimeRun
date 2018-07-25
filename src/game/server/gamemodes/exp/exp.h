@@ -54,6 +54,7 @@ public:
 	CFlag *m_FlagEnd;
 	
 	virtual void Tick();
+	virtual void Snap(int SnappingClient);
 	virtual bool OnEntity(int Index, vec2 Pos);
 
 	virtual void DoWincheck() override;
