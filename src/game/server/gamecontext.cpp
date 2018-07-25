@@ -718,7 +718,7 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 
 			pPlayer->m_LastChat = Server()->Tick();
 
-			if(!((CGameControllerEXP*)m_pController)->CheckCommand(ClientID, Team, pMsg->m_pMessage))
+			if(!CheckCommand(ClientID, Team, pMsg->m_pMessage))
 				SendChat(ClientID, Team, pMsg->m_pMessage);
 		}
 		else if(MsgID == NETMSGTYPE_CL_CALLVOTE)
@@ -1548,6 +1548,91 @@ void CGameContext::ConchainSpecialMotdupdate(IConsole::IResult *pResult, void *p
 			if(pSelf->m_apPlayers[i])
 				pSelf->Server()->SendPackMsg(&Msg, MSGFLAG_VITAL, i);
 	}
+}
+
+bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
+{
+	if (!strncmp(aMsg, "/info", 5) || !strncmp(aMsg, "!info", 5) || !strncmp(aMsg, "/help", 5) || !strncmp(aMsg, "/about", 6))
+	{
+		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		SendChatTarget(ClientID, "EXPlorer v2.0");
+		SendChatTarget(ClientID, "Based on the EXPlorer mod by <xush'> and <Choupom>");
+		SendChatTarget(ClientID, "Aim: explore, fight and eventually capture the blue flag");
+		SendChatTarget(ClientID, "Kill monsters to earn /items");
+		SendChatTarget(ClientID, "Say /cmdlist for the command list");
+		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		return true;
+	}
+	else if (!strncmp(aMsg, "/top5", 5))
+	{
+		Top5(g_Config.m_SvMap, ClientID);
+		return true;
+	}
+	else if (!strncmp(aMsg, "/rank", 5))
+	{
+		Rank(g_Config.m_SvMap, Server()->ClientName(ClientID), ClientID);
+		return true;
+	}
+	else if (!strncmp(aMsg, "/cmdlist", 8) || !strncmp(aMsg, "/cmd", 4))
+	{
+		SendChatTarget(ClientID, " ");
+		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		SendChatTarget(ClientID, "COMMAND LIST");
+		SendChatTarget(ClientID, "");
+		SendChatTarget(ClientID, "'/info': Get info about the modification.");
+		SendChatTarget(ClientID, "'/top5': View the top 5 players.");
+		SendChatTarget(ClientID, "'/items': Get info about the items.");
+		SendChatTarget(ClientID, "'/new': Restart the game.");
+		SendChatTarget(ClientID, "'/bind': Learn how to bind a key to use an item.");
+		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		return true;
+	}
+	else if (!strncmp(aMsg, "/items", 6))
+	{
+		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		SendChatTarget(ClientID, "ITEMS");
+		SendChatTarget(ClientID, " ");
+		SendChatTarget(ClientID, "Check out '/bind' to learn how to bind items.");
+		SendChatTarget(ClientID, "Weapons: You keep it when you have it.");
+		SendChatTarget(ClientID, "Potion: Use it to restore health.");
+		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		return true;
+	}
+	else if (!strncmp(aMsg, "/bind", 5))
+	{
+		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		SendChatTarget(ClientID, "BIND DOCUMENTATION");
+		SendChatTarget(ClientID, "");
+		SendChatTarget(ClientID, "1) Open the Local Console (F1).");
+		SendChatTarget(ClientID, "2) Type \"bind <key> say <item>\"");
+		SendChatTarget(ClientID, "Replace <key> by the key you want to press.");
+		SendChatTarget(ClientID, "Replace <item> by the item: potion.");
+		SendChatTarget(ClientID, "Example: \"bind l say potion\"");
+		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		return true;
+	}
+
+	else if (!strncmp(aMsg, "/new", 4))
+	{
+		((CGameControllerEXP*)m_pController)->RestartClient(ClientID);
+		return true;
+	}
+
+	else if (!strncmp(aMsg, "/potion", 7) || !strncmp(aMsg, "potion", 7))
+	{
+		((CGameControllerEXP*)m_pController)->Use(ClientID, "Potion");
+		return true;
+	}
+
+	else if (!strncmp(aMsg, "/", 1))
+	{
+		char aBuf[256];
+		str_format(aBuf, sizeof(aBuf), "Unknown command: '%s'", aMsg);
+		SendChatTarget(ClientID, aBuf);
+		return true;
+	}
+	else
+		return false;
 }
 
 void CGameContext::OnConsoleInit()

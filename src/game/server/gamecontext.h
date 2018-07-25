@@ -70,7 +70,7 @@ class CGameContext : public IGameServer
 	//EXP
 	static void ConTeleport(IConsole::IResult *pResult, void *pUserData);
 	static void ConTeleflag(IConsole::IResult *pResult, void *pUserData);
-
+	bool CheckCommand(int ClientID, int Team, const char *pMsg);
 	CGameContext(int Resetting);
 	void Construct(int Resetting);
 
