@@ -31,26 +31,30 @@ enum
 class CGameControllerEXP : public IGameController
 {
 public:
+	
 	CGameControllerEXP(class CGameContext *pGameServer);
+	~CGameControllerEXP();
+	
+	int m_CurTurret = 0, m_CurFlag = 0, m_CurMine = 0, m_CurTrap = 0, m_CurDoor = 0;
+	CTurret *m_Turrets[MAX_TURRETS];
+	CTrap *m_Traps[256];
+	CMine *m_Mines[MAX_MINES];
+	CDoor m_aDoors[MAX_DOORS];
+	
+	// bots variables
+	CBotSpawn m_aaBotSpawns[NUM_BOTTYPES][MAX_BOT_SPAWNS];
+	int m_aNumBotSpawns[NUM_BOTTYPES];
+	CBoss m_Boss;
+
+	//flags
+	CFlag *m_aFlagsCP[MAX_CHECKPOINTS];
+	CFlag *m_FlagEnd;
+	
 	virtual void Tick();
 	virtual bool OnEntity(int Index, vec2 Pos);
 	bool OnBotEntity(int BotType, vec2 pos);
 	bool CheckCommand(int ClientID, int Team, const char *pMsg);
-
-	int m_CurTurret = 0;
-	int m_CurFlag = 0;
-	int m_CurMine = 0;
-	int m_CurTrap = 0;
-	int m_CurDoor = 0;
-
-	CTurret *m_Turrets[MAX_TURRETS];
-	CTrap *m_Traps[256];
-	CMine *m_Mines[MAX_MINES];
-
-	CDoor m_aDoors[MAX_DOORS];
-
 	void BuildDoor(int d);
-
 	void TickEnvironment();
 	void TickTeleport(CPlayer* player);
 	void TickWeaponStrip(CPlayer* player);
@@ -59,28 +63,14 @@ public:
 	void TickPoisonZone(CCharacter* character, CPlayer* player);
 	void TickBots();
 	void RemoveFlaggedBots();
-
-	// bots functions
 	int BotCanSpawn();
 	void BotSpawn(CBotSpawn *pSpawn);
 	void RemoveBot(int ID, bool Killed);
-
-	// bots variables
-	CBotSpawn m_aaBotSpawns[NUM_BOTTYPES][MAX_BOT_SPAWNS]; //todo use list instead?
-	int m_aNumBotSpawns[NUM_BOTTYPES];
-	CBoss m_Boss;
-
-	//flags
-	CFlag *m_aFlagsCP[MAX_CHECKPOINTS];
-	CFlag *m_FlagEnd;
-
 	void UpdateGame(int ID);
 	void StartClient(int ID);
 	void StopClient(int ID);
 	void RestartClient(int ID);
-
 	const char *GetWeaponName(int WID);
-
 	bool Use(int ClientID, const char *aCommand);	
 };
 #endif

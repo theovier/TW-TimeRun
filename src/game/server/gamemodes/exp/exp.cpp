@@ -13,19 +13,23 @@
 #include "exp.h"
 
 CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
-: IGameController(pGameServer)
-{
+: IGameController(pGameServer) {
 	m_pGameType = "EXP";
 	m_GameFlags = GAMEFLAG_TEAMS|GAMEFLAG_FLAGS;
+	m_FlagEnd = NULL;
+	m_Boss.m_Exist = false;
+
+	// force config
+	g_Config.m_SvMaxClients = 6;
+	g_Config.m_SvScorelimit = 1;
+	g_Config.m_SvTeamdamage = 0;
 
 	for(int i = 0; i < NUM_BOTTYPES; i++)
 		m_aNumBotSpawns[i] = 0;
 	
 	for(int i = 0; i < MAX_CHECKPOINTS; i++)
 		m_aFlagsCP[i] = NULL;
-	m_FlagEnd = NULL;
-	
-	m_Boss.m_Exist = false;
+
 	for(int i = 0; i < 3; i++)
 		m_Boss.m_apShieldIcons[i] = NULL;
 
@@ -37,17 +41,104 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 
 	for (int i = 0; i < MAX_MINES; i++)
 		m_Mines[i] = 0;
-
-	// force config
-	g_Config.m_SvMaxClients = 6;
-	g_Config.m_SvScorelimit = 1;
-	g_Config.m_SvTeamdamage = 0;
 }
 
-void CGameControllerEXP::Tick()
-{
-	IGameController::Tick();
+CGameControllerEXP::~CGameControllerEXP() {
 
+}
+
+bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
+{
+	if (IGameController::OnEntity(Index, Pos)) {
+		return true;
+	}
+
+	switch (Index) {
+	case ENTITY_SPAWN_BOT_HAMMER:
+		return OnBotEntity(BOTTYPE_HAMMER, Pos);
+
+	case ENTITY_SPAWN_BOT_GUN:
+		return OnBotEntity(BOTTYPE_GUN, Pos);
+
+	case ENTITY_SPAWN_BOT_KAMIKAZE:
+		return OnBotEntity(BOTTYPE_KAMIKAZE, Pos);
+
+	case ENTITY_SPAWN_BOT_SHOTGUN:
+		return OnBotEntity(BOTTYPE_SHOTGUN, Pos);
+
+	case ENTITY_SPAWN_BOT_ENDBOSS:
+		if (m_Boss.m_Exist) {
+			dbg_msg("exp", "there can't be 2 boss entities on one map");
+			return false;
+		}
+		else {
+			return OnBotEntity(BOTTYPE_ENDBOSS, Pos);
+		}
+
+	case ENTITY_TURRET_LASER:
+		m_Turrets[m_CurTurret++] = new CLaserTurret(&GameServer()->m_World, Pos);
+		return true;
+
+	case ENTITY_TURRET_GUN:
+		m_Turrets[m_CurTurret++] = new CGunTurret(&GameServer()->m_World, Pos);
+		return true;
+
+	case ENTITY_MINE:
+		m_Mines[m_CurMine++] = new CMine(&GameServer()->m_World, Pos);
+		return true;
+
+	case ENTITY_TRAP_DOWN:
+		m_Traps[m_CurTrap++] = new CTrap(&GameServer()->m_World, Pos);
+		return true;
+
+	case ENTITY_TRAP_UP:
+		m_Traps[m_CurTrap++] = new CUpwardsTrap(&GameServer()->m_World, Pos);
+		return true;
+
+	case ENTITY_DOOR_VERTICAL:
+		m_aDoors[m_CurDoor].m_Used = true;
+		m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x, Pos.y - 16);
+		m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_VERTICAL;
+		BuildDoor(m_CurDoor++);
+		return true;
+
+	case ENTITY_DOOR_HORIZONTAL:
+		m_aDoors[m_CurDoor].m_Used = true;
+		m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x - 16, Pos.y);
+		m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_HORIZONTAL;
+		BuildDoor(m_CurDoor++);
+		return true;
+
+	case ENTITY_FLAGSTAND_RED:
+		CFlag * f = new CFlag(&GameServer()->m_World, 0, Pos);
+		f->m_Pos = Pos;
+		m_aFlagsCP[m_CurFlag++] = f;
+		g_Config.m_SvScorelimit++;
+		return true;
+
+	case ENTITY_FLAGSTAND_BLUE:
+		CFlag * f = new CFlag(&GameServer()->m_World, 1, Pos);
+		f->m_Pos = Pos;
+		m_FlagEnd = f;
+		return true;
+
+	default:
+		return false;
+	}
+}
+
+bool CGameControllerEXP::OnBotEntity(int BotType, vec2 pos) {
+	dbg_msg("exp", "bot spawn level %d added (%d)", BotType, m_aNumBotSpawns[BotType]);
+	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_Pos = pos;
+	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_BotType = BotType;
+	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_Spawned = false;
+	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_RespawnTimer = Server()->Tick() - (GameServer()->Tuning()->m_RespawnTimer - 2)*Server()->TickSpeed();
+	m_aNumBotSpawns[BotType]++;
+	return true;
+}
+
+void CGameControllerEXP::Tick() {
+	IGameController::Tick();
 	TickBots();
 	TickEnvironment();
 
@@ -105,101 +196,10 @@ void CGameControllerEXP::Tick()
 				{
 					apCloseCharacters[i]->GetPlayer()->m_GameExp.m_LastFlag = fi+1;
 					GameServer()->SendChatTarget(apCloseCharacters[i]->GetPlayer()->GetCID(), "Checkpoint reached.");
-					//apCloseCharacters[i]->GetPlayer()->m_GameExp.m_SaveTimer = Server()->Tick() + 5.0f*Server()->TickSpeed();
 				}
 			}
 		}
 	}
-}
-
-bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
-{
-	if (IGameController::OnEntity(Index, Pos)) {
-		return true;
-	}
-
-	switch (Index) {
-		case ENTITY_SPAWN_BOT_HAMMER:
-			return OnBotEntity(BOTTYPE_HAMMER, Pos);
-		
-		case ENTITY_SPAWN_BOT_GUN:
-			return OnBotEntity(BOTTYPE_GUN, Pos);
-		
-		case ENTITY_SPAWN_BOT_KAMIKAZE:
-			return OnBotEntity(BOTTYPE_KAMIKAZE, Pos);
-		
-		case ENTITY_SPAWN_BOT_SHOTGUN:
-			return OnBotEntity(BOTTYPE_SHOTGUN, Pos);
-		
-		case ENTITY_SPAWN_BOT_ENDBOSS:
-			if (m_Boss.m_Exist) {
-				dbg_msg("exp", "there can't be 2 boss entities on one map");
-				return false;
-			}
-			else {
-				return OnBotEntity(BOTTYPE_ENDBOSS, Pos);
-			}
-		
-		case ENTITY_TURRET_LASER:
-			m_Turrets[m_CurTurret++] = new CLaserTurret(&GameServer()->m_World, Pos);
-			return true;
-
-		case ENTITY_TURRET_GUN:
-			m_Turrets[m_CurTurret++] = new CGunTurret(&GameServer()->m_World, Pos);
-			return true;
-
-		case ENTITY_MINE:
-			m_Mines[m_CurMine++] = new CMine(&GameServer()->m_World, Pos);
-			return true;
-
-		case ENTITY_TRAP_DOWN:
-			m_Traps[m_CurTrap++] = new CTrap(&GameServer()->m_World, Pos);
-			return true;
-
-		case ENTITY_TRAP_UP:
-			m_Traps[m_CurTrap++] = new CUpwardsTrap(&GameServer()->m_World, Pos);
-			return true;
-
-		case ENTITY_DOOR_VERTICAL:
-			m_aDoors[m_CurDoor].m_Used = true;
-			m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x, Pos.y - 16);
-			m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_VERTICAL;
-			BuildDoor(m_CurDoor++);
-			return true;
-
-		case ENTITY_DOOR_HORIZONTAL:
-			m_aDoors[m_CurDoor].m_Used = true;
-			m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x - 16, Pos.y);
-			m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_HORIZONTAL;
-			BuildDoor(m_CurDoor++);
-			return true;
-
-		case ENTITY_FLAGSTAND_RED:
-			CFlag * f = new CFlag(&GameServer()->m_World, 0, Pos);
-			f->m_Pos = Pos;
-			m_aFlagsCP[m_CurFlag++] = f;
-			g_Config.m_SvScorelimit++;
-			return true;
-
-		case ENTITY_FLAGSTAND_BLUE:
-			CFlag * f = new CFlag(&GameServer()->m_World, 1, Pos);
-			f->m_Pos = Pos;
-			m_FlagEnd = f;
-			return true;
-
-		default:
-			return false;
-		}
-}
-
-bool CGameControllerEXP::OnBotEntity(int BotType, vec2 pos) {
-	dbg_msg("exp", "bot spawn level %d added (%d)", BotType, m_aNumBotSpawns[BotType]);
-	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_Pos = pos;
-	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_BotType = BotType;
-	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_Spawned = false;
-	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_RespawnTimer = Server()->Tick() - (GameServer()->Tuning()->m_RespawnTimer - 2)*Server()->TickSpeed();
-	m_aNumBotSpawns[BotType]++;
-	return true;
 }
 
 bool CGameControllerEXP::CheckCommand(int ClientID, int Team, const char *aMsg)
