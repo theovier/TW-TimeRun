@@ -62,7 +62,7 @@ void CGameControllerEXP::TickZones(CPlayer* player) {
 void CGameControllerEXP::TickHealingZone(CCharacter* character, CPlayer* player) {
 	bool isTicking = Server()->Tick() > player->m_GameExp.m_RegenTimer;
 	if (isTicking) {
-		if (character->m_Health < 10) {
+		if (character->m_Health < character->m_MaxHealth) {
 			character->m_Health++;
 		}
 		else if (character->m_Armor < 10) {
