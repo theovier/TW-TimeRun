@@ -13,10 +13,6 @@
 #include "exp.h"
 
 void CGameControllerEXP::TickEnvironment() {
-	TickPlayerRelatedEnvironment();
-}
-
-void CGameControllerEXP::TickPlayerRelatedEnvironment() {
 	for each (CPlayer* player in GameServer()->m_apPlayers) {
 		if (player) {
 			TickTeleport(player);

@@ -51,7 +51,6 @@ public:
 	void BuildDoor(int d);
 
 	void TickEnvironment();
-	void TickPlayerRelatedEnvironment();
 	void TickTeleport(CPlayer* player);
 	void TickWeaponStrip(CPlayer* player);
 	void TickZones(CPlayer* player);
