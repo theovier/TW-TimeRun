@@ -104,7 +104,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	case ENTITY_FLAGSTAND_RED: {
 		CFlag * flagRed = new CFlag(&GameServer()->m_World, 0, Pos);
 		m_aFlagsCP[m_CurFlag++] = flagRed;
-		g_Config.m_SvScorelimit++;
 		return true;
 	}
 		
