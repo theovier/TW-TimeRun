@@ -119,130 +119,77 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	}
 
 	switch (Index) {
-	case ENTITY_SPAWN_BOT_HAMMER:
-		OnBotEntity(BOTTYPE_HAMMER, Pos);
-		break;
-	case ENTITY_SPAWN_BOT_GUN:
-		OnBotEntity(BOTTYPE_GUN, Pos);
-		break;
-	case ENTITY_SPAWN_BOT_KAMIKAZE:
-		OnBotEntity(BOTTYPE_KAMIKAZE, Pos);
-		break;
-	case ENTITY_SPAWN_BOT_SHOTGUN:
-		OnBotEntity(BOTTYPE_SHOTGUN, Pos);
-		break;
-	case ENTITY_SPAWN_BOT_ENDBOSS:
-		if (m_Boss.m_Exist) {
-			dbg_msg("exp", "there can't be 2 boss entities on one map");
-			break;
-		}
-		OnBotEntity(BOTTYPE_ENDBOSS, Pos);
-		dbg_msg("exp", "boss added");
-		break;
-	default:
-		break;
-	}
-
-	
-	if(Index == ENTITY_TURRET_LASER)
-	{
-		if(m_CurTurret < MAX_TURRETS)
-		{
+		case ENTITY_SPAWN_BOT_HAMMER:
+			return OnBotEntity(BOTTYPE_HAMMER, Pos);
+		
+		case ENTITY_SPAWN_BOT_GUN:
+			return OnBotEntity(BOTTYPE_GUN, Pos);
+		
+		case ENTITY_SPAWN_BOT_KAMIKAZE:
+			return OnBotEntity(BOTTYPE_KAMIKAZE, Pos);
+		
+		case ENTITY_SPAWN_BOT_SHOTGUN:
+			return OnBotEntity(BOTTYPE_SHOTGUN, Pos);
+		
+		case ENTITY_SPAWN_BOT_ENDBOSS:
+			if (m_Boss.m_Exist) {
+				dbg_msg("exp", "there can't be 2 boss entities on one map");
+				return false;
+			}
+			else {
+				return OnBotEntity(BOTTYPE_ENDBOSS, Pos);
+			}
+		
+		case ENTITY_TURRET_LASER:
 			m_Turrets[m_CurTurret++] = new CLaserTurret(&GameServer()->m_World, Pos);
-		}
-		else
-			dbg_msg("exp", "can't create laser turret: too many turrets");
-		return true;
-	}
-	else if(Index == ENTITY_TURRET_GUN)
-	{
-		if(m_CurTurret < MAX_TURRETS)
-		{
+			return true;
+
+		case ENTITY_TURRET_GUN:
 			m_Turrets[m_CurTurret++] = new CGunTurret(&GameServer()->m_World, Pos);
-		}
-		else
-			dbg_msg("exp", "can't create gun turret: too many turrets");
-		return true;
-	}
-	else if(Index == ENTITY_MINE)
-	{
-		if(m_CurMine < MAX_MINES)
-		{
+			return true;
+
+		case ENTITY_MINE:
 			m_Mines[m_CurMine++] = new CMine(&GameServer()->m_World, Pos);
-		}
-		else
-			dbg_msg("exp", "can't create mine: too many mines");
-		return true;
-	}
-	else if(Index == ENTITY_TRAP_DOWN)
-	{
-		if(m_CurTrap < MAX_TRAPS)
-		{
+			return true;
+
+		case ENTITY_TRAP_DOWN:
 			m_Traps[m_CurTrap++] = new CTrap(&GameServer()->m_World, Pos);
-		}
-		else
-			dbg_msg("exp", "can't create trap: too many traps");
-		return true;
-	}
-	else if (Index == ENTITY_TRAP_UP)
-	{
-		if (m_CurTrap < MAX_TRAPS)
-		{
+			return true;
+
+		case ENTITY_TRAP_UP:
 			m_Traps[m_CurTrap++] = new CUpwardsTrap(&GameServer()->m_World, Pos);
-		}
-		else
-			dbg_msg("exp", "can't create trap: too many traps");
-		return true;
-	}
-	else if(Index == ENTITY_DOOR_VERTICAL)
-	{
-		if(m_CurDoor < MAX_DOORS)
-		{
+			return true;
+
+		case ENTITY_DOOR_VERTICAL:
 			m_aDoors[m_CurDoor].m_Used = true;
-			m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x, Pos.y-16);
+			m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x, Pos.y - 16);
 			m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_VERTICAL;
 			BuildDoor(m_CurDoor++);
-		}
-		else
-			dbg_msg("exp", "can't create vertical door: too many doors");
-		return true;
-	}
-	else if(Index == ENTITY_DOOR_HORIZONTAL)
-	{
-		if(m_CurDoor < MAX_DOORS)
-		{
+			return true;
+
+		case ENTITY_DOOR_HORIZONTAL:
 			m_aDoors[m_CurDoor].m_Used = true;
-			m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x-16, Pos.y);
+			m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x - 16, Pos.y);
 			m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_HORIZONTAL;
 			BuildDoor(m_CurDoor++);
-		}
-		else
-			dbg_msg("exp", "can't create horizontal door: too many doors");
-		return true;
-	}
-	else if(Index == ENTITY_FLAGSTAND_RED)
-	{
-		if(m_CurFlag < MAX_CHECKPOINTS)
-		{
-			CFlag *f = new CFlag(&GameServer()->m_World, 0, Pos);
+			return true;
+
+		case ENTITY_FLAGSTAND_RED:
+			CFlag * f = new CFlag(&GameServer()->m_World, 0, Pos);
 			f->m_Pos = Pos;
 			m_aFlagsCP[m_CurFlag++] = f;
 			g_Config.m_SvScorelimit++;
-		}
-		else
-			dbg_msg("exp", "can't create checkpoint: too many checkpoints");
-		return true;
-	}
-	else if(Index == ENTITY_FLAGSTAND_BLUE)
-	{
-		dbg_msg("exp", "blue flag added");
-		CFlag *f = new CFlag(&GameServer()->m_World, 1, Pos);
-		f->m_Pos = Pos;
-		m_FlagEnd = f;
-		return true;
-	}
+			return true;
 
-	return false;
+		case ENTITY_FLAGSTAND_BLUE:
+			CFlag * f = new CFlag(&GameServer()->m_World, 1, Pos);
+			f->m_Pos = Pos;
+			m_FlagEnd = f;
+			return true;
+
+		default:
+			return false;
+		}
 }
 
 bool CGameControllerEXP::OnBotEntity(int BotType, vec2 pos) {
@@ -252,8 +199,7 @@ bool CGameControllerEXP::OnBotEntity(int BotType, vec2 pos) {
 	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_Spawned = false;
 	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_RespawnTimer = Server()->Tick() - (GameServer()->Tuning()->m_RespawnTimer - 2)*Server()->TickSpeed();
 	m_aNumBotSpawns[BotType]++;
-
-	return false;
+	return true;
 }
 
 bool CGameControllerEXP::CheckCommand(int ClientID, int Team, const char *aMsg)

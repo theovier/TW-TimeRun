@@ -41,11 +41,11 @@ public:
 	int m_CurTrap = 0;
 	int m_CurDoor = 0;
 
-	CDoor m_aDoors[MAX_DOORS];
+	CDoor m_aDoors[128];
 
-	CTurret *m_Turrets[MAX_TURRETS];
-	CTrap *m_Traps[MAX_TRAPS];
-	CMine *m_Mines[MAX_MINES];
+	CTurret *m_Turrets[256];
+	CTrap *m_Traps[256];
+	CMine *m_Mines[256];
 
 
 	void BuildDoor(int d);

@@ -21,12 +21,4 @@ struct CDoor : CExplorerEntity
 	bool m_CreateLaser;
 };
 
-enum
-{
-	MAX_TURRETS=256,
-	MAX_MINES=256,
-	MAX_TRAPS=256,
-	MAX_DOORS=128
-};
-
 #endif
