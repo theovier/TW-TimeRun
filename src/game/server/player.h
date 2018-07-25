@@ -114,7 +114,7 @@ public:
 		int m_Kills;
 		int m_LastFlag;
 		int m_Weapons;
-		WeaponStat m_PermaWeapons[NUM_WEAPONS+2];
+		WeaponStat m_PermaWeapons[NUM_WEAPONS];
 		int m_RegenTimer; //ticks
 		int m_PoisonTimer; //ticks
 		CItems m_Items;
