@@ -1,6 +1,7 @@
 #include "botplayer.h"
 #include <game/server/entities/bots/hammerbot.h>
 #include <game/server/entities/bots/gunbot.h>
+#include <game/server/entities/bots/bossbot.h>
 
 
 MACRO_ALLOC_POOL_ID_IMPL(CBotPlayer, MAX_CLIENTS)
@@ -20,7 +21,7 @@ void CBotPlayer::Snap(int SnappingClient) {
 }
 
 void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
-	m_Team = 1;
+	m_Team = TEAM_BLUE;
 	GameServer()->CreatePlayerSpawn(pSpawn->m_Pos);
 	m_BotType = pSpawn->m_BotType;
 	m_BotSpawn = pSpawn;
@@ -33,6 +34,11 @@ void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 		case BOTTYPE_GUN:
 			m_pCharacter = new(m_ClientID) CGunbot(&GameServer()->m_World);
 			str_copy(m_TeeInfos.m_SkinName, "brownbear", sizeof(m_TeeInfos.m_SkinName));
+			break;
+
+		case BOTTYPE_ENDBOSS:
+			m_pCharacter = new(m_ClientID) CBossBot(&GameServer()->m_World);
+			str_copy(m_TeeInfos.m_SkinName, "twinbop", sizeof(m_TeeInfos.m_SkinName));
 			break;
 
 		default:
