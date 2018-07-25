@@ -272,33 +272,10 @@ const char *CGameControllerEXP::GetWeaponName(int WID)
 	return "?";
 }
 
-bool CGameControllerEXP::Use(int ClientID, const char *aCommand)
-{
+void CGameControllerEXP::Use(int ClientID, const char *aCommand) {
 	CPlayer *p = GameServer()->m_apPlayers[ClientID];
-	
-	if(str_find_nocase(aCommand, "Potion"))
-	{
-		if(p->GetCharacter())
-		{
-			if(p->m_GameExp.m_Items.m_Potions > 0)
-			{
-				if(p->GetCharacter()->m_Health < 10)
-				{
-					p->m_GameExp.m_Items.m_Potions--;
-					p->GetCharacter()->m_Health = 10;
-					char aBuf[256];
-					str_format(aBuf, sizeof(aBuf), "<Potion> used. You have %d <Potions> left.", p->m_GameExp.m_Items.m_Potions);
-					GameServer()->SendChatTarget(ClientID, aBuf);
-				}
-				else
-					GameServer()->SendChatTarget(ClientID, "You don't need to use that now!");
-			}
-			else
-				GameServer()->SendChatTarget(ClientID, "You haven't got a <Potion>!");
-		}
-		return true;
+	if(str_find_nocase(aCommand, "Potion")) {
+		p->UseItem(POTION, ClientID);
 	}
-	
-	return false;
 }
 

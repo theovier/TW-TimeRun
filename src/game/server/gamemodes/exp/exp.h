@@ -15,6 +15,10 @@
 #include "environment.h"
 #include "bots.h"
 
+enum Items {
+	POTION
+};
+
 struct CItems
 {
 	int m_Potions;
@@ -69,6 +73,6 @@ public:
 	void StopClient(int ID);
 	void RestartClient(int ID);
 	const char *GetWeaponName(int WID);
-	bool Use(int ClientID, const char *aCommand);	
+	void Use(int ClientID, const char *aCommand);	
 };
 #endif
