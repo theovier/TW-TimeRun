@@ -213,7 +213,6 @@ void CGameControllerEXP::StartClient(int ID)
 	CItems Items; Items.m_Potions = 0;
 	GameServer()->m_apPlayers[ID]->LoadNewGame(m_aaSpawnPoints[1][0]);
 	GameServer()->m_apPlayers[ID]->m_GameExp.m_EnterTick = Server()->Tick();
-	//SendItems(ID);
 }
 
 void CGameControllerEXP::StopClient(int ID)
