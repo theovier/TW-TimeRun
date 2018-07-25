@@ -73,69 +73,6 @@ void CGameControllerEXP::TickBots()
 			}
 		}
 	}
-
-	// TICK BOSS
-	if(m_Boss.m_Exist)
-	{
-		if(m_Boss.m_Spawn.m_Spawned)
-		{
-			if(distance(GameServer()->m_apPlayers[m_Boss.m_ClientID]->GetCharacter()->GetPos(), m_Boss.m_Spawn.m_Pos) > GameServer()->Tuning()->m_BossDistancelimit)
-			{
-				GameServer()->m_apPlayers[m_Boss.m_ClientID]->GetCharacter()->Teleport(m_Boss.m_Spawn.m_Pos);
-			}
-			
-			if(m_Boss.m_ShieldActive)
-			{
-				/*if(Server()->Tick() > m_Boss.m_RegenTimer)
-				{
-					if(GameServer()->m_apPlayers[m_Boss.m_ClientID]->GetCharacter()->m_Health < GameServer()->m_apPlayers[m_Boss.m_ClientID]->MaxHealth())
-					{
-						GameServer()->m_apPlayers[m_Boss.m_ClientID]->GetCharacter()->m_Health++;
-						m_Boss.m_RegenTimer = Server()->Tick() + 1.0f*Server()->TickSpeed();
-					}
-				}*/
-				
-				vec2 BossPos = GameServer()->m_apPlayers[m_Boss.m_ClientID]->GetCharacter()->GetPos();
-				vec2 BossVel = GameServer()->m_apPlayers[m_Boss.m_ClientID]->GetCharacter()->m_Core.m_Vel;
-				
-				if(m_Boss.m_apShieldIcons[0])
-					m_Boss.m_apShieldIcons[0]->m_Pos = (BossPos-BossVel*1)*0.1f + m_Boss.m_apShieldIcons[0]->m_Pos*0.9f;
-				if(m_Boss.m_apShieldIcons[1])
-					m_Boss.m_apShieldIcons[1]->m_Pos = (BossPos-BossVel*4)*0.1f + m_Boss.m_apShieldIcons[1]->m_Pos*0.9f;
-				if(m_Boss.m_apShieldIcons[2])
-					m_Boss.m_apShieldIcons[2]->m_Pos = (BossPos-BossVel*7)*0.1f + m_Boss.m_apShieldIcons[2]->m_Pos*0.9f;
-			}
-			else
-			{
-				if(Server()->Tick() > m_Boss.m_ShieldTimer)
-				{
-					m_Boss.m_ShieldActive = true;
-					m_Boss.m_ShieldHealth = 18;
-					for(int s = 0; s < 3; s++)
-					{
-						m_Boss.m_apShieldIcons[s] = new CPickup(&GameServer()->m_World, 1, 0);//, GameServer()->m_apPlayers[m_Boss.m_ClientID]->GetCharacter()->GetPos());
-						m_Boss.m_apShieldIcons[s]->MakeBossShield();
-					}
-				}
-			}
-		}
-		else if(m_Boss.m_Spawn.m_RespawnTimer + GameServer()->Tuning()->m_RespawnTimer*2*Server()->TickSpeed())
-		{
-			for(int p = 0; p < g_Config.m_SvMaxClients; p++)
-			{
-				if(!GameServer()->m_apPlayers[p] || !GameServer()->m_apPlayers[p]->GetCharacter())
-					continue;
-				if(GameServer()->m_apPlayers[p]->m_GameExp.m_BossKiller) // he has already killed the boss
-					continue;
-				
-				if(distance(GameServer()->m_apPlayers[p]->GetCharacter()->GetPos(), m_Boss.m_Spawn.m_Pos) < 700.0f)
-				{
-					BotSpawn(&m_Boss.m_Spawn);
-					break;
-				}
-			}
-		}
-	}
 }
 
 void CGameControllerEXP::RemoveBotsMarkedForDestroy() {
