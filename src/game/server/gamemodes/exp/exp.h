@@ -68,7 +68,7 @@ public:
 	void TickHealingZone(CCharacter* character, CPlayer* player);
 	void TickPoisonZone(CCharacter* character, CPlayer* player);
 	void TickBots();
-	void RemoveFlaggedBots();
+	void RemoveBotsMarkedForDestroy();
 	int BotCanSpawn();
 	void BotSpawn(CBotSpawn *pSpawn);
 	void RemoveBot(int ID, bool Killed);

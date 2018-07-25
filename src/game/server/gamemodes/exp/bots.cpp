@@ -10,7 +10,7 @@
 
 void CGameControllerEXP::TickBots()
 {
-	RemoveFlaggedBots();
+	RemoveBotsMarkedForDestroy();
 
 	// CHECK FOR NOBODY
 	for(int b = g_Config.m_SvMaxClients; b < MAX_CLIENTS; b++)
@@ -138,7 +138,7 @@ void CGameControllerEXP::TickBots()
 	}
 }
 
-void CGameControllerEXP::RemoveFlaggedBots() {
+void CGameControllerEXP::RemoveBotsMarkedForDestroy() {
 	for (int i = g_Config.m_SvMaxClients; i < MAX_CLIENTS; i++) {
 		CPlayer* Player = GameServer()->m_apPlayers[i];
 		
