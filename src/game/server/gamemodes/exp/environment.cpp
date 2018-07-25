@@ -60,23 +60,21 @@ void CGameControllerEXP::TickZones(CPlayer* player) {
 }
 
 void CGameControllerEXP::TickHealingZone(CCharacter* character, CPlayer* player) {
-	bool isTicking = Server()->Tick() > player->m_GameExp.m_RegenTimer;
-	if (isTicking) {
+	if (Server()->Tick() > player->m_GameExp.m_RegenTimer) {
 		if (character->m_Health < character->m_MaxHealth) {
 			character->m_Health++;
 		}
 		else if (character->m_Armor < 10) {
 			character->m_Armor++;
 		}
-		player->m_GameExp.m_RegenTimer = Server()->Tick() + (GameServer()->Tuning()->m_RegenTimer * Server()->TickSpeed());
+		player->m_GameExp.m_RegenTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_RegenTimer;
 	}
 }
 
 void CGameControllerEXP::TickPoisonZone(CCharacter* character, CPlayer* player) {
-	bool isTicking = Server()->Tick() > player->m_GameExp.m_PoisonTimer;
-	if (isTicking) {
+	if (Server()->Tick() > player->m_GameExp.m_PoisonTimer) {
 		character->TakeDamage(vec2(0, 0), 1, -1, WEAPON_WORLD);
-		player->m_GameExp.m_PoisonTimer = Server()->Tick() + (GameServer()->Tuning()->m_PoisonTimer * Server()->TickSpeed());
+		player->m_GameExp.m_PoisonTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_PoisonTimer;
 	}
 }
 
