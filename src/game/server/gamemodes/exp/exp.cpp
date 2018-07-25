@@ -95,32 +95,37 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 		m_Traps[m_CurTrap++] = new CUpwardsTrap(&GameServer()->m_World, Pos);
 		return true;
 
-	case ENTITY_DOOR_VERTICAL:
+	case ENTITY_DOOR_VERTICAL: {
 		m_aDoors[m_CurDoor].m_Used = true;
 		m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x, Pos.y - 16);
 		m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_VERTICAL;
 		BuildDoor(m_CurDoor++);
 		return true;
+	}
 
-	case ENTITY_DOOR_HORIZONTAL:
+	case ENTITY_DOOR_HORIZONTAL: {
 		m_aDoors[m_CurDoor].m_Used = true;
 		m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x - 16, Pos.y);
 		m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_HORIZONTAL;
 		BuildDoor(m_CurDoor++);
 		return true;
-
-	case ENTITY_FLAGSTAND_RED:
-		CFlag * f = new CFlag(&GameServer()->m_World, 0, Pos);
-		f->m_Pos = Pos;
-		m_aFlagsCP[m_CurFlag++] = f;
+	}
+	
+	case ENTITY_FLAGSTAND_RED: {
+		CFlag * flagRed = new CFlag(&GameServer()->m_World, 0, Pos);
+		flagRed->m_Pos = Pos;
+		m_aFlagsCP[m_CurFlag++] = flagRed;
 		g_Config.m_SvScorelimit++;
 		return true;
-
-	case ENTITY_FLAGSTAND_BLUE:
-		CFlag * f = new CFlag(&GameServer()->m_World, 1, Pos);
-		f->m_Pos = Pos;
-		m_FlagEnd = f;
+	}
+		
+	case ENTITY_FLAGSTAND_BLUE: {
+		CFlag * flagBlue = new CFlag(&GameServer()->m_World, 1, Pos);
+		flagBlue->m_Pos = Pos;
+		m_FlagEnd = flagBlue;
 		return true;
+	}
+		
 
 	default:
 		return false;
