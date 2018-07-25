@@ -1,10 +1,10 @@
 #ifndef LOOTHANDLER_H
 #define LOOTHANDLER_H
 
-#include "../../../../base/vmath.h"
-#include "../../gamecontext.h"
-#include "../../entities/pickup.h"
-#include "../../entities/drop.h"
+#include "../../base/vmath.h"
+#include "gamecontext.h"
+#include "entities/pickup.h"
+#include "entities/drop.h"
 #include <map>
 #include <tuple>
 

@@ -1,5 +1,5 @@
 #include <game/server/botplayer.h>
-#include <game/server/gamemodes/exp/loothandler.h>
+#include <game/server/loothandler.h>
 #include "botCharacter.h"
 #include "botcharacter.h"
 

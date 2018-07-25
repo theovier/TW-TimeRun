@@ -1,6 +1,6 @@
 #include "loothandler.h"
-#include "../../player.h"
-#include "../../../generated/protocol.h"
+#include "player.h"
+#include "../generated/protocol.h"
 #include <map>
 #include <utility>
 #include "loothandler.h"
