@@ -409,34 +409,3 @@ bool CGameControllerEXP::Use(int ClientID, const char *aCommand)
 	return false;
 }
 
-void CGameContext::ConTeleport(IConsole::IResult *pResult, void *pUserData) {
-	CGameContext *pSelf = (CGameContext *)pUserData;
-	int CID1 = clamp(pResult->GetInteger(0), 0, (int)MAX_CLIENTS - 1);
-	int CID2 = clamp(pResult->GetInteger(1), 0, (int)MAX_CLIENTS - 1);
-
-	if (pSelf->m_apPlayers[CID1] && pSelf->m_apPlayers[CID2]) {
-		CCharacter* pChr = pSelf->GetPlayerChar(CID1);
-		if (pChr) {
-			pChr->Teleport(pSelf->m_apPlayers[CID2]->m_ViewPos);
-		}
-	}
-}
-
-void CGameContext::ConTeleflag(IConsole::IResult *pResult, void *pUserData) {
-	CGameContext *pSelf = (CGameContext *)pUserData;
-	CGameControllerEXP* expGC = (CGameControllerEXP*) pSelf->m_pController;
-	int CID1 = clamp(pResult->GetInteger(0), 0, (int)MAX_CLIENTS - 1);
-	int FlagID = clamp(pResult->GetInteger(1), 0, (int)MAX_CHECKPOINTS - 1);
-
-	CPlayer* player = pSelf->m_apPlayers[CID1];
-	CFlag* flag = expGC->m_aFlagsCP[FlagID];
-
-	if (player && flag) {
-		CCharacter* pChr = pSelf->GetPlayerChar(CID1);
-		if (pChr) {
-			player->m_GameExp.m_LastFlag = FlagID;
-			pChr->Teleport(flag->m_Pos);
-		}
-	}
-}
-
