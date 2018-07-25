@@ -19,11 +19,13 @@ struct CItems
 {
 	int m_Potions;
 };
-
 enum
 {
-	MAX_CHECKPOINTS=32,
-	FLAG_VISIBLE_RADIUS=850
+	MAX_TURRETS = 256,
+	MAX_TRAPS = 256,
+	MAX_MINES = 256,
+	MAX_DOORS = 128,
+	MAX_CHECKPOINTS = 32,
 };
 
 class CGameControllerEXP : public IGameController
@@ -41,12 +43,11 @@ public:
 	int m_CurTrap = 0;
 	int m_CurDoor = 0;
 
-	CDoor m_aDoors[128];
-
-	CTurret *m_Turrets[256];
+	CTurret *m_Turrets[MAX_TURRETS];
 	CTrap *m_Traps[256];
-	CMine *m_Mines[256];
+	CMine *m_Mines[MAX_MINES];
 
+	CDoor m_aDoors[MAX_DOORS];
 
 	void BuildDoor(int d);
 
