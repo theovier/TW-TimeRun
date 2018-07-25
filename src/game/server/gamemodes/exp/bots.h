@@ -1,9 +1,6 @@
 #ifndef BOTS_H
 #define BOTS_H
 
-
-const int MAX_BOT_SPAWNS = 256;
-
 enum BOTTYPES
 {
 	BOTTYPE_HAMMER,

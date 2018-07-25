@@ -19,14 +19,13 @@ struct CItems
 {
 	int m_Potions;
 };
-enum
-{
-	MAX_TURRETS = 256,
-	MAX_TRAPS = 256,
-	MAX_MINES = 256,
-	MAX_DOORS = 128,
-	MAX_CHECKPOINTS = 32,
-};
+
+const int MAX_BOT_SPAWNS = 256;
+const int MAX_TURRETS = 256;
+const int MAX_MINES = 256;
+const int MAX_TRAPS = 256;
+const int MAX_DOORS = 128;
+const int MAX_CHECKPOINTS = 32;
 
 class CGameControllerEXP : public IGameController
 {
