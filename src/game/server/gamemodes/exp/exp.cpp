@@ -168,7 +168,7 @@ void CGameControllerEXP::Tick() {
 			if(fi == m_CurFlag)
 			{
 				// END
-				if(!m_Boss.m_Exist || GameServer()->m_apPlayers[id]->m_GameExp.m_BossKiller)
+				if(!m_Boss.m_Exist)
 					StopClient(id);
 			}
 			else

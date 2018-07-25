@@ -118,8 +118,6 @@ public:
 		int m_RegenTimer; //ticks
 		int m_PoisonTimer; //ticks
 		CItems m_Items;
-		bool m_BossHitter;
-		bool m_BossKiller;
 	} m_GameExp;
 
 	void LoadNewGame(vec2 SpawnPos);
