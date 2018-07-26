@@ -31,11 +31,10 @@ protected:
 
 	const char* m_Skin = "default";
 	const virtual int GetBotType() { return BOTTYPE_HAMMER; };
+	virtual void OnDeath(CPlayer* Killer);
 
 private:
 	void MarkControllerForDestroy();
-	void OnDeath(CPlayer* Killer);
-
 };
 
 #endif
