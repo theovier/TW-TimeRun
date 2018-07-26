@@ -22,6 +22,11 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 	g_Config.m_SvMaxClients = 6;
 	g_Config.m_SvScorelimit = 1;
 	g_Config.m_SvTeamdamage = 0;
+
+	for (int i = 0; i < NUM_BOTTYPES; i++)
+		m_aNumBotSpawns[i] = 0;
+	for (int i = 0; i < MAX_TURRETS; i++)
+		m_Turrets[i] = 0;
 }
 
 CGameControllerEXP::~CGameControllerEXP() {
@@ -125,6 +130,8 @@ void CGameControllerEXP::DoWincheck() {
 	if (m_BossDefeated) {
 		GameServer()->SendBroadcast("The Boss has been defeated!", -1);
 		//todo EndRound properly here and display winning message
+		//EndRound();
+		//m_GameOverTick = Server()->Tick();
 	}
 }
 
