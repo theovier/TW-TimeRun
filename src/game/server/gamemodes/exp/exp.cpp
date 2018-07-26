@@ -168,41 +168,6 @@ int CGameControllerEXP::OnCharacterDeath(class CCharacter *pVictim, class CPlaye
 	return 0;
 }
 
-void CGameControllerEXP::StartClient(int ID)
-{
-	GameServer()->m_apPlayers[ID]->KillCharacter(WEAPON_GAME);
-	CItems Items; Items.m_Potions = 0;
-	GameServer()->m_apPlayers[ID]->LoadNewGame(m_aaSpawnPoints[1][0]);
-	GameServer()->m_apPlayers[ID]->m_GameExp.m_EnterTick = Server()->Tick();
-}
-
-void CGameControllerEXP::StopClient(int ID)
-{
-	UpdateGame(ID);
-	int min = GameServer()->m_apPlayers[ID]->m_GameExp.m_Time / 60;
-	int sec = GameServer()->m_apPlayers[ID]->m_GameExp.m_Time % 60;
-	char buf[512];
-	str_format(buf, sizeof(buf), "'%s' finished in %d minutes %d seconds with %d kills. Good Game!", Server()->ClientName(ID), min, sec, GameServer()->m_apPlayers[ID]->m_GameExp.m_Kills);
-	GameServer()->SendChatTarget(-1, buf);
-
-	GameServer()->SaveRank(g_Config.m_SvMap, Server()->ClientName(ID), GameServer()->m_apPlayers[ID]->m_GameExp.m_Time, GameServer()->m_apPlayers[ID]->m_GameExp.m_Kills);	
-	RestartClient(ID);
-}
-
-void CGameControllerEXP::RestartClient(int ID)
-{
-	StartClient(ID);
-	GameServer()->SendChatTarget(ID, "Game restarted.");
-}
-
-void CGameControllerEXP::UpdateGame(int ID)
-{
-	int DiffTick = Server()->Tick() - GameServer()->m_apPlayers[ID]->m_GameExp.m_EnterTick;
-	GameServer()->m_apPlayers[ID]->m_GameExp.m_Time += (int) (DiffTick / Server()->TickSpeed());
-	GameServer()->m_apPlayers[ID]->m_GameExp.m_EnterTick = Server()->Tick();
-	GameServer()->m_apPlayers[ID]->m_GameExp.m_Kills = GameServer()->m_apPlayers[ID]->m_Score;
-}
-
 CCheckpoint* CGameControllerEXP::RegisterNewCheckpoint(vec2 Pos) {
 	m_Checkpoints[m_CurFlag++] = new CCheckpoint(&GameServer()->m_World, 0, Pos, m_CurFlag + 1);
 	return m_Checkpoints[m_CurFlag - 1];

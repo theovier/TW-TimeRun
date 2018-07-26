@@ -73,10 +73,6 @@ public:
 	int BotCanSpawn();
 	void BotSpawn(CBotSpawn *pSpawn);
 	void RemoveBot(int ID, bool Killed);
-	void UpdateGame(int ID);
-	void StartClient(int ID);
-	void StopClient(int ID);
-	void RestartClient(int ID);
 	CCheckpoint * RegisterNewCheckpoint(vec2 Pos);
 };
 #endif
