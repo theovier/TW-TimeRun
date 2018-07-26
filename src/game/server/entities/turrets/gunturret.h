@@ -8,6 +8,7 @@ class CGunTurret : public CTurret {
 
 public:
 	CGunTurret(CGameWorld *pWorld, vec2 Pos);
+	virtual void Reset() override;
 
 protected:
 	virtual bool VictimInVerticalRange(vec2 victimPos) { return true; }

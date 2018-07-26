@@ -9,6 +9,11 @@ CGunTurret::CGunTurret(CGameWorld *pGameWorld, vec2 Pos) : CTurret(pGameWorld, P
 	m_RespawnTime = GameServer()->Tuning()->m_TurretGunRespawnTime;
 }
 
+void CGunTurret::Reset() {
+	CTurret::Reset();
+	m_Health = m_MaxHealth;
+}
+
 void CGunTurret::Fire(CCharacter* at) {
 	vec2 Direction = normalize(at->GetPos() - m_Pos);
 	new CProjectile(&GameServer()->m_World, WEAPON_GUN, -1, m_Pos, Direction, (int)(Server()->TickSpeed()*GameServer()->Tuning()->m_GunLifetime), 1, 0, 0, -1, WEAPON_GUN);

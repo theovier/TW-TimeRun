@@ -8,6 +8,7 @@ class CLaserTurret : public CTurret {
 
 public:
 	CLaserTurret(CGameWorld *pWorld, vec2 Pos);
+	virtual void Reset() override;
 
 protected:
 

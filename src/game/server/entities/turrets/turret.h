@@ -10,6 +10,7 @@ public:
 
 	bool IsAlive() const { return m_Active; }
 	virtual void Tick() override;
+	virtual void Reset() override;
 	virtual void TakeDamage(int Damage, int From);
 
 protected:

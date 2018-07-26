@@ -16,6 +16,10 @@ void CTrap::Tick() {
 	}
 }
 
+void CTrap::Reset() {
+	m_Active = true;
+}
+
 void CTrap::Arm() {
 	CCharacter* closestChars[MAX_CLIENTS];
 	int amountPlayersCloseBy = GameServer()->m_World.FindEntities(m_Pos, m_Range, (CEntity**)closestChars, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);

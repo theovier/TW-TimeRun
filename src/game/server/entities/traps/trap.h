@@ -8,7 +8,8 @@ class CTrap : public CEntity {
 public:
 	CTrap(CGameWorld *pWorld, vec2 Pos);
 
-	virtual void Tick();
+	virtual void Tick() override;
+	virtual void Reset() override;
 
 protected:
 	vec2 m_Offset = vec2(0, -14.0f);

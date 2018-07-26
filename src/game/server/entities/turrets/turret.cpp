@@ -16,6 +16,11 @@ void CTurret::Tick() {
 	}
 }
 
+void CTurret::Reset() {
+	CTrap::Reset();
+	m_DamageTaken = 0;
+}
+
 void CTurret::TakeDamage(int Damage, int From) {
 	if (!m_Active) return;
 	m_DamageTaken++;
