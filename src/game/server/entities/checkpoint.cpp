@@ -11,12 +11,13 @@ CCheckpoint::CCheckpoint(CGameWorld *pGameWorld, int Team, vec2 StandPos, int In
 void CCheckpoint::Tick() {
 	if (m_pCarrier) {
 		m_Pos = m_pCarrier->GetPos();
+		m_Dropped = true;
 	}
 	else if (!m_AtStand) {
 		if (IsGrounded()) {
 			//lift the flag a little bit above the ground, so we don't get stuck.
 			m_StandPos = m_Pos + vec2(0, -5);
-			Reset();
+			ReturnToStand();
 		}
 		else {
 			m_Vel.y += GameServer()->m_World.m_Core.m_Tuning.m_Gravity;
@@ -35,6 +36,17 @@ void CCheckpoint::Tick() {
 				Regenerate(character, controller);
 			}
 		}
+	}
+}
+
+void CCheckpoint::ReturnToStand() {
+	CFlag::Reset();
+}
+
+void CCheckpoint::Reset() {
+	CFlag::Reset();
+	if (m_Dropped) {
+		Destroy();
 	}
 }
 
