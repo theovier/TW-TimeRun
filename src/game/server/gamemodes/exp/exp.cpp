@@ -133,6 +133,23 @@ void CGameControllerEXP::DoWincheck() {
 	}
 }
 
+void CGameControllerEXP::PostReset() {	
+	for (int i = 0; i < MAX_CLIENTS; i++) {
+		CPlayer* player = GameServer()->m_apPlayers[i];
+		if (player) {
+			player->Respawn();
+			player->m_Score = 0;
+			player->m_ScoreStartTick = Server()->Tick();
+			player->m_RespawnTick = Server()->Tick() + Server()->TickSpeed() / 2;
+			player->RemovePermaWeapons();
+
+			if (player->IsBot()) {
+				//ToDo: DestroyBots
+			}
+		}
+	}
+}
+
 void CGameControllerEXP::StartRound() {
 	IGameController::StartRound();
 	m_BossDefeated = false;
@@ -184,10 +201,6 @@ void CGameControllerEXP::UpdateGame(int ID)
 	GameServer()->m_apPlayers[ID]->m_GameExp.m_Time += (int) (DiffTick / Server()->TickSpeed());
 	GameServer()->m_apPlayers[ID]->m_GameExp.m_EnterTick = Server()->Tick();
 	GameServer()->m_apPlayers[ID]->m_GameExp.m_Kills = GameServer()->m_apPlayers[ID]->m_Score;
-}
-
-void CGameControllerEXP::Snap(int SnappingClient) {
-	IGameController::Snap(SnappingClient);
 }
 
 CCheckpoint* CGameControllerEXP::RegisterNewCheckpoint(vec2 Pos) {
