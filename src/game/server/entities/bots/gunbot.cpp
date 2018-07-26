@@ -5,7 +5,7 @@ MACRO_ALLOC_POOL_ID_IMPL(CGunbot, MAX_CLIENTS)
 
 CGunbot::CGunbot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	CBotCharacter::CBotCharacter(pWorld);
-	m_MaxHealth = m_Health = 10;
+	m_MaxHealth = m_Health = GameServer()->Tuning()->m_GunBotLife;;
 	m_Skin = "brownbear";
 }
 

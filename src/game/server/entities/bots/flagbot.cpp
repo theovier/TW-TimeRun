@@ -5,7 +5,7 @@
 MACRO_ALLOC_POOL_ID_IMPL(CFlagBot, MAX_CLIENTS)
 
 CFlagBot::CFlagBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
-	m_MaxHealth = m_Health = 10;
+	m_MaxHealth = m_Health = GameServer()->Tuning()->m_FlagBotLife;
 	m_Skin = "cammostripes";
 
 	//todo find a better way

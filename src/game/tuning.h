@@ -70,6 +70,15 @@ MACRO_TUNING_PARAM(TurretLaserRespawnTime, turret_laser_respawn_time, 10)
 MACRO_TUNING_PARAM(MineRespawnTime, mine_respawn_time, 15)
 MACRO_TUNING_PARAM(MineWarnRadius, mine_warn_radius, 400.0f)
 
+//bots
+MACRO_TUNING_PARAM(GunBotRespawnTime, bot_gun_respawn_time, 20.0f)
+MACRO_TUNING_PARAM(GunBotLife, bot_gun_life, 15.0f)
+
+MACRO_TUNING_PARAM(HammerBotRespawnTime, bot_hammer_respawn_time, 10.0f)
+MACRO_TUNING_PARAM(HammerBotLife, bot_hammer_life, 10.0f)
+
+MACRO_TUNING_PARAM(FlagBotLife, bot_flag_life, 25.0f)
+
 // boss
 MACRO_TUNING_PARAM(BossLife, boss_life, 200)
 MACRO_TUNING_PARAM(BossDistancelimit, boss_distancelimit, 1000.0f)
