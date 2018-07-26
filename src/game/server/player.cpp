@@ -308,6 +308,7 @@ void CPlayer::TryRespawn() {
 	m_pCharacter = new(m_ClientID) CCharacter(&GameServer()->m_World);
 	m_pCharacter->Spawn(this, SpawnPos);
 	GameServer()->CreatePlayerSpawn(SpawnPos);
+	LoadPermaWeapons();
 }
 
 const char *CPlayer::GetDisplayName() {
@@ -333,6 +334,15 @@ bool CPlayer::GiveWeaponPermanently(int Weapon, int PermaStartAmmo) {
 
 bool CPlayer::HasWeaponPermanently (int Weapon) {
 	return m_GameExp.m_PermaWeapons[Weapon].m_Got;
+}
+
+void CPlayer::LoadPermaWeapons() {
+	for (int i = 0; i < NUM_WEAPONS; i += 1) {
+		bool gotWeapon = m_GameExp.m_PermaWeapons[i].m_Got;
+		int ammo = m_GameExp.m_PermaWeapons[i].m_StartAmmo;
+		m_pCharacter->m_aWeapons[i].m_Got = gotWeapon;
+		m_pCharacter->m_aWeapons[i].m_Ammo = ammo;
+	}
 }
 
 void CPlayer::RemovePermaWeapons() {

@@ -124,6 +124,7 @@ public:
 	bool GiveWeaponPermanently(int Weapon, int PermaStartAmmo);
 	bool HasWeaponPermanently(int Weapon);
 	virtual void RemovePermaWeapons();
+	virtual void LoadPermaWeapons();
 	virtual void ResetStats();
 
 	virtual bool UseItem(int Item);
