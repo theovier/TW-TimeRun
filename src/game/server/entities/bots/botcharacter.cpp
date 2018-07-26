@@ -23,7 +23,7 @@ void CBotCharacter::Die(int Killer, int Weapon) {
 
 void CBotCharacter::MarkControllerForDestroy() {
 	CBotPlayer* botController = (CBotPlayer*) m_pPlayer;
-	botController->m_MarkedForDestroy = true;
+	botController->OnCharactersDeath();
 }
 
 void CBotCharacter::OnDeath(CPlayer* Killer) {	

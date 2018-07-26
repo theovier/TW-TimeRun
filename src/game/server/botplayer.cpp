@@ -9,6 +9,7 @@ MACRO_ALLOC_POOL_ID_IMPL(CBotPlayer, MAX_CLIENTS)
 
 CBotPlayer::CBotPlayer(CGameContext *pGameServer, int ClientID, int Team) : CPlayer(pGameServer, ClientID, Team) {
 	CPlayer::CPlayer(pGameServer, ClientID, Team);
+	m_Team = TEAM_BLUE;
 }
 
 void CBotPlayer::Tick() {
@@ -21,13 +22,28 @@ void CBotPlayer::Snap(int SnappingClient) {
 	CPlayer::SnapIngame(SnappingClient);
 }
 
-void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
-	m_Team = TEAM_BLUE;
-	GameServer()->CreatePlayerSpawn(pSpawn->m_Pos);
-	m_BotType = pSpawn->m_BotType;
-	m_BotSpawn = pSpawn;
+void CBotPlayer::OnCharactersDeath() {
+	//if the bot char dies, we destroy the player too.
+	/*
+	if (m_pCharacter) {
+		delete m_pCharacter;
+		m_pCharacter = 0;
+	}
+	*/
+	
+	//inform the spawn that it can spawn again
+	m_Spawn->OnSpawnlingsDeath();
 
-	switch (m_BotType) {
+	//how to delete the player from here????
+
+	//GameServer()->m_apPlayers[m_ClientID] = 0;
+	//delete this;
+}
+
+void CBotPlayer::InitBot(CBotSpawn *pSpawn) {
+	GameServer()->CreatePlayerSpawn(pSpawn->GetPos());
+	m_Spawn = pSpawn;
+	switch (m_Spawn->GetBotType()) {
 		case BOTTYPE_HAMMER:
 			m_pCharacter = new(m_ClientID) CHammerbot(&GameServer()->m_World);
 			break;
@@ -49,7 +65,7 @@ void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 		};
 
 	str_copy(m_TeeInfos.m_SkinName, ((CBotCharacter*)m_pCharacter)->GetSkinName(), sizeof(m_TeeInfos.m_SkinName));
-	m_pCharacter->Spawn(GameServer()->m_apPlayers[m_ClientID], pSpawn->m_Pos);
+	m_pCharacter->Spawn(GameServer()->m_apPlayers[m_ClientID], pSpawn->GetPos());
 }
 
 const char* CBotPlayer::GetDisplayName() {

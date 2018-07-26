@@ -10,6 +10,12 @@
 #include <game/server/entities/flag.h>
 #include <game/server/entities/pickup.h>
 #include <game/server/entities/bots/bossbot.h>
+#include <game/server/entities/spawns/hammerbotspawn.h>
+#include <game/server/entities/spawns/gunbotspawn.h>
+#include <game/server/entities/spawns/bossbotspawn.h>
+#include <game/server/entities/spawns/flagbotspawn.h>
+#include <game/server/entities/spawns/botspawn.h>
+
 
 #include "exp.h"
 
@@ -23,8 +29,6 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 	g_Config.m_SvScorelimit = 1;
 	g_Config.m_SvTeamdamage = 0;
 
-	for (int i = 0; i < NUM_BOTTYPES; i++)
-		m_aNumBotSpawns[i] = 0;
 	for (int i = 0; i < MAX_TURRETS; i++)
 		m_Turrets[i] = 0;
 }
@@ -40,24 +44,22 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	}
 
 	switch (Index) {
-
+		
 		case ENTITY_SPAWN_BOT_HAMMER:
-			return OnBotEntity(BOTTYPE_HAMMER, Pos);
-
+			m_BotSpawns[m_CurBotSpawn++] = new CHammerBotSpawn(&GameServer()->m_World, Pos, this);
+			return true;
+		
 		case ENTITY_SPAWN_BOT_GUN:
-			return OnBotEntity(BOTTYPE_GUN, Pos);
-
-		case ENTITY_SPAWN_BOT_KAMIKAZE:
-			return OnBotEntity(BOTTYPE_KAMIKAZE, Pos);
-
-		case ENTITY_SPAWN_BOT_SHOTGUN:
-			return OnBotEntity(BOTTYPE_SHOTGUN, Pos);
+			m_BotSpawns[m_CurBotSpawn++] = new CGunBotSpawn(&GameServer()->m_World, Pos, this);
+			return true;
 
 		case ENTITY_SPAWN_BOT_FLAGBEARER:
-			return OnBotEntity(BOTTYPE_FLAGBEARER, Pos);
+			m_BotSpawns[m_CurBotSpawn++] = new CFlagBotSpawn(&GameServer()->m_World, Pos, this);
+			return true;
 
 		case ENTITY_SPAWN_BOT_ENDBOSS:
-			return OnBotEntity(BOTTYPE_ENDBOSS, Pos);
+			m_BotSpawns[m_CurBotSpawn++] = new CBossBotSpawn(&GameServer()->m_World, Pos, this);
+			return true;
 
 		case ENTITY_TURRET_LASER:
 			m_Turrets[m_CurTurret++] = new CLaserTurret(&GameServer()->m_World, Pos);
@@ -108,16 +110,6 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 		default:
 			return false;
 		}
-}
-
-bool CGameControllerEXP::OnBotEntity(int BotType, vec2 pos) {
-	dbg_msg("exp", "bot spawn level %d added (%d)", BotType, m_aNumBotSpawns[BotType]);
-	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_Pos = pos;
-	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_BotType = BotType;
-	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_Spawned = false;
-	m_aaBotSpawns[BotType][m_aNumBotSpawns[BotType]].m_RespawnTimer = Server()->Tick() - (GameServer()->Tuning()->m_RespawnTimer - 2)*Server()->TickSpeed();
-	m_aNumBotSpawns[BotType]++;
-	return true;
 }
 
 void CGameControllerEXP::Tick() {

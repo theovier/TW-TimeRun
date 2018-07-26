@@ -15,13 +15,4 @@ enum BOTTYPES
 	BOTTYPE_ENDBOSS,
 	NUM_BOTTYPES
 };
-
-struct CBotSpawn
-{
-	vec2 m_Pos;
-	int m_BotType;
-	bool m_Spawned;
-	int m_RespawnTimer;
-};
-
 #endif
