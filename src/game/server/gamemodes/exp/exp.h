@@ -76,7 +76,6 @@ public:
 	void StartClient(int ID);
 	void StopClient(int ID);
 	void RestartClient(int ID);
-	const char *GetWeaponName(int WID);
 	void Use(int ClientID, const char *aCommand);	
 };
 #endif

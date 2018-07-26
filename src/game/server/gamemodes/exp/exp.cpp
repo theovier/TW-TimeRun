@@ -193,27 +193,6 @@ void CGameControllerEXP::UpdateGame(int ID)
 	GameServer()->m_apPlayers[ID]->m_GameExp.m_Kills = GameServer()->m_apPlayers[ID]->m_Score;
 }
 
-const char *CGameControllerEXP::GetWeaponName(int WID)
-{
-	if(WID == WEAPON_HAMMER)
-		return "Hammer";
-	else if(WID == WEAPON_GUN)
-		return "Gun";
-	else if(WID == WEAPON_SHOTGUN)
-		return "Shotgun";
-	else if(WID == WEAPON_GRENADE)
-		return "Grenade";
-	else if(WID == WEAPON_RIFLE)
-		return "Rifle";
-	else if(WID == WEAPON_NINJA)
-		return "Ninja";
-	else if(WID == WEAPON_KAMIKAZE)
-		return "Kamikaze";
-	else if(WID == WEAPON_FREEZER)
-		return "Freezer";
-	return "?";
-}
-
 void CGameControllerEXP::Use(int ClientID, const char *aCommand) {
 	CPlayer *p = GameServer()->m_apPlayers[ClientID];
 	if(str_find_nocase(aCommand, "Potion")) {
