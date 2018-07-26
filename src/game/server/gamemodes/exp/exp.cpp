@@ -60,6 +60,9 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 		case ENTITY_SPAWN_BOT_SHOTGUN:
 			return OnBotEntity(BOTTYPE_SHOTGUN, Pos);
 
+		case ENTITY_SPAWN_BOT_FLAGBEARER:
+			return OnBotEntity(BOTTYPE_FLAGBEARER, Pos);
+
 		case ENTITY_SPAWN_BOT_ENDBOSS:
 			return OnBotEntity(BOTTYPE_ENDBOSS, Pos);
 
@@ -202,4 +205,9 @@ void CGameControllerEXP::Use(int ClientID, const char *aCommand) {
 
 void CGameControllerEXP::Snap(int SnappingClient) {
 	IGameController::Snap(SnappingClient);
+}
+
+CCheckpoint* CGameControllerEXP::RegisterNewCheckpoint(vec2 Pos) {
+	m_Checkpoints[m_CurFlag++] = new CCheckpoint(&GameServer()->m_World, 0, Pos, m_CurFlag + 1);
+	return m_Checkpoints[m_CurFlag - 1];
 }

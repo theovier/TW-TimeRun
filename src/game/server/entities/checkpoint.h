@@ -17,6 +17,7 @@ private:
 	void Regenerate(CCharacter* beneficiary, CPlayer* controller);
 	bool RegenerateHealth(CCharacter* beneficiary);
 	void RegenerateAmmo(CCharacter* beneficiary);
+	bool IsGrounded();
 };
 
 #endif

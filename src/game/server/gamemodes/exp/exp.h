@@ -47,11 +47,11 @@ public:
 	CMine *m_Mines[MAX_MINES];
 	CDoor m_aDoors[MAX_DOORS];
 	CCheckpoint *m_Checkpoints[MAX_CHECKPOINTS];
-	
+
 	// bots variables
 	CBotSpawn m_aaBotSpawns[NUM_BOTTYPES][MAX_BOT_SPAWNS];
 	int m_aNumBotSpawns[NUM_BOTTYPES];
-	
+
 	virtual void Tick();
 	virtual void Snap(int SnappingClient);
 	virtual bool OnEntity(int Index, vec2 Pos);
@@ -76,6 +76,7 @@ public:
 	void StartClient(int ID);
 	void StopClient(int ID);
 	void RestartClient(int ID);
-	void Use(int ClientID, const char *aCommand);	
+	void Use(int ClientID, const char *aCommand);
+	CCheckpoint * RegisterNewCheckpoint(vec2 Pos);
 };
 #endif

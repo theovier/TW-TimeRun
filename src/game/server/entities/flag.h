@@ -7,7 +7,7 @@
 
 class CFlag : public CEntity
 {
-private:
+protected:
 	/* Identity */
 	int m_Team;
 	vec2 m_StandPos;
