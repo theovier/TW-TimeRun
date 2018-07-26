@@ -76,7 +76,6 @@ public:
 	void StartClient(int ID);
 	void StopClient(int ID);
 	void RestartClient(int ID);
-	void Use(int ClientID, const char *aCommand);
 	CCheckpoint * RegisterNewCheckpoint(vec2 Pos);
 };
 #endif

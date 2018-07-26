@@ -1618,7 +1618,7 @@ bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
 
 	else if (!strncmp(aMsg, "/potion", 7) || !strncmp(aMsg, "potion", 7))
 	{
-		((CGameControllerEXP*)m_pController)->Use(ClientID, "Potion");
+		Use(ClientID, "Potion");
 		return true;
 	}
 
@@ -1631,6 +1631,13 @@ bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
 	}
 	else
 		return false;
+}
+
+void CGameContext::Use(int ClientID, const char *aCommand) {
+	CPlayer *p = m_apPlayers[ClientID];
+	if (str_find_nocase(aCommand, "Potion")) {
+		p->UseItem(POTION);
+	}
 }
 
 void CGameContext::OnConsoleInit()

@@ -156,6 +156,8 @@ public:
 	//
 	void SwapTeams();
 
+	void Use(int ClientID, const char *aCommand);
+
 	// engine events
 	virtual void OnInit();
 	virtual void OnConsoleInit();

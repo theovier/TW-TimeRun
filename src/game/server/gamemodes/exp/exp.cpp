@@ -196,13 +196,6 @@ void CGameControllerEXP::UpdateGame(int ID)
 	GameServer()->m_apPlayers[ID]->m_GameExp.m_Kills = GameServer()->m_apPlayers[ID]->m_Score;
 }
 
-void CGameControllerEXP::Use(int ClientID, const char *aCommand) {
-	CPlayer *p = GameServer()->m_apPlayers[ClientID];
-	if(str_find_nocase(aCommand, "Potion")) {
-		p->UseItem(POTION);
-	}
-}
-
 void CGameControllerEXP::Snap(int SnappingClient) {
 	IGameController::Snap(SnappingClient);
 }
