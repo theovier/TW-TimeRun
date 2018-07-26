@@ -36,10 +36,9 @@ void CBotPlayer::InitBot(struct CBotSpawn *pSpawn) {
 			m_pCharacter = new(m_ClientID) CGunbot(&GameServer()->m_World);
 			break;
 
-		case BOTTYPE_FLAGBEARER: {
+		case BOTTYPE_FLAGBEARER:
 			m_pCharacter = new(m_ClientID) CFlagBot(&GameServer()->m_World);
 			break;
-		}
 			
 		case BOTTYPE_ENDBOSS:
 			m_pCharacter = new(m_ClientID) CBossBot(&GameServer()->m_World);
