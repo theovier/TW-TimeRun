@@ -121,8 +121,6 @@ public:
 		CItems m_Items;
 	} m_GameExp;
 
-	void LoadNewGame(vec2 SpawnPos);
-	void LoadGame(vec2 SpawnPos, int Time);
 	bool GiveWeaponPermanently(int Weapon, int PermaStartAmmo);
 	bool HasWeaponPermanently(int Weapon);
 	virtual void RemovePermaWeapons();

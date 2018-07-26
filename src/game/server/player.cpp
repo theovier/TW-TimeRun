@@ -298,21 +298,16 @@ void CPlayer::SetTeam(int Team, bool DoChatMsg)
 	}
 }
 
-void CPlayer::TryRespawn()
-{
-	if(m_GameExp.m_LastFlag == 0)
-	{
-		vec2 SpawnPos = vec2(0.0f, 0.0f);
-		if(!GameServer()->m_pController->CanSpawn(m_Team, &SpawnPos))
-			return;
-
-		m_GameExp.m_EnterTick = Server()->Tick();
-		LoadNewGame(SpawnPos);
-	}
-	else if(m_Team != -1)
-	{
-		LoadGame(((CGameControllerEXP*)GameServer()->m_pController)->m_Checkpoints[m_GameExp.m_LastFlag-1]->GetPos(), m_GameExp.m_Time);
-	}
+void CPlayer::TryRespawn() {
+	vec2 SpawnPos;
+	if (!GameServer()->m_pController->CanSpawn(m_Team, &SpawnPos))
+		return;
+	if (m_GameExp.m_LastFlag > 0)
+		SpawnPos = ((CGameControllerEXP*)GameServer()->m_pController)->m_Checkpoints[m_GameExp.m_LastFlag - 1]->GetPos();
+	m_Spawning = false;
+	m_pCharacter = new(m_ClientID) CCharacter(&GameServer()->m_World);
+	m_pCharacter->Spawn(this, SpawnPos);
+	GameServer()->CreatePlayerSpawn(SpawnPos);
 }
 
 const char *CPlayer::GetDisplayName() {
@@ -325,27 +320,6 @@ void CPlayer::ResetStats() {
 	m_GameExp.m_Kills = 0;
 	m_GameExp.m_LastFlag = 0;
 	m_GameExp.m_Items.m_Potions = 0;
-}
-
-void CPlayer::LoadNewGame(vec2 SpawnPos)
-{
-	LoadGame(SpawnPos, 0);
-}
-
-void CPlayer::LoadGame(vec2 SpawnPos, int Time)
-{
-	m_GameExp.m_Time = Time;
-	m_Spawning = false;
-	GameServer()->CreatePlayerSpawn(SpawnPos);
-	m_pCharacter = new(m_ClientID) CCharacter(&GameServer()->m_World);
-	m_pCharacter->Spawn(GameServer()->m_apPlayers[m_ClientID], SpawnPos);
-	
-	for (int i = 0; i < NUM_WEAPONS+2; i += 1) {
-		bool gotWeapon = m_GameExp.m_PermaWeapons[i].m_Got;
-		int ammo = m_GameExp.m_PermaWeapons[i].m_StartAmmo;
-		m_pCharacter->m_aWeapons[i].m_Got = gotWeapon;
-		m_pCharacter->m_aWeapons[i].m_Ammo = ammo;
-	}
 }
 
 bool CPlayer::GiveWeaponPermanently(int Weapon, int PermaStartAmmo) {
