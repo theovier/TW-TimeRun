@@ -26,6 +26,7 @@ public:
 	int GetCID() const { return m_ClientID; };
 
 	virtual void Tick();
+	virtual void Reset();
 	void PostTick();
 	virtual void Snap(int SnappingClient);
 
@@ -125,7 +126,8 @@ public:
 	bool GiveWeaponPermanently(int Weapon, int PermaStartAmmo);
 	bool HasWeaponPermanently(int Weapon);
 	virtual void RemovePermaWeapons();
-	
+	virtual void ResetStats();
+
 	virtual bool UseItem(int Item);
 	virtual bool UsePotion();
 

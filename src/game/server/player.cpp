@@ -114,6 +114,19 @@ void CPlayer::PostTick()
 		m_ViewPos = GameServer()->m_apPlayers[m_SpectatorID]->m_ViewPos;
 }
 
+void CPlayer::Reset() { 
+	Respawn();
+	m_Score = 0;
+	m_ScoreStartTick = Server()->Tick();
+	m_RespawnTick = Server()->Tick() + Server()->TickSpeed() / 2;
+	m_GameExp.m_EnterTick = Server()->Tick();
+	m_GameExp.m_Time = 0;
+	m_GameExp.m_Kills = 0;
+	m_GameExp.m_LastFlag = 0;
+	m_GameExp.m_Items.m_Potions = 0;
+	RemovePermaWeapons();
+}
+
 void CPlayer::Snap(int SnappingClient)
 {
 #ifdef CONF_DEBUG
@@ -304,6 +317,14 @@ void CPlayer::TryRespawn()
 
 const char *CPlayer::GetDisplayName() {
 	return Server()->ClientName(m_ClientID);
+}
+
+void CPlayer::ResetStats() {
+	m_GameExp.m_EnterTick = Server()->Tick();
+	m_GameExp.m_Time = 0;
+	m_GameExp.m_Kills = 0;
+	m_GameExp.m_LastFlag = 0;
+	m_GameExp.m_Items.m_Potions = 0;
 }
 
 void CPlayer::LoadNewGame(vec2 SpawnPos)

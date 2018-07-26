@@ -137,12 +137,7 @@ void CGameControllerEXP::PostReset() {
 	for (int i = 0; i < MAX_CLIENTS; i++) {
 		CPlayer* player = GameServer()->m_apPlayers[i];
 		if (player) {
-			player->Respawn();
-			player->m_Score = 0;
-			player->m_ScoreStartTick = Server()->Tick();
-			player->m_RespawnTick = Server()->Tick() + Server()->TickSpeed() / 2;
-			player->RemovePermaWeapons();
-
+			player->Reset();
 			if (player->IsBot()) {
 				//ToDo: DestroyBots
 			}
