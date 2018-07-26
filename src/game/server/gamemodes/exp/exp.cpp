@@ -22,18 +22,6 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 	g_Config.m_SvMaxClients = 6;
 	g_Config.m_SvScorelimit = 1;
 	g_Config.m_SvTeamdamage = 0;
-
-	for(int i = 0; i < NUM_BOTTYPES; i++)
-		m_aNumBotSpawns[i] = 0;
-	
-	for (int i = 0; i < MAX_TRAPS; i++)
-		m_Traps[i] = 0;
-
-	for (int i = 0; i < MAX_TURRETS; i++)
-		m_Turrets[i] = 0;
-
-	for (int i = 0; i < MAX_MINES; i++)
-		m_Mines[i] = 0;
 }
 
 CGameControllerEXP::~CGameControllerEXP() {
