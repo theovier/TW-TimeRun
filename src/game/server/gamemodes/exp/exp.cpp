@@ -47,71 +47,71 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	}
 
 	switch (Index) {
-	case ENTITY_SPAWN_BOT_HAMMER:
-		return OnBotEntity(BOTTYPE_HAMMER, Pos);
 
-	case ENTITY_SPAWN_BOT_GUN:
-		return OnBotEntity(BOTTYPE_GUN, Pos);
+		case ENTITY_SPAWN_BOT_HAMMER:
+			return OnBotEntity(BOTTYPE_HAMMER, Pos);
 
-	case ENTITY_SPAWN_BOT_KAMIKAZE:
-		return OnBotEntity(BOTTYPE_KAMIKAZE, Pos);
+		case ENTITY_SPAWN_BOT_GUN:
+			return OnBotEntity(BOTTYPE_GUN, Pos);
 
-	case ENTITY_SPAWN_BOT_SHOTGUN:
-		return OnBotEntity(BOTTYPE_SHOTGUN, Pos);
+		case ENTITY_SPAWN_BOT_KAMIKAZE:
+			return OnBotEntity(BOTTYPE_KAMIKAZE, Pos);
 
-	case ENTITY_SPAWN_BOT_ENDBOSS:
-		return OnBotEntity(BOTTYPE_ENDBOSS, Pos);
+		case ENTITY_SPAWN_BOT_SHOTGUN:
+			return OnBotEntity(BOTTYPE_SHOTGUN, Pos);
 
-	case ENTITY_TURRET_LASER:
-		m_Turrets[m_CurTurret++] = new CLaserTurret(&GameServer()->m_World, Pos);
-		return true;
+		case ENTITY_SPAWN_BOT_ENDBOSS:
+			return OnBotEntity(BOTTYPE_ENDBOSS, Pos);
 
-	case ENTITY_TURRET_GUN:
-		m_Turrets[m_CurTurret++] = new CGunTurret(&GameServer()->m_World, Pos);
-		return true;
+		case ENTITY_TURRET_LASER:
+			m_Turrets[m_CurTurret++] = new CLaserTurret(&GameServer()->m_World, Pos);
+			return true;
 
-	case ENTITY_MINE:
-		m_Mines[m_CurMine++] = new CMine(&GameServer()->m_World, Pos);
-		return true;
+		case ENTITY_TURRET_GUN:
+			m_Turrets[m_CurTurret++] = new CGunTurret(&GameServer()->m_World, Pos);
+			return true;
 
-	case ENTITY_TRAP_DOWN:
-		m_Traps[m_CurTrap++] = new CTrap(&GameServer()->m_World, Pos);
-		return true;
+		case ENTITY_MINE:
+			m_Mines[m_CurMine++] = new CMine(&GameServer()->m_World, Pos);
+			return true;
 
-	case ENTITY_TRAP_UP:
-		m_Traps[m_CurTrap++] = new CUpwardsTrap(&GameServer()->m_World, Pos);
-		return true;
+		case ENTITY_TRAP_DOWN:
+			m_Traps[m_CurTrap++] = new CTrap(&GameServer()->m_World, Pos);
+			return true;
 
-	case ENTITY_DOOR_VERTICAL: {
-		m_aDoors[m_CurDoor].m_Used = true;
-		m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x, Pos.y - 16);
-		m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_VERTICAL;
-		BuildDoor(m_CurDoor++);
-		return true;
-	}
+		case ENTITY_TRAP_UP:
+			m_Traps[m_CurTrap++] = new CUpwardsTrap(&GameServer()->m_World, Pos);
+			return true;
 
-	case ENTITY_DOOR_HORIZONTAL: {
-		m_aDoors[m_CurDoor].m_Used = true;
-		m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x - 16, Pos.y);
-		m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_HORIZONTAL;
-		BuildDoor(m_CurDoor++);
-		return true;
-	}
+		case ENTITY_DOOR_VERTICAL: {
+			m_aDoors[m_CurDoor].m_Used = true;
+			m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x, Pos.y - 16);
+			m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_VERTICAL;
+			BuildDoor(m_CurDoor++);
+			return true;
+		}
+
+		case ENTITY_DOOR_HORIZONTAL: {
+			m_aDoors[m_CurDoor].m_Used = true;
+			m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x - 16, Pos.y);
+			m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_HORIZONTAL;
+			BuildDoor(m_CurDoor++);
+			return true;
+		}
 	
-	case ENTITY_FLAGSTAND_RED: {
-		m_Checkpoints[m_CurFlag++] = new CCheckpoint(&GameServer()->m_World, 0, Pos, m_CurFlag + 1);
-		return true;
-	}
+		case ENTITY_FLAGSTAND_RED: {
+			m_Checkpoints[m_CurFlag++] = new CCheckpoint(&GameServer()->m_World, 0, Pos, m_CurFlag + 1);
+			return true;
+		}
 		
-	case ENTITY_FLAGSTAND_BLUE: {
-		CFlag * flagBlue = new CFlag(&GameServer()->m_World, 1, Pos);
-		return true;
-	}
+		case ENTITY_FLAGSTAND_BLUE: {
+			CFlag * flagBlue = new CFlag(&GameServer()->m_World, 1, Pos);
+			return true;
+		}
 		
-
-	default:
-		return false;
-	}
+		default:
+			return false;
+		}
 }
 
 bool CGameControllerEXP::OnBotEntity(int BotType, vec2 pos) {
