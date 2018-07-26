@@ -127,12 +127,15 @@ void CGameControllerEXP::Tick() {
 }
 
 void CGameControllerEXP::DoWincheck() {
-	if (m_BossDefeated) {
+	if (m_BossDefeated && m_GameOverTick == -1 && !m_Warmup && !GameServer()->m_World.m_ResetRequested) {
 		GameServer()->SendBroadcast("The Boss has been defeated!", -1);
-		//todo EndRound properly here and display winning message
-		//EndRound();
-		//m_GameOverTick = Server()->Tick();
+		EndRound();
 	}
+}
+
+void CGameControllerEXP::StartRound() {
+	IGameController::StartRound();
+	m_BossDefeated = false;
 }
 
 int CGameControllerEXP::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) {

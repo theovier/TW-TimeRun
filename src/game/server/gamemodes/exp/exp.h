@@ -56,6 +56,7 @@ public:
 	virtual void Snap(int SnappingClient);
 	virtual bool OnEntity(int Index, vec2 Pos);
 
+	virtual void StartRound() override;
 	virtual void DoWincheck() override;
 	virtual int OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) override;
 
