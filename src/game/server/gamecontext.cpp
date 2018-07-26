@@ -458,11 +458,9 @@ void CGameContext::SwapTeams()
 static const char *s_apHints[] = {
 		"If you don't progress, try to kill monsters and turrets to obtain stronger items.",
 		"Sometimes it is smart to just rush to a flag/checkpoint.",
-		"The blue finish flag will spawn after you kill the boss (if there is one on the map).",
 		"Teaming up with other tees is definetly a good idea!",
 		"You may restart your game by typing \"/new\".",
 		"Check out \"/cmdlist\"!",
-		"\"/game\": Show your weapons, kills, armor and so on!",
 		"Try out \"/top5\" and \"/rank\"!",
 };
 
