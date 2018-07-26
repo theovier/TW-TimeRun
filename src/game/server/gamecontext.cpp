@@ -1835,7 +1835,7 @@ void CGameContext::ConTeleflag(IConsole::IResult *pResult, void *pUserData) {
 	int FlagID = clamp(pResult->GetInteger(1), 0, (int)MAX_CHECKPOINTS - 1);
 
 	CPlayer* player = pSelf->m_apPlayers[CID1];
-	CFlag* flag = expGC->m_aFlagsCP[FlagID];
+	CFlag* flag = expGC->m_Checkpoints[FlagID];
 
 	if (player && flag) {
 		CCharacter* pChr = pSelf->GetPlayerChar(CID1);

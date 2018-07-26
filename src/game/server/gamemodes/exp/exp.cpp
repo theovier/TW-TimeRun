@@ -26,9 +26,6 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer)
 	for(int i = 0; i < NUM_BOTTYPES; i++)
 		m_aNumBotSpawns[i] = 0;
 	
-	for(int i = 0; i < MAX_CHECKPOINTS; i++)
-		m_aFlagsCP[i] = NULL;
-
 	for (int i = 0; i < MAX_TRAPS; i++)
 		m_Traps[i] = 0;
 
@@ -102,8 +99,7 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos)
 	}
 	
 	case ENTITY_FLAGSTAND_RED: {
-		CFlag * flagRed = new CFlag(&GameServer()->m_World, 0, Pos);
-		m_aFlagsCP[m_CurFlag++] = flagRed;
+		m_Checkpoints[m_CurFlag++] = new CCheckpoint(&GameServer()->m_World, 0, Pos, m_CurFlag + 1);
 		return true;
 	}
 		
@@ -132,59 +128,6 @@ void CGameControllerEXP::Tick() {
 	IGameController::Tick();
 	TickBots();
 	TickEnvironment();
-
-	for(int fi = 0; fi < m_CurFlag+1; fi++)
-	{
-		CFlag *f = m_aFlagsCP[fi];
-		if(!f) // if there isn't flag end
-			continue;
-		
-		CCharacter *apCloseCharacters[MAX_CLIENTS];
-		int Num = GameServer()->m_World.FindEntities(f->GetPos(), CFlag::ms_PhysSize, (CEntity**)apCloseCharacters, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);
-		for(int i = 0; i < Num; i++)
-		{
-			if(!apCloseCharacters[i]->IsAlive() || apCloseCharacters[i]->GetPlayer()->IsBot() || apCloseCharacters[i]->GetPlayer()->GetTeam() == -1)
-				continue;
-			int id = apCloseCharacters[i]->GetPlayer()->GetCID();
-			
-			if(fi == m_CurFlag)
-			{
-				
-			}
-			else
-			{
-				// REGEN
-				if(Server()->Tick() > apCloseCharacters[i]->GetPlayer()->m_GameExp.m_RegenTimer + GameServer()->Tuning()->m_RegenTimer*Server()->TickSpeed())
-				{
-					if(apCloseCharacters[i]->m_Health < 10) //regen health
-					{
-						apCloseCharacters[i]->m_Health++;
-						apCloseCharacters[i]->GetPlayer()->m_GameExp.m_RegenTimer = Server()->Tick();
-					}
-					else // regen ammo
-					{
-						int WID = apCloseCharacters[i]->m_ActiveWeapon;
-						if(apCloseCharacters[i]->m_aWeapons[WID].m_Ammo != -1)
-						{
-							int MaxAmmo = g_pData->m_Weapons.m_aId[WID].m_Maxammo;
-							if(apCloseCharacters[i]->m_aWeapons[WID].m_Ammo < MaxAmmo)
-							{
-								apCloseCharacters[i]->m_aWeapons[WID].m_Ammo++;
-								apCloseCharacters[i]->GetPlayer()->m_GameExp.m_RegenTimer = Server()->Tick();
-							}
-						}
-					}
-				}
-
-				// SAVE
-				if(apCloseCharacters[i]->GetPlayer()->m_GameExp.m_LastFlag != fi+1)
-				{
-					apCloseCharacters[i]->GetPlayer()->m_GameExp.m_LastFlag = fi+1;
-					GameServer()->SendChatTarget(apCloseCharacters[i]->GetPlayer()->GetCID(), "Checkpoint reached.");
-				}
-			}
-		}
-	}
 }
 
 void CGameControllerEXP::DoWincheck() {

@@ -4,6 +4,7 @@
 #define GAME_SERVER_GAMEMODES_EXP_H
 #include <game/server/gamecontroller.h>
 #include <game/server/entities/flag.h>
+#include <game/server/entities/checkpoint.h>
 #include <game/server/entities/traps/trap.h>
 #include <game/server/entities/traps/upwardstrap.h>
 #include <game/server/entities/turrets/turret.h>
@@ -34,10 +35,10 @@ const int MAX_CHECKPOINTS = 32;
 class CGameControllerEXP : public IGameController
 {
 public:
-	
+
 	CGameControllerEXP(class CGameContext *pGameServer);
 	~CGameControllerEXP();
-	
+
 	bool m_BossDefeated = false;
 
 	int m_CurTurret = 0, m_CurFlag = 0, m_CurMine = 0, m_CurTrap = 0, m_CurDoor = 0;
@@ -45,7 +46,7 @@ public:
 	CTrap *m_Traps[MAX_TRAPS];
 	CMine *m_Mines[MAX_MINES];
 	CDoor m_aDoors[MAX_DOORS];
-	CFlag *m_aFlagsCP[MAX_CHECKPOINTS];
+	CCheckpoint *m_Checkpoints[MAX_CHECKPOINTS];
 	
 	// bots variables
 	CBotSpawn m_aaBotSpawns[NUM_BOTTYPES][MAX_BOT_SPAWNS];

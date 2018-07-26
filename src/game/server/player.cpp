@@ -298,8 +298,7 @@ void CPlayer::TryRespawn()
 	}
 	else if(m_Team != -1)
 	{
-		LoadGame(((CGameControllerEXP*)GameServer()->m_pController)->m_aFlagsCP[m_GameExp.m_LastFlag-1]->GetPos(), m_GameExp.m_Time);
-
+		LoadGame(((CGameControllerEXP*)GameServer()->m_pController)->m_Checkpoints[m_GameExp.m_LastFlag-1]->GetPos(), m_GameExp.m_Time);
 	}
 }
 
