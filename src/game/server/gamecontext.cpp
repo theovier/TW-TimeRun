@@ -1609,13 +1609,6 @@ bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
 		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		return true;
 	}
-
-	else if (!strncmp(aMsg, "/new", 4))
-	{
-		((CGameControllerEXP*)m_pController)->RestartClient(ClientID);
-		return true;
-	}
-
 	else if (!strncmp(aMsg, "/potion", 7) || !strncmp(aMsg, "potion", 7))
 	{
 		Use(ClientID, "Potion");
