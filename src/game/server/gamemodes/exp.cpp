@@ -7,7 +7,6 @@
 #include <game/server/gamecontext.h>
 #include <game/server/botplayer.h>
 #include <game/server/player.h>
-#include <game/server/entities/door.h>
 #include <game/server/entities/character.h>
 #include <game/server/entities/flag.h>
 #include <game/server/entities/pickup.h>
@@ -96,26 +95,9 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos) {
 		m_Traps[m_CurTrap++] = new CUpwardsTrap(&GameServer()->m_World, Pos);
 		return true;
 
-	case ENTITY_DOOR_VERTICAL: {
-		m_aDoors[m_CurDoor].m_Used = true;
-		m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x, Pos.y - 16);
-		m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_VERTICAL;
-		BuildDoor(m_CurDoor++);
-		return true;
-	}
-
-	case ENTITY_DOOR_HORIZONTAL: {
-		m_aDoors[m_CurDoor].m_Used = true;
-		m_aDoors[m_CurDoor].m_Pos = vec2(Pos.x - 16, Pos.y);
-		m_aDoors[m_CurDoor].m_Type = DOOR_TYPE_HORIZONTAL;
-		BuildDoor(m_CurDoor++);
-		return true;
-	}
-
-	case ENTITY_FLAGSTAND_RED: {
+	case ENTITY_FLAGSTAND_RED:
 		m_Checkpoints[m_CurFlag++] = new CCheckpoint(&GameServer()->m_World, 0, Pos, m_CurFlag + 1);
 		return true;
-	}
 
 	case ENTITY_FLAGSTAND_BLUE: {
 		CFlag * flagBlue = new CFlag(&GameServer()->m_World, 1, Pos);
@@ -282,13 +264,6 @@ void CGameControllerEXP::TickPoisonZone(CCharacter* character, CPlayer* player) 
 		character->TakeDamage(vec2(0, 0), 1, -1, WEAPON_WORLD);
 		player->m_GameExp.m_PoisonTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_PoisonTimer;
 	}
-}
-
-void CGameControllerEXP::BuildDoor(int d)
-{
-	m_aDoors[d].m_CreateLaser = false;
-	m_aDoors[d].m_Laser = new CLaserDoor(&GameServer()->m_World, m_aDoors[d].m_Pos, m_aDoors[d].m_Type, &m_aDoors[d]);
-	GameServer()->Collision()->SetDoor(m_aDoors[d].m_Laser->m_From.x, m_aDoors[d].m_Laser->m_From.y, m_aDoors[d].m_Laser->GetPos().x, m_aDoors[d].m_Laser->GetPos().y);
 }
 
 

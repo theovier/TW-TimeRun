@@ -25,23 +25,6 @@ struct CItems {
 	int m_Potions;
 };
 
-enum CDoorTypes {
-	DOOR_TYPE_VERTICAL = 0,
-	DOOR_TYPE_HORIZONTAL
-};
-
-struct CExplorerEntity {
-	bool m_Used;
-	vec2 m_Pos;
-	CExplorerEntity() { m_Used = false; }
-};
-
-struct CDoor : CExplorerEntity {
-	int m_Type;
-	class CLaserDoor * m_Laser;
-	bool m_CreateLaser;
-};
-
 const int MAX_BOT_SPAWNS = 256;
 const int MAX_TURRETS = 256;
 const int MAX_MINES = 256;
@@ -60,7 +43,6 @@ public:
 	CTurret *m_Turrets[MAX_TURRETS];
 	CTrap *m_Traps[MAX_TRAPS];
 	CMine *m_Mines[MAX_MINES];
-	CDoor m_aDoors[MAX_DOORS];
 	CCheckpoint *m_Checkpoints[MAX_CHECKPOINTS];
 	CBotSpawn *m_BotSpawns[MAX_BOT_SPAWNS];
 
@@ -82,10 +64,5 @@ public:
 	void TickZones(CPlayer* player);
 	void TickHealingZone(CCharacter* character, CPlayer* player);
 	void TickPoisonZone(CCharacter* character, CPlayer* player);
-	void BuildDoor(int d);
-
-
-	
-	
 };
 #endif

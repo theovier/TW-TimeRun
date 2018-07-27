@@ -9,7 +9,6 @@
 #include <game/server/gamemodes/bots.h>
 
 #include "character.h"
-#include "door.h"
 #include "laser.h"
 #include "projectile.h"
 #include "pickup.h"
@@ -635,15 +634,6 @@ void CCharacter::TickDefered()
 
 	m_Core.Move();
 
-	int DoorCol = DoorCollision();
-	if(DoorCol != -1)
-		m_Core.m_Pos = StartPos;
-	
-	if(DoorCol == DOOR_TYPE_VERTICAL)
-		m_Core.m_Vel.x *= -1.1f;
-	else if(DoorCol == DOOR_TYPE_HORIZONTAL)
-		m_Core.m_Vel.y *= -1.1f;
-
 	bool StuckAfterMove = GameServer()->Collision()->TestBox(m_Core.m_Pos, vec2(28.0f, 28.0f));
 	m_Core.Quantize();
 	bool StuckAfterQuant = GameServer()->Collision()->TestBox(m_Core.m_Pos, vec2(28.0f, 28.0f));
@@ -945,61 +935,6 @@ void CCharacter::Freeze()
 	m_LastWeapon = m_ActiveWeapon;
 	m_ActiveWeapon = WEAPON_NINJA;
 	}
-
-bool CCharacter::DoorOpen()
-{
-	if(m_pPlayer->IsBot())
-		return true;
-
-	for(int i = 0; i < MAX_CLIENTS; i++)
-	{
-		if(!GameServer()->m_apPlayers[i] || !GameServer()->m_apPlayers[i]->IsBot() || !GameServer()->m_apPlayers[i]->GetCharacter())
-			continue;
-		if(distance(m_Pos, GameServer()->m_apPlayers[i]->GetCharacter()->GetPos()) < 400.0f)
-			return false;
-	}
-
-	return true;
-}
-
-int CCharacter::DoorCollision()
-{
-	if(DoorOpen())
-		return -1;
-	
-	for(int d = 0; d < ((CGameControllerEXP*)GameServer()->m_pController)->m_CurDoor; d++)
-	{
-		CDoor *pDoor = &((CGameControllerEXP*)GameServer()->m_pController)->m_aDoors[d];
-		if(!pDoor->m_Laser)
-			continue;
-		
-		vec2 Start = pDoor->m_Laser->m_From;
-		vec2 End = pDoor->m_Laser->GetPos();
-		
-		if(pDoor->m_Type == DOOR_TYPE_VERTICAL)
-		{
-			for(int y = Start.y; y < End.y; y += 3)
-			{
-				if(distance(m_Core.m_Pos, vec2(Start.x, y)) < 30.0f)
-					return DOOR_TYPE_VERTICAL;
-			}
-			if(distance(m_Core.m_Pos, End) < 30.0f)
-				return DOOR_TYPE_VERTICAL;
-		}
-		else if(pDoor->m_Type == DOOR_TYPE_HORIZONTAL)
-		{
-			for(int x = Start.x; x < End.x; x += 3)
-			{
-				if(distance(m_Core.m_Pos, vec2(x, Start.y)) < 30.0f)
-					return DOOR_TYPE_HORIZONTAL;
-			}
-			if(distance(m_Core.m_Pos, End) < 30.0f)
-				return DOOR_TYPE_HORIZONTAL;
-		}
-	}
-	
-	return -1;
-}
 
 void CCharacter::Teleport(vec2 To)
 {
