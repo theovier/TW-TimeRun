@@ -17,8 +17,8 @@ void CBotCharacter::Tick() {
 
 void CBotCharacter::Die(int Killer, int Weapon) {
 	CCharacter::Die(Killer, Weapon);
-	MarkControllerForDestroy();
 	OnDeath(GameServer()->m_apPlayers[Killer]);
+	MarkControllerForDestroy();
 }
 
 void CBotCharacter::MarkControllerForDestroy() {

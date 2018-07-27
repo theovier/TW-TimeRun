@@ -10,6 +10,7 @@
 
 void CGameControllerEXP::TickBots()
 {
+	RemoveBotsMarkedForDestroy();
 
 	// CHECK FOR NOBODY
 	for(int b = g_Config.m_SvMaxClients; b < MAX_CLIENTS; b++)
@@ -37,7 +38,7 @@ void CGameControllerEXP::TickBots()
 			else
 			{
 				if (Server()->Tick() > p->m_NobodyTimer) {
-					//RemoveBot(b, false);
+					RemoveBot(b);
 				}	
 			}
 		}
@@ -51,5 +52,24 @@ int CGameControllerEXP::BotCanSpawn()
 	for(int p = g_Config.m_SvMaxClients; p < MAX_CLIENTS; p++)
 		if(!GameServer()->m_apPlayers[p]) return p;
 	return -1;
+}
+
+
+void CGameControllerEXP::RemoveBotsMarkedForDestroy() {
+	for (int i = g_Config.m_SvMaxClients; i < MAX_CLIENTS; i++) {
+		CPlayer* Player = GameServer()->m_apPlayers[i];
+
+		if (Player && Player->IsBot()) {
+			CBotPlayer* botPlayer = (CBotPlayer*)Player;
+			if (botPlayer && botPlayer->m_MarkedForDestroy) {
+				RemoveBot(i);
+			}
+		}
+	}
+}
+
+
+void CGameControllerEXP::RemoveBot(int ClientID) {
+	GameServer()->OnClientDrop(ClientID, "despawn");
 }
 

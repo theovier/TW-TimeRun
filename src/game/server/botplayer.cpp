@@ -23,21 +23,12 @@ void CBotPlayer::Snap(int SnappingClient) {
 }
 
 void CBotPlayer::OnCharactersDeath() {
-	//if the bot char dies, we destroy the player too.
-	/*
-	if (m_pCharacter) {
-		delete m_pCharacter;
-		m_pCharacter = 0;
-	}
-	*/
-	
-	//inform the spawn that it can spawn again
+	m_MarkedForDestroy = true;
+}
+
+void CBotPlayer::OnDisconnect(const char *pReason) {
 	m_Spawn->OnSpawnlingsDeath();
-
-	//how to delete the player from here????
-
-	//GameServer()->m_apPlayers[m_ClientID] = 0;
-	//delete this;
+	KillCharacter();
 }
 
 void CBotPlayer::InitBot(CBotSpawn *pSpawn) {

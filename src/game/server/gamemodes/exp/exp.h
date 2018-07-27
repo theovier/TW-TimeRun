@@ -61,6 +61,9 @@ public:
 	virtual void PostReset() override;
 	virtual int OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) override;
 
+	void RemoveBotsMarkedForDestroy();
+	void RemoveBot(int ClientID);
+
 
 	void BuildDoor(int d);
 	void TickEnvironment();

@@ -16,6 +16,8 @@ public:
 	void RemovePermaWeapons() override {};
 	CBotSpawn* m_Spawn;
 	void OnCharactersDeath();
+	bool m_MarkedForDestroy;
+	virtual void OnDisconnect(const char *pReason) override;
 
 private:
 	const char *GetDisplayName() override;
