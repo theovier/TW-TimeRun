@@ -149,7 +149,7 @@ void CGameControllerEXP::PostReset() {
 		if (player) {
 			player->Reset();
 			if (player->IsBot()) {
-				//ToDo: DestroyBots
+				((CBotPlayer*)player)->MarkForDestroy();
 			}
 		}
 	}
