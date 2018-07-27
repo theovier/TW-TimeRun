@@ -617,7 +617,8 @@ void CGameContext::OnBotClientConnected(int ClientID) {
 }
 
 void CGameContext::OnClientConnected(int ClientID) {
-	m_apPlayers[ClientID] = new (ClientID) CPlayer(this, ClientID, TEAM_RED);
+	const int StartTeam = g_Config.m_SvTournamentMode ? TEAM_SPECTATORS : TEAM_RED;
+	m_apPlayers[ClientID] = new (ClientID) CPlayer(this, ClientID, StartTeam);
   	SendChatTarget(ClientID, "Welcome to the EXPlorer mod. Say '/info' for more info about EXPlorer.");
 
 #ifdef CONF_DEBUG
