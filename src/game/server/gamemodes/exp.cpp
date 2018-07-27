@@ -129,6 +129,10 @@ int CGameControllerEXP::OnCharacterDeath(class CCharacter *pVictim, class CPlaye
 	if (pKiller && pKiller->GetTeam() != pVictim->GetPlayer()->GetTeam()) {
 		pKiller->m_Score++;
 	}
+	if (Weapon == WEAPON_GAME) {
+		//boss was probably killed by reset. dont end the game.
+		return 0;
+	}
 	bool isBoss = dynamic_cast<const CBossBot*>(pVictim) != nullptr;
 	if (isBoss) {
 		m_BossDefeated = true;
@@ -148,9 +152,6 @@ void CGameControllerEXP::PostReset() {
 		CPlayer* player = GameServer()->m_apPlayers[i];
 		if (player) {
 			player->Reset();
-			if (player->IsBot()) {
-				((CBotPlayer*)player)->MarkForDestroy();
-			}
 		}
 	}
 }

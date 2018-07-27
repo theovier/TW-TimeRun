@@ -18,6 +18,10 @@ void CBotPlayer::Tick() {
 	m_Latency.m_Min = 42;
 }
 
+void CBotPlayer::Reset() {
+	MarkForDestroy();
+}
+
 void CBotPlayer::Snap(int SnappingClient) {
 	CPlayer::SnapIngame(SnappingClient);
 }

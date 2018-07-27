@@ -11,6 +11,7 @@ public:
 	CBotPlayer(CGameContext *pGameServer, int ClientID, int Team);
 
 	void Tick() override;
+	void Reset() override;
 	void Snap(int SnappingClient) override;
 	void InitBot(CBotSpawn *pSpawn);
 	void RemovePermaWeapons() override {};
