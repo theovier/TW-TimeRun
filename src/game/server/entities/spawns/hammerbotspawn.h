@@ -2,7 +2,6 @@
 #define HAMMERBOTSPAWN_H
 
 #include <game/server/gamecontext.h>
-#include <game/server/gamemodes/exp/bots.h>
 
 class CHammerBotSpawn : public CBotSpawn {
 

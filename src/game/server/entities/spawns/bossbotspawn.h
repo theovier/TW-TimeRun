@@ -2,7 +2,6 @@
 #define BOSSBOTSPAWN_H
 
 #include <game/server/gamecontext.h>
-#include <game/server/gamemodes/exp/bots.h>
 
 class CBossBotSpawn : public CBotSpawn {
 

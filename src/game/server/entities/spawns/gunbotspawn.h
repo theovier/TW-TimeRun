@@ -2,7 +2,6 @@
 #define GUNBOTSPAWN_H
 
 #include <game/server/gamecontext.h>
-#include <game/server/gamemodes/exp/bots.h>
 
 class CGunBotSpawn : public CBotSpawn {
 

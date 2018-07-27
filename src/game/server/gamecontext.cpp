@@ -9,7 +9,7 @@
 #include <game/version.h>
 #include <game/collision.h>
 #include <game/gamecore.h>
-#include "gamemodes/exp/exp.h"
+#include "gamemodes/exp.h"
 #include "botplayer.h"
 
 void CQueryTop5::OnData()

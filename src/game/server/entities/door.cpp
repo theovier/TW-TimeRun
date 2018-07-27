@@ -1,6 +1,6 @@
 #include <game/server/gamecontext.h>
 #include <game/server/player.h>
-#include <game/server/gamemodes/exp/exp.h>
+#include <game/server/gamemodes/exp.h>
 
 #include "character.h"
 #include "door.h"
