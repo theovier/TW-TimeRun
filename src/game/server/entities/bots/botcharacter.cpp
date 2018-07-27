@@ -1,6 +1,5 @@
 #include <game/server/botplayer.h>
 #include <game/server/loothandler.h>
-#include "botCharacter.h"
 #include "botcharacter.h"
 
 MACRO_ALLOC_POOL_ID_IMPL(CBotCharacter, MAX_CLIENTS)
