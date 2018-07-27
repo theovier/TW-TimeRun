@@ -69,20 +69,29 @@ public:
 	bool m_Frozen;
 	float m_FrozenTimer;
 
-	bool DoorOpen();
-	int DoorCollision();
+	vec2 m_OldPos;
+	bool m_HittingDoor;
+	vec2 m_PushDirection;
 	void Teleport(vec2 To);
 
 	void SetEmoteType(int EmoteType) { m_EmoteType = EmoteType; };
 	void SetEmoteStop(int EmoteStop) { m_EmoteStop = EmoteStop; };
 
-	// moved to public
 	int m_Health;
 	int m_Armor;
 	int m_MaxHealth;
 
 	int m_EmoteType;
 	int m_EmoteStop;
+
+	// ninja
+	struct
+	{
+		vec2 m_ActivationDir;
+		int m_ActivationTick;
+		int m_CurrentMoveTime;
+		int m_OldVelAmount;
+	} m_Ninja;
 
 	// the player core for the physics
 	CCharacterCore m_Core;
@@ -130,15 +139,6 @@ protected:
 	int m_Jumped;
 
 	int m_DamageTakenTick;
-
-	// ninja
-	struct
-	{
-		vec2 m_ActivationDir;
-		int m_ActivationTick;
-		int m_CurrentMoveTime;
-		int m_OldVelAmount;
-	} m_Ninja;
 
 	// info for dead reckoning
 	int m_ReckoningTick; // tick that we are performing dead reckoning From

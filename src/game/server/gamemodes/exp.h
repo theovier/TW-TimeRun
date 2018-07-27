@@ -29,7 +29,7 @@ const int MAX_BOT_SPAWNS = 256;
 const int MAX_TURRETS = 256;
 const int MAX_MINES = 256;
 const int MAX_TRAPS = 256;
-const int MAX_DOORS = 128;
+const int MAX_DOORS = 32;
 const int MAX_CHECKPOINTS = 32;
 
 class CGameControllerEXP : public IGameController {
@@ -45,6 +45,9 @@ public:
 	CMine *m_Mines[MAX_MINES];
 	CCheckpoint *m_Checkpoints[MAX_CHECKPOINTS];
 	CBotSpawn *m_BotSpawns[MAX_BOT_SPAWNS];
+	struct CDoorTemp {
+		int m_State;
+	} m_Door[MAX_DOORS];
 
 	virtual void Tick() override;
 	virtual void TickBots();
@@ -64,5 +67,12 @@ public:
 	void TickZones(CPlayer* player);
 	void TickHealingZone(CCharacter* character, CPlayer* player);
 	void TickPoisonZone(CCharacter* character, CPlayer* player);
+
+
+	int GetDoorState(int Index);
+	void SetDoorState(int Index, int State);
+	void ResetDoorState();
+
+
 };
 #endif

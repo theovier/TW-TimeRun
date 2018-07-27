@@ -9,6 +9,7 @@
 #include <game/server/player.h>
 #include <game/server/entities/character.h>
 #include <game/server/entities/flag.h>
+#include <game/server/entities/door.h>
 #include <game/server/entities/pickup.h>
 #include <game/server/entities/bots/bossbot.h>
 #include <game/server/entities/spawns/hammerbotspawn.h>
@@ -29,6 +30,8 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer) : IGameC
 
 	for (int i = 0; i < MAX_TURRETS; i++)
 		m_Turrets[i] = 0;
+
+	ResetDoorState();
 }
 
 void CGameControllerEXP::Tick() {
@@ -101,6 +104,12 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos) {
 
 	case ENTITY_FLAGSTAND_BLUE: {
 		CFlag * flagBlue = new CFlag(&GameServer()->m_World, 1, Pos);
+		return true;
+	}
+
+	case ENTITY_DOOR_VERTICAL: {
+		CDoor *pDoor = new CDoor(&GameServer()->m_World, Index);
+		pDoor->m_Pos = Pos;
 		return true;
 	}
 
@@ -265,5 +274,25 @@ void CGameControllerEXP::TickPoisonZone(CCharacter* character, CPlayer* player) 
 		player->m_GameExp.m_PoisonTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_PoisonTimer;
 	}
 }
+
+
+
+
+
+
+int CGameControllerEXP::GetDoorState(int Index) {
+	return m_Door[Index].m_State;
+}
+
+void CGameControllerEXP::SetDoorState(int Index, int State) {
+	m_Door[Index].m_State = State;
+}
+
+void CGameControllerEXP::ResetDoorState() {
+	for (int i = 0; i < MAX_DOORS; i++) {
+		m_Door[i].m_State = DOOR_CLOSED;
+	}
+}
+
 
 
