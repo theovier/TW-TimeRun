@@ -15,13 +15,13 @@ public:
 	void InitBot(CBotSpawn *pSpawn);
 	void RemovePermaWeapons() override {};
 	CBotSpawn* m_Spawn;
-	void OnCharactersDeath();
-	bool m_MarkedForDestroy;
+	void MarkForDestroy();
+	const bool IsMarkedForDestroy() { return m_MarkedForDestroy; };
 	virtual void OnDisconnect(const char *pReason) override;
 
 private:
 	const char *GetDisplayName() override;
-
+	bool m_MarkedForDestroy;
 };
 
 #endif

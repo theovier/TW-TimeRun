@@ -22,7 +22,7 @@ void CBotPlayer::Snap(int SnappingClient) {
 	CPlayer::SnapIngame(SnappingClient);
 }
 
-void CBotPlayer::OnCharactersDeath() {
+void CBotPlayer::MarkForDestroy() {
 	m_MarkedForDestroy = true;
 }
 

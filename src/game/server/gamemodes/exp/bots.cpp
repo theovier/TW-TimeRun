@@ -61,7 +61,7 @@ void CGameControllerEXP::RemoveBotsMarkedForDestroy() {
 
 		if (Player && Player->IsBot()) {
 			CBotPlayer* botPlayer = (CBotPlayer*)Player;
-			if (botPlayer && botPlayer->m_MarkedForDestroy) {
+			if (botPlayer && botPlayer->IsMarkedForDestroy()) {
 				RemoveBot(i);
 			}
 		}
