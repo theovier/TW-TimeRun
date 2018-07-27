@@ -3,10 +3,7 @@
 #include <engine/shared/config.h>
 #include <game/generated/protocol.h>
 #include <game/server/gamecontext.h>
-
-#include <game/server/gamemodes/exp/environment.h>
 #include <game/server/gamemodes/exp/exp.h>
-
 #include "pickup.h"
 
 CPickup::CPickup(CGameWorld *pGameWorld, int Type, int SubType)

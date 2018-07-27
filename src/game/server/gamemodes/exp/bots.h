@@ -1,8 +1,7 @@
 #ifndef BOTS_H
 #define BOTS_H
 
-enum BOTTYPES
-{
+enum BOTTYPES {
 	BOTTYPE_HAMMER,
 	BOTTYPE_GUN,
 	BOTTYPE_NINJA,

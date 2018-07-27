@@ -13,8 +13,6 @@
 #include <game/server/entities/mines/mine.h>
 #include <game/server/entities/spawns/botspawn.h>
 #include <engine/console.h>
-
-#include "environment.h"
 #include "bots.h"
 
 class CBotSpawn;
@@ -23,9 +21,25 @@ enum Items {
 	POTION
 };
 
-struct CItems
-{
+struct CItems {
 	int m_Potions;
+};
+
+enum CDoorTypes {
+	DOOR_TYPE_VERTICAL = 0,
+	DOOR_TYPE_HORIZONTAL
+};
+
+struct CExplorerEntity {
+	bool m_Used;
+	vec2 m_Pos;
+	CExplorerEntity() { m_Used = false; }
+};
+
+struct CDoor : CExplorerEntity {
+	int m_Type;
+	class CLaserDoor * m_Laser;
+	bool m_CreateLaser;
 };
 
 const int MAX_BOT_SPAWNS = 256;
@@ -35,12 +49,10 @@ const int MAX_TRAPS = 256;
 const int MAX_DOORS = 128;
 const int MAX_CHECKPOINTS = 32;
 
-class CGameControllerEXP : public IGameController
-{
+class CGameControllerEXP : public IGameController {
 public:
 
 	CGameControllerEXP(class CGameContext *pGameServer);
-	~CGameControllerEXP();
 
 	bool m_BossDefeated = false;
 
@@ -52,28 +64,28 @@ public:
 	CCheckpoint *m_Checkpoints[MAX_CHECKPOINTS];
 	CBotSpawn *m_BotSpawns[MAX_BOT_SPAWNS];
 
-
-
-	virtual void Tick();
-	virtual bool OnEntity(int Index, vec2 Pos);
+	virtual void Tick() override;
+	virtual void TickBots();
+	virtual void TickEnvironment();
+	virtual bool OnEntity(int Index, vec2 Pos) override;
 	virtual void StartRound() override;
+	virtual int OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) override;
 	virtual void DoWincheck() override;
 	virtual void PostReset() override;
-	virtual int OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) override;
-
+	CCheckpoint *RegisterNewCheckpoint(vec2 Pos);
+	int GetFreePlayerSlotID();
 	void RemoveBotsMarkedForDestroy();
 	void RemoveBot(int ClientID);
-
-
-	void BuildDoor(int d);
-	void TickEnvironment();
+	void KickBotsWhenServerEmpty();
 	void TickTeleport(CPlayer* player);
 	void TickWeaponStrip(CPlayer* player);
 	void TickZones(CPlayer* player);
 	void TickHealingZone(CCharacter* character, CPlayer* player);
 	void TickPoisonZone(CCharacter* character, CPlayer* player);
-	void TickBots();
-	int BotCanSpawn();
-	CCheckpoint * RegisterNewCheckpoint(vec2 Pos);
+	void BuildDoor(int d);
+
+
+	
+	
 };
 #endif

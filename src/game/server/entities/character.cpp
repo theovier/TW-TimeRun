@@ -6,7 +6,6 @@
 #include <game/mapitems.h>
 
 #include <game/server/gamemodes/exp/exp.h>
-#include <game/server/gamemodes/exp/environment.h>
 #include <game/server/gamemodes/exp/bots.h>
 
 #include "character.h"

@@ -4,10 +4,8 @@
 #include <math.h>
 #include <new>
 #include <engine/shared/config.h>
-#include "player.h"
-
 #include <game/server/gamemodes/exp/bots.h>
-#include <game/server/gamemodes/exp/environment.h>
+#include "player.h"
 
 MACRO_ALLOC_POOL_ID_IMPL(CPlayer, MAX_CLIENTS)
 
