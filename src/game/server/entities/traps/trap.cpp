@@ -3,8 +3,7 @@
 #include <game/server/botplayer.h>
 #include "trap.h"
 
-//ToDo: Subclass for horizontal traps or different weapons.
-CTrap::CTrap(CGameWorld *pGameWorld, vec2 Pos) : CEntity(pGameWorld, CGameWorld::ENTTYPE_PICKUP) {
+CTrap::CTrap(CGameWorld *pGameWorld, vec2 Pos) : CEntity(pGameWorld, CGameWorld::ENTTYPE_TRAP) {
 	GameWorld()->InsertEntity(this);
 	m_Pos = Pos - m_Offset;
 	m_Active = true;
