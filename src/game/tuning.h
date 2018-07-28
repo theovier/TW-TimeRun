@@ -53,6 +53,7 @@ MACRO_TUNING_PARAM(RespawnTimer, respawn_timer, 20.0f)
 MACRO_TUNING_PARAM(RegenTimer, regen_timer, 1.0f)
 MACRO_TUNING_PARAM(PoisonTimer, poison_timer, 1.0f)
 MACRO_TUNING_PARAM(PickupLifetime, pickup_lifetime, 20.0f)
+MACRO_TUNING_PARAM(TimeBonusFlagGain, time_bonus_flag, 15)
 
 // turrets
 MACRO_TUNING_PARAM(TurretGunLife, turret_gun_life, 10)

@@ -14,6 +14,7 @@ public:
 
 private:
 	bool m_Collected;
+	int m_TimeGain;
 };
 
 #endif

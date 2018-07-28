@@ -1,11 +1,11 @@
 #include "character.h"
 #include <game/server/gamecontext.h>
 #include <game/server/gamecontroller.h>
-#include <game/server/gamemodes/exp.h>
 #include "timebonusflag.h"
 
 CTimeBonusFlag::CTimeBonusFlag(CGameWorld *pGameWorld, vec2 Pos) : CEntity(pGameWorld, CGameWorld::ENTTYPE_FLAG) {
 	m_Pos = Pos;
+	m_TimeGain = GameServer()->Tuning()->m_TimeBonusFlagGain;
 	Reset();
 	GameWorld()->InsertEntity(this);
 }
@@ -16,7 +16,10 @@ void CTimeBonusFlag::Tick() {
 	}
 	CCharacter *pChr = GameServer()->m_World.ClosestCharacter(m_Pos, 20.0f, 0);
 	if (pChr && pChr->IsAlive()) {
-		GameServer()->EXPController()->SubtractGameTime(5);
+		GameServer()->EXPController()->SubtractGameTime(m_TimeGain);
+		std::string name = "-" + std::to_string(m_TimeGain) + " Seconds gained!";
+		char* c = new char[name.length() + 1];
+		GameServer()->SendBroadcast(strcpy(c, name.c_str()), -1);
 		m_Collected = true;
 	}
 }

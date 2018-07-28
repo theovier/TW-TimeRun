@@ -187,7 +187,8 @@ void CGameControllerEXP::ResetDoorState() {
 	}
 }
 
-void CGameControllerEXP::SubtractGameTime(int Amount) {
-	m_RoundStartTick += Server()->TickSpeed() * Amount;
+void CGameControllerEXP::SubtractGameTime(int Seconds) {
+	//to subtract time, we have to "delay" the startTick by adding the time.
+	m_RoundStartTick += Server()->TickSpeed() * Seconds;
 }
 

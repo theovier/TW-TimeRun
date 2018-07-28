@@ -65,7 +65,7 @@ public:
 	void SetDoorState(int Index, int State);
 	void ResetDoorState();
 
-	void SubtractGameTime(int Amount);
+	void SubtractGameTime(int Seconds);
 
 };
 #endif
