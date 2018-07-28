@@ -27,36 +27,6 @@ void CCollision::Init(class CLayers *pLayers)
 	m_Height = m_pLayers->GameLayer()->m_Height;
 	m_pTiles = static_cast<CTile *>(m_pLayers->Map()->GetData(m_pLayers->GameLayer()->m_Data));
 
-	mem_zero(&m_aNumTele, sizeof(m_aNumTele));
-	mem_zero(&m_apTeleports, sizeof(m_apTeleports));
-
-	for(int i = 0; i < m_Width*m_Height; i++)
-	{
-		int TeleIndex = m_pTiles[i].m_Index - TELEPORT_OFFSET;
-		if(TeleIndex >= 0 && TeleIndex < NUM_TELEPORTS)
-		{
-			if(TeleIndex&1) //from
-				m_aNumTele[TeleIndex]++;
-		}
-	}
-	
-	for(int i = 0; i < NUM_TELEPORTS; i++)
-	{
-		if(m_aNumTele[i] > 0)
-			m_apTeleports[i] = new int[m_aNumTele[i]];
-	}
-	
-	int CurTele[NUM_TELEPORTS] = {0};
-	for(int i = 0; i < m_Width*m_Height; i++)
-	{
-		int TeleIndex = m_pTiles[i].m_Index - TELEPORT_OFFSET;
-		if(TeleIndex >= 0 && TeleIndex < NUM_TELEPORTS)
-		{
-			if(TeleIndex&1) //from
-				m_apTeleports[TeleIndex][CurTele[TeleIndex]++] = i;
-		}
-	}
-
 	for(int i = 0; i < m_Width*m_Height; i++)
 	{
 		int Index = m_pTiles[i].m_Index;
@@ -87,10 +57,6 @@ void CCollision::Init(class CLayers *pLayers)
 		default:
 			m_pTiles[i].m_Index = 0;
 		}
-
-		int TeleIndex = Index - TELEPORT_OFFSET;
-		if(TeleIndex >= 0 && TeleIndex < NUM_TELEPORTS)
-			m_pTiles[i].m_Index = 128+TeleIndex;
 	}
 }
 
@@ -133,37 +99,6 @@ int CCollision::IntersectLine(vec2 Pos0, vec2 Pos1, vec2 *pOutCollision, vec2 *p
 	if(pOutBeforeCollision)
 		*pOutBeforeCollision = Pos1;
 	return 0;
-}
-
-vec2 CCollision::Teleport(int x, int y)
-{
-	int nx = clamp(x/32, 0, m_Width-1);
-	int ny = clamp(y/32, 0, m_Height-1);
-	
-	int TeleIndex = m_pTiles[ny*m_Width+nx].m_Index - 128;
-	if(TeleIndex < 0 || TeleIndex >= NUM_TELEPORTS)
-		return vec2(-1, -1);
-	
-	if(TeleIndex&1) //from
-		return vec2(-1, -1);
-	
-	if(m_aNumTele[TeleIndex+1] == 0)
-		return vec2(-1, -1);
-	
-	vec2 Closest = vec2(-1, -1);
-	float ClosestDistance = 0.0f;
-	for(int i = 0; i < m_aNumTele[TeleIndex+1]; i++)
-	{
-		int Dest = m_apTeleports[TeleIndex+1][i];
-		vec2 DestPos = vec2((Dest%m_Width)*32+16, (Dest/m_Width)*32+16);
-		float d = distance(vec2(x, y), DestPos);
-		if(Closest == vec2(-1, -1) || d < ClosestDistance)
-		{
-			ClosestDistance = d;
-			Closest = DestPos;
-		}
-	}
-	return Closest;
 }
 
 void CCollision::SetDoor(int StartX, int StartY, int EndX, int EndY)

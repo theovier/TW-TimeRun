@@ -62,7 +62,6 @@ public:
 	void RemoveBotsMarkedForDestroy();
 	void RemoveBot(int ClientID);
 	void KickBotsWhenServerEmpty();
-	void TickTeleport(CPlayer* player);
 	void TickWeaponStrip(CPlayer* player);
 	void TickZones(CPlayer* player);
 	void TickHealingZone(CCharacter* character, CPlayer* player);

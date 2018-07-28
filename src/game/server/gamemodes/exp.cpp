@@ -48,7 +48,6 @@ void CGameControllerEXP::TickBots() {
 void CGameControllerEXP::TickEnvironment() {
 	for each (CPlayer* player in GameServer()->m_apPlayers) {
 		if (player) {
-			TickTeleport(player);
 			TickWeaponStrip(player);
 			TickZones(player);
 		}
@@ -217,18 +216,6 @@ void CGameControllerEXP::KickBotsWhenServerEmpty() {
 		}
 		else
 			p->m_NobodyTimer = 0;
-	}
-}
-
-void CGameControllerEXP::TickTeleport(CPlayer* player) {
-	CCharacter* character = player->GetCharacter();
-	if (character) {
-		vec2 charPos = character->GetPos();
-		vec2 Dest = GameServer()->Collision()->Teleport(charPos.x, charPos.y);
-		if (Dest.x >= 0 && Dest.y >= 0) {
-			character->m_Core.m_Pos = Dest;
-			character->m_Core.m_Vel = vec2(0, 0);
-		}
 	}
 }
 
