@@ -9,6 +9,7 @@
 #include <game/server/player.h>
 #include <game/server/entities/character.h>
 #include <game/server/entities/flag.h>
+#include <game/server/entities/timebonusflag.h>
 #include <game/server/entities/door.h>
 #include <game/server/entities/pickup.h>
 #include <game/server/entities/bots/bossbot.h>
@@ -87,7 +88,7 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos) {
 		return true;
 
 	case ENTITY_FLAGSTAND_BLUE: {
-		CFlag * flagBlue = new CFlag(&GameServer()->m_World, 1, Pos);
+		CTimeBonusFlag* flagBlue = new CTimeBonusFlag(&GameServer()->m_World, Pos);
 		return true;
 	}
 
@@ -186,5 +187,7 @@ void CGameControllerEXP::ResetDoorState() {
 	}
 }
 
-
+void CGameControllerEXP::SubtractGameTime(int Amount) {
+	m_RoundStartTick += Server()->TickSpeed() * Amount;
+}
 
