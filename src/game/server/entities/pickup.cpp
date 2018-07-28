@@ -82,12 +82,12 @@ void CPickup::TickPickup() {
 	if (pChr && pChr->IsAlive())
 	{
 		CPlayer *pPlayer = pChr->GetPlayer();
-
+		
 		// player picked us up, is someone was hooking us, let them go
 		int RespawnTime = -1;
 		switch (m_Type) {
 			case POWERUP_HEALTH: {
-				if (pChr->IncreaseHealth(4)) {
+				if (pChr->IncreaseHealth(g_Config.m_SvPickupHealthGain)) {
 					GameServer()->CreateSound(m_Pos, SOUND_PICKUP_HEALTH);
 					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
 				}
