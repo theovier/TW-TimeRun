@@ -64,7 +64,6 @@ public:
 	bool IsAlive() const { return m_Alive; }
 	class CPlayer *GetPlayer() { return m_pPlayer; }
 
-	// EXP
 	void Freeze();
 	bool m_Frozen;
 	float m_FrozenTimer;
