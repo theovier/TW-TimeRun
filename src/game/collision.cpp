@@ -232,3 +232,15 @@ void CCollision::MoveBox(vec2 *pInoutPos, vec2 *pInoutVel, vec2 Size, float Elas
 	*pInoutPos = Pos;
 	*pInoutVel = Vel;
 }
+
+int CCollision::GetIndex(vec2 Pos) {
+	int nx = clamp((int)Pos.x / 32, 0, m_Width - 1);
+	int ny = clamp((int)Pos.y / 32, 0, m_Height - 1);
+	return ny * m_Width + nx;
+}
+
+int CCollision::GetCollision(int Index) {
+	if (Index < 0)
+		return 0;
+	return m_pTiles[Index].m_Index;
+}

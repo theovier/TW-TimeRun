@@ -144,6 +144,11 @@ protected:
 	CCharacterCore m_SendCore; // core that we should send
 	CCharacterCore m_ReckoningCore; // the dead reckoning core
 
+	virtual void OnOverlapTile(int TileIndex);
+	virtual void OnOverlapWeaponStrip();
+	virtual void OnOverlapHealingZone();
+	virtual void OnOverlapPoisonZone();
+
 };
 
 #endif

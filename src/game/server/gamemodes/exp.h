@@ -51,7 +51,6 @@ public:
 
 	virtual void Tick() override;
 	virtual void TickBots();
-	virtual void TickEnvironment();
 	virtual bool OnEntity(int Index, vec2 Pos) override;
 	virtual void StartRound() override;
 	virtual int OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) override;
@@ -62,10 +61,6 @@ public:
 	void RemoveBotsMarkedForDestroy();
 	void RemoveBot(int ClientID);
 	void KickBotsWhenServerEmpty();
-	void TickWeaponStrip(CPlayer* player);
-	void TickZones(CPlayer* player);
-	void TickHealingZone(CCharacter* character, CPlayer* player);
-	void TickPoisonZone(CCharacter* character, CPlayer* player);
 
 
 	int GetDoorState(int Index);

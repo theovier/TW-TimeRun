@@ -575,6 +575,9 @@ void CCharacter::Tick()
 		m_pPlayer->m_ForceBalanced = false;
 	}
 
+	int Tile = GameServer()->Collision()->GetIndex(m_Pos);
+	OnOverlapTile(Tile);
+
 	if(m_Frozen && Server()->Tick() > m_FrozenTimer)
 	{
 		m_Frozen = false;
@@ -724,6 +727,46 @@ void CCharacter::TickPaused()
 		++m_aWeapons[m_ActiveWeapon].m_AmmoRegenStart;
 	if(m_EmoteStop > -1)
 		++m_EmoteStop;
+}
+
+void CCharacter::OnOverlapTile(int Tile) {
+	int collision = GameServer()->Collision()->GetCollision(Tile);
+	switch (collision) {
+		case CCollision::COFLAG_WEAPONSTRIP:
+			OnOverlapWeaponStrip();
+			break;
+		case CCollision::COLFLAG_HEALING:
+			OnOverlapHealingZone();
+			break;
+		case CCollision::COLFLAG_POISON:
+			OnOverlapPoisonZone();
+			break;
+		default:
+			break;
+	}
+}
+
+void CCharacter::OnOverlapWeaponStrip() {
+	m_pPlayer->RemovePermaWeapons();
+}
+
+void CCharacter::OnOverlapHealingZone() {
+	if (Server()->Tick() > m_pPlayer->m_GameExp.m_RegenTimer) {
+		if (m_Health < m_MaxHealth) {
+			m_Health++;
+		}
+		else if (m_Armor < 10) {
+			m_Armor++;
+		}
+		m_pPlayer->m_GameExp.m_RegenTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_RegenTimer;
+	}
+}
+
+void CCharacter::OnOverlapPoisonZone() {
+	if (Server()->Tick() > m_pPlayer->m_GameExp.m_PoisonTimer) {
+		TakeDamage(vec2(0, 0), 1, -1, WEAPON_WORLD);
+		m_pPlayer->m_GameExp.m_PoisonTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_PoisonTimer;
+	}
 }
 
 bool CCharacter::IncreaseHealth(int Amount)

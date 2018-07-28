@@ -37,21 +37,11 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer) : IGameC
 void CGameControllerEXP::Tick() {
 	IGameController::Tick();
 	TickBots();
-	TickEnvironment();
 }
 
 void CGameControllerEXP::TickBots() {
 	RemoveBotsMarkedForDestroy();
 	KickBotsWhenServerEmpty();
-}
-
-void CGameControllerEXP::TickEnvironment() {
-	for each (CPlayer* player in GameServer()->m_apPlayers) {
-		if (player) {
-			TickWeaponStrip(player);
-			TickZones(player);
-		}
-	}
 }
 
 bool CGameControllerEXP::OnEntity(int Index, vec2 Pos) {
@@ -218,55 +208,6 @@ void CGameControllerEXP::KickBotsWhenServerEmpty() {
 			p->m_NobodyTimer = 0;
 	}
 }
-
-void CGameControllerEXP::TickWeaponStrip(CPlayer* player) {
-	CCharacter* character = player->GetCharacter();
-	if (character) {
-		vec2 pos = character->GetPos();
-		bool isOverlapping = GameServer()->Collision()->GetCollisionAt(pos.x, pos.y) & CCollision::COFLAG_WEAPONSTRIP;
-		if (isOverlapping) {
-			player->RemovePermaWeapons();
-		}
-	}
-}
-
-void CGameControllerEXP::TickZones(CPlayer* player) {
-	CCharacter* character = player->GetCharacter();
-	if (character) {
-		vec2 charPos = character->GetPos();
-		int collision = GameServer()->Collision()->GetCollisionAt(charPos.x, charPos.y);
-		if (collision & CCollision::COLFLAG_HEALING) {
-			TickHealingZone(character, player);
-		}
-		else if (collision & CCollision::COLFLAG_POISON) {
-			TickPoisonZone(character, player);
-		}
-	}
-}
-
-void CGameControllerEXP::TickHealingZone(CCharacter* character, CPlayer* player) {
-	if (Server()->Tick() > player->m_GameExp.m_RegenTimer) {
-		if (character->m_Health < character->m_MaxHealth) {
-			character->m_Health++;
-		}
-		else if (character->m_Armor < 10) {
-			character->m_Armor++;
-		}
-		player->m_GameExp.m_RegenTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_RegenTimer;
-	}
-}
-
-void CGameControllerEXP::TickPoisonZone(CCharacter* character, CPlayer* player) {
-	if (Server()->Tick() > player->m_GameExp.m_PoisonTimer) {
-		character->TakeDamage(vec2(0, 0), 1, -1, WEAPON_WORLD);
-		player->m_GameExp.m_PoisonTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_PoisonTimer;
-	}
-}
-
-
-
-
-
 
 int CGameControllerEXP::GetDoorState(int Index) {
 	return m_Door[Index].m_State;
