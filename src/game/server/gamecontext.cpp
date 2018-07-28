@@ -643,6 +643,7 @@ void CGameContext::OnClientDrop(int ClientID, const char *pReason)
 {
 	AbortVoteKickOnDisconnect(ClientID);
 	m_apPlayers[ClientID]->OnDisconnect(pReason);
+	bool wasBot = m_apPlayers[ClientID]->IsBot();
 	delete m_apPlayers[ClientID];
 	m_apPlayers[ClientID] = 0;
 
@@ -653,6 +654,10 @@ void CGameContext::OnClientDrop(int ClientID, const char *pReason)
 	{
 		if(m_apPlayers[i] && m_apPlayers[i]->m_SpectatorID == ClientID)
 			m_apPlayers[i]->m_SpectatorID = SPEC_FREEVIEW;
+	}
+
+	if (wasBot) {
+		return;
 	}
 
 	bool onlyBotPlayerRemaining = true;
