@@ -86,6 +86,7 @@ MACRO_CONFIG_INT(SvVoteKickBantime, sv_vote_kick_bantime, 5, 0, 1440, CFGFLAG_SE
 
 
 MACRO_CONFIG_INT(SvPickupHealthGain, sv_pickup_health_gain, 1, 1, 10, CFGFLAG_SERVER, "The amount of lives you gain by picking up a heart")
+MACRO_CONFIG_INT(SvPickupShieldGain, sv_pickup_shield_gain, 1, 1, 10, CFGFLAG_SERVER, "The amount of shields you gain by picking up a shield")
 
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly

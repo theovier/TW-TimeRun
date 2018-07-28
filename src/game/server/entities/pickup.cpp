@@ -95,7 +95,7 @@ void CPickup::TickPickup() {
 			}
 
 			case POWERUP_ARMOR: {
-				if (pChr->IncreaseArmor(1)) {
+				if (pChr->IncreaseArmor(g_Config.m_SvPickupShieldGain)) {
 					GameServer()->CreateSound(m_Pos, SOUND_PICKUP_ARMOR);
 					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
 				}
