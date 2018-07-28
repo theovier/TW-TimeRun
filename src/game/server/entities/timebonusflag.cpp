@@ -17,7 +17,7 @@ void CTimeBonusFlag::Tick() {
 	CCharacter *pChr = GameServer()->m_World.ClosestCharacter(m_Pos, 20.0f, 0);
 	if (pChr && pChr->IsAlive()) {
 		GameServer()->EXPController()->SubtractGameTime(m_TimeGain);
-		std::string name = "-" + std::to_string(m_TimeGain) + " Seconds gained!";
+		std::string name = "-" + std::to_string(m_TimeGain) + " Seconds!";
 		char* c = new char[name.length() + 1];
 		GameServer()->SendBroadcast(strcpy(c, name.c_str()), -1);
 		m_Collected = true;

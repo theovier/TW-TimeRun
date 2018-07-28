@@ -39,6 +39,8 @@ public:
 
 	bool m_BossDefeated = false;
 
+	float m_ClockWasZeroTick;
+
 	int m_CurTurret = 0, m_CurFlag = 0, m_CurMine = 0, m_CurTrap = 0, m_CurDoor = 0, m_CurBotSpawn = 0;
 	CTurret *m_Turrets[MAX_TURRETS];
 	CTrap *m_Traps[MAX_TRAPS];
