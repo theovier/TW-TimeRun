@@ -646,7 +646,6 @@ void CGameContext::OnClientDrop(int ClientID, const char *pReason)
 	delete m_apPlayers[ClientID];
 	m_apPlayers[ClientID] = 0;
 
-	(void)m_pController->CheckTeamBalance();
 	m_VoteUpdate = true;
 
 	// update spectator modes
@@ -664,6 +663,7 @@ void CGameContext::OnClientDrop(int ClientID, const char *pReason)
 		}
 	}
 	if (onlyBotPlayerRemaining) {
+		Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", "No players left, resetting game");
 		EXPController()->ResetRound();
 	}
 }
