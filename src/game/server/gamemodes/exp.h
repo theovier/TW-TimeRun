@@ -53,6 +53,7 @@ public:
 	virtual void TickBots();
 	virtual bool OnEntity(int Index, vec2 Pos) override;
 	virtual void StartRound() override;
+	virtual void ResetRound();
 	virtual int OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) override;
 	virtual void DoWincheck() override;
 	virtual void PostReset() override;

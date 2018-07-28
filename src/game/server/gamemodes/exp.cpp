@@ -107,6 +107,10 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos) {
 	}
 }
 
+void CGameControllerEXP::ResetRound() {
+	IGameController::ResetGame();
+}
+
 void CGameControllerEXP::StartRound() {
 	IGameController::StartRound();
 	m_BossDefeated = false;

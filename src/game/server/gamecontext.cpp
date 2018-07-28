@@ -655,6 +655,17 @@ void CGameContext::OnClientDrop(int ClientID, const char *pReason)
 		if(m_apPlayers[i] && m_apPlayers[i]->m_SpectatorID == ClientID)
 			m_apPlayers[i]->m_SpectatorID = SPEC_FREEVIEW;
 	}
+
+	bool onlyBotPlayerRemaining = true;
+	for (int i = 0; i < MAX_CLIENTS; ++i) {
+		if (m_apPlayers[i] && !m_apPlayers[i]->IsBot()) {
+			onlyBotPlayerRemaining = false;
+			break;
+		}
+	}
+	if (onlyBotPlayerRemaining) {
+		EXPController()->ResetRound();
+	}
 }
 
 void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
