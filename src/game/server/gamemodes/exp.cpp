@@ -36,12 +36,7 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer) : IGameC
 
 void CGameControllerEXP::Tick() {
 	IGameController::Tick();
-	TickBots();
-}
-
-void CGameControllerEXP::TickBots() {
 	RemoveBotsMarkedForDestroy();
-	KickBotsWhenServerEmpty();
 }
 
 bool CGameControllerEXP::OnEntity(int Index, vec2 Pos) {
@@ -175,42 +170,6 @@ void CGameControllerEXP::RemoveBotsMarkedForDestroy() {
 
 void CGameControllerEXP::RemoveBot(int ClientID) {
 	GameServer()->OnClientDrop(ClientID, "despawn");
-}
-
-void CGameControllerEXP::KickBotsWhenServerEmpty() {
-	// CHECK FOR NOBODY
-	for (int b = g_Config.m_SvMaxClients; b < MAX_CLIENTS; b++)
-	{
-		CPlayer *p = GameServer()->m_apPlayers[b];
-		if (!p || !p->GetCharacter())
-			continue;
-
-		bool Nobody = true;
-		for (int i = 0; i < g_Config.m_SvMaxClients; i++)
-		{
-			if (GameServer()->m_apPlayers[i] && !p->GetCharacter()->NetworkClipped(i))
-			{
-				Nobody = false;
-				break;
-			}
-		}
-
-		if (Nobody)
-		{
-			if (p->m_NobodyTimer == 0)
-			{
-				p->m_NobodyTimer = Server()->Tick() + 10.0f*Server()->TickSpeed();
-			}
-			else
-			{
-				if (Server()->Tick() > p->m_NobodyTimer) {
-					RemoveBot(b);
-				}
-			}
-		}
-		else
-			p->m_NobodyTimer = 0;
-	}
 }
 
 int CGameControllerEXP::GetDoorState(int Index) {

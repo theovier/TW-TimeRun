@@ -50,7 +50,6 @@ public:
 	} m_Door[MAX_DOORS];
 
 	virtual void Tick() override;
-	virtual void TickBots();
 	virtual bool OnEntity(int Index, vec2 Pos) override;
 	virtual void StartRound() override;
 	virtual void ResetRound();
@@ -61,8 +60,6 @@ public:
 	int GetFreePlayerSlotID();
 	void RemoveBotsMarkedForDestroy();
 	void RemoveBot(int ClientID);
-	void KickBotsWhenServerEmpty();
-
 
 	int GetDoorState(int Index);
 	void SetDoorState(int Index, int State);
