@@ -134,10 +134,6 @@ public:
 	virtual bool UseItem(int Item);
 	virtual bool UsePotion();
 
-	// lil hack
-	CFlag *m_pClosestFlag;
-	int m_ClosestFlag;
-
 	CCharacter *m_pCharacter;
 
 protected:
