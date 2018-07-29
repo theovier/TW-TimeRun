@@ -117,11 +117,11 @@ void CPlayer::Reset() {
 	m_Score = 0;
 	m_ScoreStartTick = Server()->Tick();
 	m_RespawnTick = Server()->Tick() + Server()->TickSpeed() / 2;
-	m_GameExp.m_EnterTick = Server()->Tick();
-	m_GameExp.m_Time = 0;
-	m_GameExp.m_Kills = 0;
-	m_GameExp.m_LastFlag = 0;
-	m_GameExp.m_Items.m_Potions = 0;
+	m_GameStats.m_EnterTick = Server()->Tick();
+	m_GameStats.m_Time = 0;
+	m_GameStats.m_Kills = 0;
+	m_GameStats.m_LastFlag = 0;
+	m_GameStats.m_Items.m_Potions = 0;
 	RemovePermaWeapons();
 }
 
@@ -300,8 +300,8 @@ void CPlayer::TryRespawn() {
 	vec2 SpawnPos;
 	if (!GameServer()->m_pController->CanSpawn(m_Team, &SpawnPos))
 		return;
-	if (m_GameExp.m_LastFlag > 0)
-		SpawnPos = ((CGameControllerTimeRun*)GameServer()->m_pController)->m_Checkpoints[m_GameExp.m_LastFlag - 1]->GetPos();
+	if (m_GameStats.m_LastFlag > 0)
+		SpawnPos = ((CGameControllerTimeRun*)GameServer()->m_pController)->m_Checkpoints[m_GameStats.m_LastFlag - 1]->GetPos();
 	m_Spawning = false;
 	m_pCharacter = new(m_ClientID) CCharacter(&GameServer()->m_World);
 	m_pCharacter->Spawn(this, SpawnPos);
@@ -314,30 +314,30 @@ const char *CPlayer::GetDisplayName() {
 }
 
 void CPlayer::ResetStats() {
-	m_GameExp.m_EnterTick = Server()->Tick();
-	m_GameExp.m_Time = 0;
-	m_GameExp.m_Kills = 0;
-	m_GameExp.m_LastFlag = 0;
-	m_GameExp.m_Items.m_Potions = 0;
+	m_GameStats.m_EnterTick = Server()->Tick();
+	m_GameStats.m_Time = 0;
+	m_GameStats.m_Kills = 0;
+	m_GameStats.m_LastFlag = 0;
+	m_GameStats.m_Items.m_Potions = 0;
 }
 
 bool CPlayer::GiveWeaponPermanently(int Weapon, int PermaStartAmmo) {
-	if (m_GameExp.m_PermaWeapons[Weapon].m_Got == false) {
-		m_GameExp.m_PermaWeapons[Weapon].m_Got = true;
-		m_GameExp.m_PermaWeapons[Weapon].m_StartAmmo = PermaStartAmmo;
+	if (m_GameStats.m_PermaWeapons[Weapon].m_Got == false) {
+		m_GameStats.m_PermaWeapons[Weapon].m_Got = true;
+		m_GameStats.m_PermaWeapons[Weapon].m_StartAmmo = PermaStartAmmo;
 		return true;
 	}
 	return false;
 }
 
 bool CPlayer::HasWeaponPermanently (int Weapon) {
-	return m_GameExp.m_PermaWeapons[Weapon].m_Got;
+	return m_GameStats.m_PermaWeapons[Weapon].m_Got;
 }
 
 void CPlayer::LoadPermaWeapons() {
 	for (int i = 0; i < NUM_WEAPONS; i += 1) {
-		bool gotWeapon = m_GameExp.m_PermaWeapons[i].m_Got;
-		int ammo = m_GameExp.m_PermaWeapons[i].m_StartAmmo;
+		bool gotWeapon = m_GameStats.m_PermaWeapons[i].m_Got;
+		int ammo = m_GameStats.m_PermaWeapons[i].m_StartAmmo;
 		m_pCharacter->m_aWeapons[i].m_Got = gotWeapon;
 		m_pCharacter->m_aWeapons[i].m_Ammo = ammo;
 	}
@@ -348,8 +348,8 @@ void CPlayer::RemovePermaWeapons() {
 
 	//keep hammer and gun
 	for (int i = 2; i < NUM_WEAPONS; i++) {
-		m_GameExp.m_PermaWeapons[i].m_Got = m_pCharacter->m_aWeapons[i].m_Got = false;
-		m_GameExp.m_PermaWeapons[i].m_StartAmmo = m_pCharacter->m_aWeapons[i].m_Ammo = 0;
+		m_GameStats.m_PermaWeapons[i].m_Got = m_pCharacter->m_aWeapons[i].m_Got = false;
+		m_GameStats.m_PermaWeapons[i].m_StartAmmo = m_pCharacter->m_aWeapons[i].m_Ammo = 0;
 	}
 }
 
@@ -365,12 +365,12 @@ bool CPlayer::UseItem(int Item) {
 }
 
 bool CPlayer::UsePotion() {
-	if (m_GameExp.m_Items.m_Potions > 0) {
+	if (m_GameStats.m_Items.m_Potions > 0) {
 		if (m_pCharacter->m_Health < m_pCharacter->m_MaxHealth) {
-			m_GameExp.m_Items.m_Potions--;
+			m_GameStats.m_Items.m_Potions--;
 			m_pCharacter->m_Health = m_pCharacter->m_MaxHealth;
 			char aBuf[256];
-			str_format(aBuf, sizeof(aBuf), "<Potion> used. You have %d <Potions> left.", m_GameExp.m_Items.m_Potions);
+			str_format(aBuf, sizeof(aBuf), "<Potion> used. You have %d <Potions> left.", m_GameStats.m_Items.m_Potions);
 			GameServer()->SendChatTarget(m_ClientID, aBuf);
 			return true;
 		}

@@ -459,8 +459,9 @@ static const char *s_apHints[] = {
 		"If you don't progress, try to kill monsters and turrets to obtain stronger items.",
 		"Sometimes it is smart to just rush to a flag/checkpoint.",
 		"Teaming up with other tees is definetly a good idea!",
-		"You may restart your game by typing \"/new\".",
+		"You may vote to restart the game by typing \"/restart\".",
 		"Check out \"/cmdlist\"!",
+		"Blue flags offer time bonus!",
 		"Try out \"/top5\" and \"/rank\"!",
 };
 
@@ -619,7 +620,7 @@ void CGameContext::OnBotClientConnected(int ClientID) {
 void CGameContext::OnClientConnected(int ClientID) {
 	const int StartTeam = g_Config.m_SvTournamentMode ? TEAM_SPECTATORS : TEAM_RED;
 	m_apPlayers[ClientID] = new (ClientID) CPlayer(this, ClientID, StartTeam);
-  	SendChatTarget(ClientID, "Welcome to the EXPlorer mod. Say '/info' for more info about EXPlorer.");
+  	SendChatTarget(ClientID, "Welcome to the TimeRun mod. Say '/info' for more info.");
 
 #ifdef CONF_DEBUG
 	if(g_Config.m_DbgDummies)
@@ -1570,10 +1571,11 @@ bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
 	if (!strncmp(aMsg, "/info", 5) || !strncmp(aMsg, "!info", 5) || !strncmp(aMsg, "/help", 5) || !strncmp(aMsg, "/about", 6))
 	{
 		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		SendChatTarget(ClientID, "EXPlorer v2.0");
-		SendChatTarget(ClientID, "Based on the EXPlorer mod by <xush'> and <Choupom>");
-		SendChatTarget(ClientID, "Aim: explore, fight and eventually capture the blue flag");
+		SendChatTarget(ClientID, "TimeRun");
+		SendChatTarget(ClientID, "Loosely based on the EXPlorer mod by <xush'> and <Choupom>");
+		SendChatTarget(ClientID, "Aim: fight your way through the map as fast as possible and defeat the final boss.");
 		SendChatTarget(ClientID, "Kill monsters to earn /items");
+		SendChatTarget(ClientID, "Watch out for traps on your way.");
 		SendChatTarget(ClientID, "Say /cmdlist for the command list");
 		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		return true;
@@ -1597,7 +1599,7 @@ bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
 		SendChatTarget(ClientID, "'/info': Get info about the modification.");
 		SendChatTarget(ClientID, "'/top5': View the top 5 players.");
 		SendChatTarget(ClientID, "'/items': Get info about the items.");
-		SendChatTarget(ClientID, "'/new': Restart the game.");
+		SendChatTarget(ClientID, "'/restart': Votes to restart the game.");
 		SendChatTarget(ClientID, "'/bind': Learn how to bind a key to use an item.");
 		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		return true;
@@ -1678,7 +1680,6 @@ void CGameContext::OnConsoleInit()
 
 	Console()->Chain("sv_motd", ConchainSpecialMotdupdate, this);
 
-	//EXP
 	Console()->Register("tele", "ii", CFGFLAG_SERVER, ConTeleport, this, "Teleport a player to another player");
 	Console()->Register("teleflag", "ii", CFGFLAG_SERVER, ConTeleflag, this, "Teleport a player to a specific flag");
 }
@@ -1845,17 +1846,17 @@ void CGameContext::ConTeleport(IConsole::IResult *pResult, void *pUserData) {
 
 void CGameContext::ConTeleflag(IConsole::IResult *pResult, void *pUserData) {
 	CGameContext *pSelf = (CGameContext *)pUserData;
-	CGameControllerTimeRun* expGC = (CGameControllerTimeRun*)pSelf->m_pController;
+	CGameControllerTimeRun* gc = (CGameControllerTimeRun*)pSelf->m_pController;
 	int CID1 = clamp(pResult->GetInteger(0), 0, (int)MAX_CLIENTS - 1);
 	int FlagID = clamp(pResult->GetInteger(1), 0, (int)MAX_CHECKPOINTS - 1);
 
 	CPlayer* player = pSelf->m_apPlayers[CID1];
-	CFlag* flag = expGC->m_Checkpoints[FlagID];
+	CFlag* flag = gc->m_Checkpoints[FlagID];
 
 	if (player && flag) {
 		CCharacter* pChr = pSelf->GetPlayerChar(CID1);
 		if (pChr) {
-			player->m_GameExp.m_LastFlag = FlagID;
+			player->m_GameStats.m_LastFlag = FlagID;
 			pChr->Teleport(flag->m_Pos);
 		}
 	}

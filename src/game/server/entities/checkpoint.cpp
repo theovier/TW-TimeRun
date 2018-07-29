@@ -51,19 +51,19 @@ void CCheckpoint::Reset() {
 }
 
 void CCheckpoint::SaveProgress(CCharacter* beneficiary, CPlayer* controller) {
-	int lastCheckpointIndex = controller->m_GameExp.m_LastFlag;
+	int lastCheckpointIndex = controller->m_GameStats.m_LastFlag;
 	if (lastCheckpointIndex != m_Index) {
-		controller->m_GameExp.m_LastFlag = m_Index;
+		controller->m_GameStats.m_LastFlag = m_Index;
 		GameServer()->SendChatTarget(controller->GetCID(), "Checkpoint reached.");
 	}
 }
 
 void CCheckpoint::Regenerate(CCharacter* beneficiary, CPlayer* controller) {
-	if(Server()->Tick() > controller->m_GameExp.m_RegenTimer + Server()->TickSpeed() * GameServer()->Tuning()->m_RegenTimer) {
+	if(Server()->Tick() > controller->m_GameStats.m_RegenTimer + Server()->TickSpeed() * GameServer()->Tuning()->m_RegenTimer) {
 		if (!RegenerateHealth(beneficiary)) {
 			RegenerateAmmo(beneficiary);
 		}
-		controller->m_GameExp.m_RegenTimer = Server()->Tick();
+		controller->m_GameStats.m_RegenTimer = Server()->Tick();
 	}
 }
 

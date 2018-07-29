@@ -119,7 +119,7 @@ public:
 		int m_RegenTimer; //ticks
 		int m_PoisonTimer; //ticks
 		CItems m_Items;
-	} m_GameExp;
+	} m_GameStats;
 
 	bool GiveWeaponPermanently(int Weapon, int PermaStartAmmo);
 	bool HasWeaponPermanently(int Weapon);

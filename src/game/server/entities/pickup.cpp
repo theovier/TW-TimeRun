@@ -146,15 +146,15 @@ void CPickup::TickPickup() {
 			}
 
 			case POWERUP_POTION: {
-				if (pPlayer->m_GameExp.m_Items.m_Potions == 0)
+				if (pPlayer->m_GameStats.m_Items.m_Potions == 0)
 					GameServer()->SendChatTarget(pPlayer->GetCID(), "Picked up: <POTION>. Use it with /potion");
 				else
 				{
 					char aBuf[256];
-					str_format(aBuf, sizeof(aBuf), "Picked up: <POTION> (%d)", pPlayer->m_GameExp.m_Items.m_Potions + 1);
+					str_format(aBuf, sizeof(aBuf), "Picked up: <POTION> (%d)", pPlayer->m_GameStats.m_Items.m_Potions + 1);
 					GameServer()->SendChatTarget(pPlayer->GetCID(), aBuf);
 				}
-				pPlayer->m_GameExp.m_Items.m_Potions++;
+				pPlayer->m_GameStats.m_Items.m_Potions++;
 
 				GameServer()->CreateSound(m_Pos, SOUND_PICKUP_HEALTH);
 			}

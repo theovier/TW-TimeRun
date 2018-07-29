@@ -751,21 +751,21 @@ void CCharacter::OnOverlapWeaponStrip() {
 }
 
 void CCharacter::OnOverlapHealingZone() {
-	if (Server()->Tick() > m_pPlayer->m_GameExp.m_RegenTimer) {
+	if (Server()->Tick() > m_pPlayer->m_GameStats.m_RegenTimer) {
 		if (m_Health < m_MaxHealth) {
 			m_Health++;
 		}
 		else if (m_Armor < 10) {
 			m_Armor++;
 		}
-		m_pPlayer->m_GameExp.m_RegenTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_RegenTimer;
+		m_pPlayer->m_GameStats.m_RegenTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_RegenTimer;
 	}
 }
 
 void CCharacter::OnOverlapPoisonZone() {
-	if (Server()->Tick() > m_pPlayer->m_GameExp.m_PoisonTimer) {
+	if (Server()->Tick() > m_pPlayer->m_GameStats.m_PoisonTimer) {
 		TakeDamage(vec2(0, 0), 1, -1, WEAPON_WORLD);
-		m_pPlayer->m_GameExp.m_PoisonTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_PoisonTimer;
+		m_pPlayer->m_GameStats.m_PoisonTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_PoisonTimer;
 	}
 }
 
