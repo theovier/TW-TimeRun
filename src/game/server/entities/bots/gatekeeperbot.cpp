@@ -20,7 +20,6 @@ void CGatekeeperBot::OnDeath(CPlayer* Killer) {
 }
 
 void CGatekeeperBot::SetDoorIndex(int DoorIndex) {
-	dbg_msg("Gatekeeper", "door was set");
 	m_DoorIndex = DoorIndex;
 }
 
