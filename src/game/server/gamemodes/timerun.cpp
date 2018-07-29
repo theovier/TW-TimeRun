@@ -114,6 +114,10 @@ void CGameControllerTimeRun::StartRound() {
 	m_BossDefeated = false;
 }
 
+void CGameControllerTimeRun::EndRound() {
+	IGameController::EndRound();
+}
+
 void CGameControllerTimeRun::ResetRound() {
 	IGameController::ResetGame();
 }

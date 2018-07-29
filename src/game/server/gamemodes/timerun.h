@@ -62,6 +62,7 @@ public:
 	virtual void Tick() override;
 	virtual bool OnEntity(int Index, vec2 Pos) override;
 	virtual void StartRound() override;
+	virtual void EndRound() override;
 	virtual void ResetRound();
 	virtual void PostReset() override;
 	virtual void OnCharacterSpawn(class CCharacter *pChr) override;
