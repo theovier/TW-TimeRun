@@ -190,8 +190,9 @@ void CGameControllerEXP::ResetDoorState() {
 
 void CGameControllerEXP::SubtractGameTime(int Seconds) {	
 	//to subtract time, we have to "delay" the startTick by adding the time.
-	float rewindTime = Server()->Tick() + Server()->TickSpeed() * Seconds;
+	float rewindTime = Server()->TickSpeed() * Seconds;
 	float passedTime = Server()->Tick() - m_ClockWasZeroTick;
+
 	if (rewindTime > passedTime) {
 		m_RoundStartTick += passedTime;
 		m_ClockWasZeroTick = Server()->Tick();
