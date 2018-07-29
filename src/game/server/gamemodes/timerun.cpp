@@ -101,14 +101,28 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 	}
 }
 
-void CGameControllerTimeRun::ResetRound() {
-	IGameController::ResetGame();
-}
-
 void CGameControllerTimeRun::StartRound() {
 	IGameController::StartRound();
 	m_ClockWasZeroTick = m_RoundStartTick;
 	m_BossDefeated = false;
+}
+
+void CGameControllerTimeRun::ResetRound() {
+	IGameController::ResetGame();
+}
+
+void CGameControllerTimeRun::PostReset() {
+	for (int i = 0; i < MAX_CLIENTS; i++) {
+		CPlayer* player = GameServer()->m_apPlayers[i];
+		if (player) {
+			player->Reset();
+		}
+	}
+}
+
+void CGameControllerTimeRun::OnCharacterSpawn(class CCharacter *pChr) {
+	pChr->IncreaseHealth(10);
+	pChr->GiveWeapon(WEAPON_HAMMER, -1);
 }
 
 int CGameControllerTimeRun::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) {
@@ -132,15 +146,6 @@ void CGameControllerTimeRun::DoWincheck() {
 	if (m_BossDefeated && m_GameOverTick == -1 && !m_Warmup && !GameServer()->m_World.m_ResetRequested) {
 		GameServer()->SendBroadcast("The Boss has been defeated!", -1);
 		EndRound();
-	}
-}
-
-void CGameControllerTimeRun::PostReset() {	
-	for (int i = 0; i < MAX_CLIENTS; i++) {
-		CPlayer* player = GameServer()->m_apPlayers[i];
-		if (player) {
-			player->Reset();
-		}
 	}
 }
 

@@ -64,9 +64,10 @@ public:
 	virtual bool OnEntity(int Index, vec2 Pos) override;
 	virtual void StartRound() override;
 	virtual void ResetRound();
+	virtual void PostReset() override;
+	virtual void OnCharacterSpawn(class CCharacter *pChr) override;
 	virtual int OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) override;
 	virtual void DoWincheck() override;
-	virtual void PostReset() override;
 	CCheckpoint *RegisterNewCheckpoint(vec2 Pos);
 	int GetFreePlayerSlotID();
 	void RemoveBotsMarkedForDestroy();
