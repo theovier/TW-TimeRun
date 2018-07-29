@@ -18,7 +18,7 @@
 #include <game/server/entities/spawns/bossbotspawn.h>
 #include <game/server/entities/spawns/flagbotspawn.h>
 #include <game/server/entities/spawns/botspawn.h>
-#include "exp.h"
+#include "timerun.h"
 
 CGameControllerTimeRun::CGameControllerTimeRun(class CGameContext *pGameServer) : IGameController(pGameServer) {
 	m_pGameType = "EXP";

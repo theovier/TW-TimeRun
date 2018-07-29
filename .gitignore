@@ -27,6 +27,7 @@ versionsrv*
 .vs
 Debug
 TimeRun.*
+!src/game/server/gamemodes/*
 sv_config.cfg
 exp_srv.lnk
 

@@ -1,7 +1,7 @@
 #include <engine/shared/config.h>
 #include <game/generated/protocol.h>
 #include <game/server/gamecontext.h>
-#include <game/server/gamemodes/exp.h>
+#include <game/server/gamemodes/timerun.h>
 #include "drop.h"
 
 CDrop::CDrop(CGameWorld *pGameWorld, vec2 Pos, int Type, int SubType) : CPickup(pGameWorld, Type, SubType) {	

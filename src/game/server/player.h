@@ -5,7 +5,7 @@
 
 // this include should perhaps be removed
 #include "entities/character.h"
-#include <game/server/gamemodes/exp.h>
+#include <game/server/gamemodes/timerun.h>
 #include "gamecontext.h"
 
 // player object
