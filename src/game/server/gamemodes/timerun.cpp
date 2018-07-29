@@ -111,6 +111,7 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 
 void CGameControllerTimeRun::StartRound() {
 	IGameController::StartRound();
+	ResetDoorState();
 	m_BossDefeated = false;
 }
 
@@ -138,16 +139,15 @@ void CGameControllerTimeRun::AnnounceFinishTime(int FinishTime) {
 
 void CGameControllerTimeRun::ResetRound() {
 	IGameController::ResetGame();
+}
 
+void CGameControllerTimeRun::PostReset() {
 	for (int i = 0; i < MAX_CLIENTS; i++) {
 		CPlayer* player = GameServer()->m_apPlayers[i];
 		if (player) {
 			player->Reset();
 		}
 	}
-}
-
-void CGameControllerTimeRun::PostReset() {
 	ResetDoorState();
 }
 
