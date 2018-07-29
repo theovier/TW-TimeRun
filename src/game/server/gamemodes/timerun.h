@@ -64,6 +64,7 @@ public:
 	virtual void StartRound() override;
 	virtual void EndRound() override;
 	virtual void SaveFinishTime();
+	virtual void AnnounceFinishTime(int FinishTime);
 	virtual void ResetRound();
 	virtual void PostReset() override;
 	virtual void OnCharacterSpawn(class CCharacter *pChr) override;

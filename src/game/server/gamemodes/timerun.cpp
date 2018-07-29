@@ -120,20 +120,19 @@ void CGameControllerTimeRun::EndRound() {
 }
 
 void CGameControllerTimeRun::SaveFinishTime() {
-
-	int finishTime = (int) (Server()->Tick() + m_RoundStartTick) / Server()->TickSpeed();
-
-	int min = finishTime / 60;
-	int sec = finishTime % 60;
-
-	for (int i = 0; i < MAX_CLIENTS; i++) {
+	int elapsedTime = (int) ((Server()->Tick() - m_RoundStartTick) / Server()->TickSpeed());
+	AnnounceFinishTime(elapsedTime);
+	for (int i = 0; i < g_Config.m_SvMaxClients; i++) {
 		CPlayer* player = GameServer()->m_apPlayers[i];
 		if (player && !player->IsBot()) {
-			GameServer()->SaveRank(g_Config.m_SvMap, Server()->ClientName(i), finishTime, player->m_Score);
+			GameServer()->SaveRank(g_Config.m_SvMap, Server()->ClientName(i), elapsedTime, player->m_Score);
 		}
 	}
+}
+
+void CGameControllerTimeRun::AnnounceFinishTime(int FinishTime) {
 	char buf[512];
-	str_format(buf, sizeof(buf), "You finished in %02d:%02d!", min, sec);
+	str_format(buf, sizeof(buf), "You finished in %02d:%02d!", FinishTime / 60, FinishTime % 60);
 	GameServer()->SendChatTarget(-1, buf);
 }
 
