@@ -21,7 +21,7 @@
 #include "timerun.h"
 
 CGameControllerTimeRun::CGameControllerTimeRun(class CGameContext *pGameServer) : IGameController(pGameServer) {
-	m_pGameType = "EXP";
+	m_pGameType = "PvE";
 	m_GameFlags = GAMEFLAG_TEAMS|GAMEFLAG_FLAGS;
 
 	// force config
