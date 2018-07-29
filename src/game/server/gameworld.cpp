@@ -249,3 +249,24 @@ CCharacter *CGameWorld::ClosestCharacter(vec2 Pos, float Radius, CEntity *pNotTh
 
 	return pClosest;
 }
+
+CEntity *CGameWorld::ClosestEntity(int EntityType, vec2 Pos, CEntity *pNotThis) {
+	float ClosestRange = FLT_MAX;
+	CCharacter *pClosest = 0;
+
+	CCharacter *p = (CCharacter *)GameServer()->m_World.FindFirst(EntityType);
+	for (; p; p = (CCharacter *)p->TypeNext())
+	{
+		if (p == pNotThis)
+			continue;
+
+		float Len = distance(Pos, p->m_Pos);
+		if (Len < ClosestRange)
+		{
+			ClosestRange = Len;
+			pClosest = p;
+		}
+	}
+
+	return pClosest;
+}
