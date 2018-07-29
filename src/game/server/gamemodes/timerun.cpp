@@ -11,6 +11,7 @@
 #include <game/server/entities/flag.h>
 #include <game/server/entities/timebonusflag.h>
 #include <game/server/entities/doors/door.h>
+#include <game/server/entities/doors/doortrigger.h>
 #include <game/server/entities/pickup.h>
 #include <game/server/entities/bots/bossbot.h>
 #include <game/server/entities/spawns/hammerbotspawn.h>
@@ -89,16 +90,17 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 		CTimeBonusFlag* flagBlue = new CTimeBonusFlag(&GameServer()->m_World, Pos);
 		return true;
 	}
-
-	case ENTITY_DOOR_VERTICAL: {
-		CDoor *pDoor = new CDoor(&GameServer()->m_World, Index);
-		pDoor->m_Pos = Pos;
+	}
+	if (Index >= ENTITY_DOOR_1 && Index <= ENTITY_DOOR_32) {
+		CDoor *pDoor = new CDoor(&GameServer()->m_World, Pos, Index);
+		return true;
+	}
+	else if (Index >= ENTITY_TRIGGER_DOOR_1 && Index <= ENTITY_TRIGGER_DOOR_32) {
+		CDoorTrigger *pTrigger = new CDoorTrigger(&GameServer()->m_World, Pos, Index - ENTITY_DOOR_32);
 		return true;
 	}
 
-	default:
-		return false;
-	}
+	return false;
 }
 
 void CGameControllerTimeRun::StartRound() {

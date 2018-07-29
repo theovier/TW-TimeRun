@@ -778,8 +778,9 @@ void CCharacter::OnOverlapDoorTrigger() {
 	if (doorEntity) {
 		CDoor* door = (CDoor*)doorEntity;
 		int index = door->GetIndex();
-		if (GameServer()->TimeRunController()->GetDoorState(index) == DOOR_CLOSED)
+		if (GameServer()->TimeRunController()->GetDoorState(index) == DOOR_CLOSED) {
 			GameServer()->TimeRunController()->SetDoorState(index, DOOR_OPEN);
+		}
 	}
 }
 

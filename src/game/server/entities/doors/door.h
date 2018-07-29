@@ -11,7 +11,7 @@ enum {
 class CDoor : public CEntity {
 
 public:
-	CDoor(CGameWorld *pGameWorld, int Index);
+	CDoor(CGameWorld *pGameWorld, vec2 Pos, int Index);
 
 	virtual void Reset();
 	virtual void Tick();

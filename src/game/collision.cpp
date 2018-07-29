@@ -31,7 +31,7 @@ void CCollision::Init(class CLayers *pLayers)
 	{
 		int Index = m_pTiles[i].m_Index;
 
-		if(Index > 128)
+		if(Index > 64)
 			continue;
 
 		switch(Index)

@@ -1,8 +1,9 @@
 #include <game/server/gamecontext.h>
 #include "door.h"
 
-CDoor::CDoor(CGameWorld *pGameWorld, int Index) : CEntity(pGameWorld, CGameWorld::ENTTYPE_DOOR) {
+CDoor::CDoor(CGameWorld *pGameWorld, vec2 Pos, int Index) : CEntity(pGameWorld, CGameWorld::ENTTYPE_DOOR) {
 	m_Index = Index;
+	m_Pos = Pos;
 	m_State = DOOR_CLOSED;
 	GameWorld()->InsertEntity(this);
 }
