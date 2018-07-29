@@ -20,6 +20,7 @@ void CTimeBonusFlag::Tick() {
 		std::string name = "-" + std::to_string(m_TimeGain) + " Seconds!";
 		char* c = new char[name.length() + 1];
 		GameServer()->SendBroadcast(strcpy(c, name.c_str()), -1);
+		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, "You collected a time bonus!");
 		m_Collected = true;
 	}
 }
