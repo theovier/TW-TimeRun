@@ -13,16 +13,25 @@
 #include <game/server/entities/mines/mine.h>
 #include <game/server/entities/spawns/botspawn.h>
 #include <engine/console.h>
-#include "bots.h"
 
 class CBotSpawn;
 
-enum Items {
-	POTION
+enum BOTTYPES {
+	BOTTYPE_HAMMER,
+	BOTTYPE_GUN,
+	BOTTYPE_NINJA,
+	BOTTYPE_KAMIKAZE,
+	BOTTYPE_SHOTGUN,
+	BOTTYPE_GRENADE,
+	BOTTYPE_LASER,
+	BOTTYPE_THOR,
+	BOTTYPE_FLAGBEARER,
+	BOTTYPE_ENDBOSS,
+	NUM_BOTTYPES
 };
 
-struct CItems {
-	int m_Potions;
+enum Items {
+	POTION
 };
 
 const int MAX_BOT_SPAWNS = 256;

@@ -108,6 +108,10 @@ public:
 		bool m_Got;
 	};
 
+	struct CItems {
+		int m_Potions = 1;
+	};
+
 	struct CGame
 	{
 		int m_EnterTick; //ticks

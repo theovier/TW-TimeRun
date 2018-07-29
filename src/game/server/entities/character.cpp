@@ -6,7 +6,7 @@
 #include <game/mapitems.h>
 
 #include <game/server/gamemodes/timerun.h>
-#include <game/server/gamemodes/bots.h>
+#include <game/server/gamemodes/timerun.h>
 
 #include "character.h"
 #include "laser.h"

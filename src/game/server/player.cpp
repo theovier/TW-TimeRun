@@ -4,7 +4,7 @@
 #include <math.h>
 #include <new>
 #include <engine/shared/config.h>
-#include <game/server/gamemodes/bots.h>
+#include <game/server/gamemodes/timerun.h>
 #include "player.h"
 
 MACRO_ALLOC_POOL_ID_IMPL(CPlayer, MAX_CLIENTS)
