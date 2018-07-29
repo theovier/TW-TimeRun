@@ -451,8 +451,6 @@ void CGameContext::SwapTeams()
 		if(m_apPlayers[i] && m_apPlayers[i]->GetTeam() != TEAM_SPECTATORS)
 			m_apPlayers[i]->SetTeam(m_apPlayers[i]->GetTeam()^1, false);
 	}
-
-	(void)m_pController->CheckTeamBalance();
 }
 
 static const char *s_apHints[] = {
@@ -939,7 +937,6 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 					if(pPlayer->GetTeam() == TEAM_SPECTATORS || pMsg->m_Team == TEAM_SPECTATORS)
 						m_VoteUpdate = true;
 					pPlayer->SetTeam(pMsg->m_Team);
-					(void)m_pController->CheckTeamBalance();
 					pPlayer->m_TeamChangeTick = Server()->Tick();
 				}
 				else
@@ -1239,7 +1236,6 @@ void CGameContext::ConSetTeam(IConsole::IResult *pResult, void *pUserData)
 
 	pSelf->m_apPlayers[ClientID]->m_TeamChangeTick = pSelf->Server()->Tick()+pSelf->Server()->TickSpeed()*Delay*60;
 	pSelf->m_apPlayers[ClientID]->SetTeam(Team);
-	(void)pSelf->m_pController->CheckTeamBalance();
 }
 
 void CGameContext::ConSetTeamAll(IConsole::IResult *pResult, void *pUserData)
@@ -1254,8 +1250,6 @@ void CGameContext::ConSetTeamAll(IConsole::IResult *pResult, void *pUserData)
 	for(int i = 0; i < MAX_CLIENTS; ++i)
 		if(pSelf->m_apPlayers[i])
 			pSelf->m_apPlayers[i]->SetTeam(Team, false);
-
-	(void)pSelf->m_pController->CheckTeamBalance();
 }
 
 void CGameContext::ConSwapTeams(IConsole::IResult *pResult, void *pUserData)
@@ -1303,8 +1297,6 @@ void CGameContext::ConShuffleTeams(IConsole::IResult *pResult, void *pUserData)
 			}
 		}
 	}
-
-	(void)pSelf->m_pController->CheckTeamBalance();
 }
 
 void CGameContext::ConLockTeams(IConsole::IResult *pResult, void *pUserData)

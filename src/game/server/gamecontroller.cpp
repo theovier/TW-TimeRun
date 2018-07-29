@@ -396,21 +396,6 @@ bool IGameController::IsFriendlyFire(int ClientID1, int ClientID2)
 	return false;
 }
 
-bool IGameController::IsForceBalanced()
-{
-	if(m_ForceBalanced)
-	{
-		m_ForceBalanced = false;
-		return true;
-	}
-	else
-		return false;
-}
-
-bool IGameController::CanBeMovedOnBalance(int ClientID)
-{
-	return true;
-}
 
 void IGameController::Tick()
 {
@@ -565,37 +550,6 @@ bool IGameController::CanJoinTeam(int Team, int NotThisID)
 	}
 
 	return (aNumplayers[0] + aNumplayers[1]) < Server()->MaxClients()-g_Config.m_SvSpectatorSlots;
-}
-
-bool IGameController::CheckTeamBalance()
-{
-	if(!IsTeamplay() || !g_Config.m_SvTeambalanceTime)
-		return true;
-
-	int aT[2] = {0, 0};
-	for(int i = 0; i < MAX_CLIENTS; i++)
-	{
-		CPlayer *pP = GameServer()->m_apPlayers[i];
-		if(pP && pP->GetTeam() != TEAM_SPECTATORS)
-			aT[pP->GetTeam()]++;
-	}
-
-	char aBuf[256];
-	if(absolute(aT[0]-aT[1]) >= 2)
-	{
-		str_format(aBuf, sizeof(aBuf), "Teams are NOT balanced (red=%d blue=%d)", aT[0], aT[1]);
-		GameServer()->Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
-		if(GameServer()->m_pController->m_UnbalancedTick == -1)
-			GameServer()->m_pController->m_UnbalancedTick = Server()->Tick();
-		return false;
-	}
-	else
-	{
-		str_format(aBuf, sizeof(aBuf), "Teams are balanced (red=%d blue=%d)", aT[0], aT[1]);
-		GameServer()->Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
-		GameServer()->m_pController->m_UnbalancedTick = -1;
-		return true;
-	}
 }
 
 bool IGameController::CanChangeTeam(CPlayer *pPlayer, int JoinTeam)
