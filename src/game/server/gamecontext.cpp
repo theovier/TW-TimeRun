@@ -1571,9 +1571,9 @@ bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
 	if (!strncmp(aMsg, "/info", 5) || !strncmp(aMsg, "!info", 5) || !strncmp(aMsg, "/help", 5) || !strncmp(aMsg, "/about", 6))
 	{
 		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		SendChatTarget(ClientID, "TimeRun");
-		SendChatTarget(ClientID, "Loosely based on the EXPlorer mod by <xush'> and <Choupom>");
-		SendChatTarget(ClientID, "Aim: fight your way through the map as fast as possible and defeat the final boss.");
+		SendChatTarget(ClientID, "TimeRun v0.1");
+		SendChatTarget(ClientID, "Based on the EXPlorer mod by <Choupom> and <xush'>");
+		SendChatTarget(ClientID, "Aim: Defeat the final boss as fast as possible.");
 		SendChatTarget(ClientID, "Kill monsters to earn /items");
 		SendChatTarget(ClientID, "Watch out for traps on your way.");
 		SendChatTarget(ClientID, "Say /cmdlist for the command list");
