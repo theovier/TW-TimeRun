@@ -63,10 +63,11 @@ bool CBotSpawn::IsSpawnOccupied() {
 	return overlappingCharacters > 0;
 }
 
-void CBotSpawn::Spawn() {
+int CBotSpawn::Spawn() {
 	int uniqueBotId = m_Controller->GetFreePlayerSlotID(); //todo: check that not -1 again?
 	GameServer()->OnBotClientConnected(uniqueBotId);
 	CBotPlayer* botPlayer = (CBotPlayer*) GameServer()->m_apPlayers[uniqueBotId];
 	botPlayer->InitBot(this);
 	m_AlreadySpawned = true;
+	return uniqueBotId;
 }

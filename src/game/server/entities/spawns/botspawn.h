@@ -21,12 +21,13 @@ protected:
 	int m_TriggerRadius;
 	int m_BotType;
 
+	virtual int Spawn();
+
 private:
 	bool m_AlreadySpawned;
 	bool CanSpawn();
 	bool IsPlayerNearby();
 	bool IsSpawnOccupied();
-	void Spawn();
 	CGameControllerTimeRun *m_Controller;
 };
 

@@ -2,6 +2,7 @@
 #include <game/server/entities/bots/hammerbot.h>
 #include <game/server/entities/bots/gunbot.h>
 #include <game/server/entities/bots/flagbot.h>
+#include <game/server/entities/bots/gatekeeperbot.h>
 #include <game/server/entities/bots/bossbot.h>
 
 
@@ -49,6 +50,10 @@ void CBotPlayer::InitBot(CBotSpawn *pSpawn) {
 
 		case BOTTYPE_FLAGBEARER:
 			m_pCharacter = new(m_ClientID) CFlagBot(&GameServer()->m_World);
+			break;
+
+		case BOTTYPE_GATEKEEPER:
+			m_pCharacter = new(m_ClientID) CGatekeeperBot(&GameServer()->m_World);
 			break;
 			
 		case BOTTYPE_ENDBOSS:
