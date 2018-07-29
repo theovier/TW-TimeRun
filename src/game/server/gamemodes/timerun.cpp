@@ -103,7 +103,6 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 
 void CGameControllerTimeRun::StartRound() {
 	IGameController::StartRound();
-	m_ClockWasZeroTick = m_RoundStartTick;
 	m_BossDefeated = false;
 }
 
@@ -193,15 +192,9 @@ void CGameControllerTimeRun::ResetDoorState() {
 
 void CGameControllerTimeRun::SubtractGameTime(int Seconds) {	
 	//to subtract time, we have to "delay" the startTick by adding the time.
-	float rewindTime = Server()->TickSpeed() * Seconds;
-	float passedTime = Server()->Tick() - m_ClockWasZeroTick;
+	m_RoundStartTick += Server()->TickSpeed() * Seconds;
 
-	if (rewindTime > passedTime) {
-		m_RoundStartTick += passedTime;
-		m_ClockWasZeroTick = Server()->Tick();
-	}
-	else {
-		m_RoundStartTick += rewindTime;
-	}
+	//the clock must not display negative time
+	m_RoundStartTick = clamp(float(m_RoundStartTick), 0.0f, (float)Server()->Tick());
 }
 
