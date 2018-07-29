@@ -10,7 +10,7 @@
 #include <game/server/entities/character.h>
 #include <game/server/entities/flag.h>
 #include <game/server/entities/timebonusflag.h>
-#include <game/server/entities/door.h>
+#include <game/server/entities/doors/door.h>
 #include <game/server/entities/pickup.h>
 #include <game/server/entities/bots/bossbot.h>
 #include <game/server/entities/spawns/hammerbotspawn.h>
