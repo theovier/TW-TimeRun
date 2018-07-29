@@ -148,6 +148,7 @@ protected:
 	virtual void OnOverlapWeaponStrip();
 	virtual void OnOverlapHealingZone();
 	virtual void OnOverlapPoisonZone();
+	virtual void OnOverlapDoorTrigger();
 
 };
 

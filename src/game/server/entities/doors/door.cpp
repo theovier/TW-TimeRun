@@ -10,6 +10,7 @@ CDoor::CDoor(CGameWorld *pGameWorld, int Index) : CEntity(pGameWorld, CGameWorld
 void CDoor::Reset() {
 	if (m_Index == -1)
 		GameServer()->m_World.DestroyEntity(this);
+	GameServer()->TimeRunController()->SetDoorState(m_Index, DOOR_CLOSED);
 }
 
 void CDoor::Tick() {
@@ -41,4 +42,8 @@ void CDoor::Snap(int SnappingClient) {
 	pP->m_Y = (int)m_Pos.y;
 	pP->m_Type = POWERUP_ARMOR;
 	pP->m_Subtype = 0;
+}
+
+int CDoor::GetIndex() {
+	return m_Index;
 }

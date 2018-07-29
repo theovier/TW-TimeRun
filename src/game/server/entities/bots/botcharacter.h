@@ -33,6 +33,7 @@ protected:
 	const virtual int GetBotType() { return BOTTYPE_HAMMER; };
 	virtual void OnDeath(CPlayer* Killer);
 	virtual void OnOverlapWeaponStrip() { };
+	virtual void OnOverlapDoorTrigger() { };
 
 private:
 	void MarkControllerForDestroy();

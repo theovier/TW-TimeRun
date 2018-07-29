@@ -17,6 +17,8 @@ public:
 	virtual void Tick();
 	virtual void Snap(int SnappingClient);
 
+	int GetIndex();
+
 private:
 	int m_Index;
 	int m_State;

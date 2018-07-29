@@ -5,6 +5,7 @@
 #include <game/server/gamecontext.h>
 #include <game/mapitems.h>
 
+#include "doors/door.h"
 #include <game/server/gamemodes/timerun.h>
 #include <game/server/gamemodes/timerun.h>
 
@@ -741,6 +742,9 @@ void CCharacter::OnOverlapTile(int Tile) {
 		case CCollision::COLFLAG_POISON:
 			OnOverlapPoisonZone();
 			break;
+		case CCollision::COFLAG_DOOR_TRIGGER_NEAREST:
+			OnOverlapDoorTrigger();
+			break;
 		default:
 			break;
 	}
@@ -766,6 +770,16 @@ void CCharacter::OnOverlapPoisonZone() {
 	if (Server()->Tick() > m_pPlayer->m_GameStats.m_PoisonTimer) {
 		TakeDamage(vec2(0, 0), 1, -1, WEAPON_WORLD);
 		m_pPlayer->m_GameStats.m_PoisonTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_PoisonTimer;
+	}
+}
+
+void CCharacter::OnOverlapDoorTrigger() {
+	CEntity* doorEntity = GameServer()->m_World.ClosestEntity(CGameWorld::ENTTYPE_DOOR, m_Pos, NULL);
+	if (doorEntity) {
+		CDoor* door = (CDoor*)doorEntity;
+		int index = door->GetIndex();
+		if (GameServer()->TimeRunController()->GetDoorState(index) == DOOR_CLOSED)
+			GameServer()->TimeRunController()->SetDoorState(index, DOOR_OPEN);
 	}
 }
 

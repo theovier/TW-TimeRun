@@ -54,6 +54,9 @@ void CCollision::Init(class CLayers *pLayers)
 		case TILE_WEAPONSTRIP:
 			m_pTiles[i].m_Index = COFLAG_WEAPONSTRIP;
 			break;
+		case TILE_DOOR_TRIGGER_NEAREST:
+			m_pTiles[i].m_Index = COFLAG_DOOR_TRIGGER_NEAREST;
+			break;
 		default:
 			m_pTiles[i].m_Index = 0;
 		}
