@@ -26,8 +26,6 @@ CGameControllerTimeRun::CGameControllerTimeRun(class CGameContext *pGameServer) 
 
 	// force config
 	g_Config.m_SvMaxClients = 6;
-	g_Config.m_SvScorelimit = 1;
-	g_Config.m_SvTeamdamage = 0;
 
 	for (int i = 0; i < MAX_TURRETS; i++)
 		m_Turrets[i] = 0;
