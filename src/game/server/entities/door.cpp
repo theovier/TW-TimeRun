@@ -14,7 +14,7 @@ void CDoor::Reset() {
 
 void CDoor::Tick() {
 	if (m_Index > -1)
-		m_State = GameServer()->EXPController()->GetDoorState(m_Index);
+		m_State = GameServer()->TimeRunController()->GetDoorState(m_Index);
 	if (m_State == DOOR_OPEN)
 		return;
 

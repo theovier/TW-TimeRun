@@ -32,10 +32,10 @@ const int MAX_TRAPS = 256;
 const int MAX_DOORS = 32;
 const int MAX_CHECKPOINTS = 32;
 
-class CGameControllerEXP : public IGameController {
+class CGameControllerTimeRun : public IGameController {
 public:
 
-	CGameControllerEXP(class CGameContext *pGameServer);
+	CGameControllerTimeRun(class CGameContext *pGameServer);
 
 	bool m_BossDefeated = false;
 

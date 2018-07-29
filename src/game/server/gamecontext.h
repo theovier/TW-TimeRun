@@ -81,7 +81,7 @@ public:
 	CCollision *Collision() { return &m_Collision; }
 	CTuningParams *Tuning() { return &m_Tuning; }
 
-	class CGameControllerEXP *EXPController() { return (CGameControllerEXP*)m_pController; }
+	class CGameControllerTimeRun *TimeRunController() { return (CGameControllerTimeRun*)m_pController; }
 
 	CGameContext();
 	~CGameContext();

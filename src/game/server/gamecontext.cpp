@@ -181,7 +181,7 @@ void CGameContext::CreateExplosion(vec2 Pos, int Owner, int Weapon, bool NoDamag
 		{
 			for(int b = 0; b < MAX_TURRETS; b++)
 			{
-				CTurret *t = ((CGameControllerEXP*)m_pController)->m_Turrets[b];
+				CTurret *t = ((CGameControllerTimeRun*)m_pController)->m_Turrets[b];
 				if(!t || !t->IsAlive())
 					continue;
 				
@@ -669,7 +669,7 @@ void CGameContext::OnClientDrop(int ClientID, const char *pReason)
 	}
 	if (onlyBotPlayerRemaining) {
 		Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", "No players left, resetting game");
-		EXPController()->ResetRound();
+		TimeRunController()->ResetRound();
 	}
 }
 
@@ -1704,7 +1704,7 @@ void CGameContext::OnInit(/*class IKernel *pKernel*/)
 	//players = new CPlayer[MAX_CLIENTS];
 
 	// select gametype
-	m_pController = new CGameControllerEXP(this);
+	m_pController = new CGameControllerTimeRun(this);
 
 	// setup core world
 	//for(int i = 0; i < MAX_CLIENTS; i++)
@@ -1845,7 +1845,7 @@ void CGameContext::ConTeleport(IConsole::IResult *pResult, void *pUserData) {
 
 void CGameContext::ConTeleflag(IConsole::IResult *pResult, void *pUserData) {
 	CGameContext *pSelf = (CGameContext *)pUserData;
-	CGameControllerEXP* expGC = (CGameControllerEXP*)pSelf->m_pController;
+	CGameControllerTimeRun* expGC = (CGameControllerTimeRun*)pSelf->m_pController;
 	int CID1 = clamp(pResult->GetInteger(0), 0, (int)MAX_CLIENTS - 1);
 	int FlagID = clamp(pResult->GetInteger(1), 0, (int)MAX_CHECKPOINTS - 1);
 

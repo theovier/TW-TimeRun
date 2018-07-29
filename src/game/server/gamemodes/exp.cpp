@@ -20,7 +20,7 @@
 #include <game/server/entities/spawns/botspawn.h>
 #include "exp.h"
 
-CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer) : IGameController(pGameServer) {
+CGameControllerTimeRun::CGameControllerTimeRun(class CGameContext *pGameServer) : IGameController(pGameServer) {
 	m_pGameType = "EXP";
 	m_GameFlags = GAMEFLAG_TEAMS|GAMEFLAG_FLAGS;
 
@@ -35,12 +35,12 @@ CGameControllerEXP::CGameControllerEXP(class CGameContext *pGameServer) : IGameC
 	ResetDoorState();
 }
 
-void CGameControllerEXP::Tick() {
+void CGameControllerTimeRun::Tick() {
 	IGameController::Tick();
 	RemoveBotsMarkedForDestroy();
 }
 
-bool CGameControllerEXP::OnEntity(int Index, vec2 Pos) {
+bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 	if (IGameController::OnEntity(Index, Pos)) {
 		return true;
 	}
@@ -103,17 +103,17 @@ bool CGameControllerEXP::OnEntity(int Index, vec2 Pos) {
 	}
 }
 
-void CGameControllerEXP::ResetRound() {
+void CGameControllerTimeRun::ResetRound() {
 	IGameController::ResetGame();
 }
 
-void CGameControllerEXP::StartRound() {
+void CGameControllerTimeRun::StartRound() {
 	IGameController::StartRound();
 	m_ClockWasZeroTick = m_RoundStartTick;
 	m_BossDefeated = false;
 }
 
-int CGameControllerEXP::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) {
+int CGameControllerTimeRun::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) {
 	IGameController::OnCharacterDeath(pVictim, pKiller, Weapon);
 
 	if (pKiller && pKiller->GetTeam() != pVictim->GetPlayer()->GetTeam()) {
@@ -130,14 +130,14 @@ int CGameControllerEXP::OnCharacterDeath(class CCharacter *pVictim, class CPlaye
 	return 0;
 }
 
-void CGameControllerEXP::DoWincheck() {
+void CGameControllerTimeRun::DoWincheck() {
 	if (m_BossDefeated && m_GameOverTick == -1 && !m_Warmup && !GameServer()->m_World.m_ResetRequested) {
 		GameServer()->SendBroadcast("The Boss has been defeated!", -1);
 		EndRound();
 	}
 }
 
-void CGameControllerEXP::PostReset() {	
+void CGameControllerTimeRun::PostReset() {	
 	for (int i = 0; i < MAX_CLIENTS; i++) {
 		CPlayer* player = GameServer()->m_apPlayers[i];
 		if (player) {
@@ -146,18 +146,18 @@ void CGameControllerEXP::PostReset() {
 	}
 }
 
-CCheckpoint* CGameControllerEXP::RegisterNewCheckpoint(vec2 Pos) {
+CCheckpoint* CGameControllerTimeRun::RegisterNewCheckpoint(vec2 Pos) {
 	m_Checkpoints[m_CurFlag++] = new CCheckpoint(&GameServer()->m_World, 0, Pos, m_CurFlag + 1);
 	return m_Checkpoints[m_CurFlag - 1];
 }
 
-int CGameControllerEXP::GetFreePlayerSlotID() {
+int CGameControllerTimeRun::GetFreePlayerSlotID() {
 	for (int p = g_Config.m_SvMaxClients; p < MAX_CLIENTS; p++)
 		if (!GameServer()->m_apPlayers[p]) return p;
 	return -1;
 }
 
-void CGameControllerEXP::RemoveBotsMarkedForDestroy() {
+void CGameControllerTimeRun::RemoveBotsMarkedForDestroy() {
 	for (int i = g_Config.m_SvMaxClients; i < MAX_CLIENTS; i++) {
 		CPlayer* Player = GameServer()->m_apPlayers[i];
 
@@ -170,25 +170,25 @@ void CGameControllerEXP::RemoveBotsMarkedForDestroy() {
 	}
 }
 
-void CGameControllerEXP::RemoveBot(int ClientID) {
+void CGameControllerTimeRun::RemoveBot(int ClientID) {
 	GameServer()->OnClientDrop(ClientID, "despawn");
 }
 
-int CGameControllerEXP::GetDoorState(int Index) {
+int CGameControllerTimeRun::GetDoorState(int Index) {
 	return m_Door[Index].m_State;
 }
 
-void CGameControllerEXP::SetDoorState(int Index, int State) {
+void CGameControllerTimeRun::SetDoorState(int Index, int State) {
 	m_Door[Index].m_State = State;
 }
 
-void CGameControllerEXP::ResetDoorState() {
+void CGameControllerTimeRun::ResetDoorState() {
 	for (int i = 0; i < MAX_DOORS; i++) {
 		m_Door[i].m_State = DOOR_CLOSED;
 	}
 }
 
-void CGameControllerEXP::SubtractGameTime(int Seconds) {	
+void CGameControllerTimeRun::SubtractGameTime(int Seconds) {	
 	//to subtract time, we have to "delay" the startTick by adding the time.
 	float rewindTime = Server()->TickSpeed() * Seconds;
 	float passedTime = Server()->Tick() - m_ClockWasZeroTick;

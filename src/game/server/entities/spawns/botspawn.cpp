@@ -3,7 +3,7 @@
 #include <game/server/gamecontext.h>
 #include "botspawn.h"
 
-CBotSpawn::CBotSpawn(CGameWorld *pGameWorld, vec2 Pos, CGameControllerEXP *pController) : CEntity(pGameWorld, CGameWorld::ENTTYPE_PICKUP) {
+CBotSpawn::CBotSpawn(CGameWorld *pGameWorld, vec2 Pos, CGameControllerTimeRun *pController) : CEntity(pGameWorld, CGameWorld::ENTTYPE_PICKUP) {
 	GameWorld()->InsertEntity(this);
 	m_Pos = Pos;
 	m_RespawnTimer = GameServer()->Tuning()->m_RespawnTimer;

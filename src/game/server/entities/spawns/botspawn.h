@@ -3,12 +3,12 @@
 
 #include <game/server/gamecontext.h>
 
-class CGameControllerEXP;
+class CGameControllerTimeRun;
 
 class CBotSpawn : public CEntity {
 
 public:
-	CBotSpawn(CGameWorld *pWorld, vec2 Pos, CGameControllerEXP *pController);
+	CBotSpawn(CGameWorld *pWorld, vec2 Pos, CGameControllerTimeRun *pController);
 	void Tick() override;
 	void Reset() override;
 	virtual vec2 GetPos();
@@ -27,7 +27,7 @@ private:
 	bool IsPlayerNearby();
 	bool IsSpawnOccupied();
 	void Spawn();
-	CGameControllerEXP *m_Controller;
+	CGameControllerTimeRun *m_Controller;
 };
 
 #endif

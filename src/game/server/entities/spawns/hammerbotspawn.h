@@ -6,7 +6,7 @@
 class CHammerBotSpawn : public CBotSpawn {
 
 public:
-	CHammerBotSpawn(CGameWorld *pWorld, vec2 Pos, CGameControllerEXP *pController);
+	CHammerBotSpawn(CGameWorld *pWorld, vec2 Pos, CGameControllerTimeRun *pController);
 };
 
 #endif

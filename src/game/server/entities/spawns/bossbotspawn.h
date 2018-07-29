@@ -6,7 +6,7 @@
 class CBossBotSpawn : public CBotSpawn {
 
 public:
-	CBossBotSpawn(CGameWorld *pWorld, vec2 Pos, CGameControllerEXP *pController);
+	CBossBotSpawn(CGameWorld *pWorld, vec2 Pos, CGameControllerTimeRun *pController);
 	virtual void OnSpawnlingsDeath() {};
 };
 

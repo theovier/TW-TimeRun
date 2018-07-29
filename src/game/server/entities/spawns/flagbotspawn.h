@@ -7,7 +7,7 @@
 class CFlagBotSpawn : public CBotSpawn {
 
 public:
-	CFlagBotSpawn(CGameWorld *pWorld, vec2 Pos, CGameControllerEXP *pController);
+	CFlagBotSpawn(CGameWorld *pWorld, vec2 Pos, CGameControllerTimeRun *pController);
 	virtual void OnSpawnlingsDeath() {};
 };
 

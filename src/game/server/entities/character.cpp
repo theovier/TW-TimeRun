@@ -337,7 +337,7 @@ void CCharacter::FireWeapon()
 			{
 				for(int b = 0; b < MAX_TURRETS; b++)
 				{
-					CTurret *t = ((CGameControllerEXP*)GameServer()->m_pController)->m_Turrets[b];
+					CTurret *t = ((CGameControllerTimeRun*)GameServer()->m_pController)->m_Turrets[b];
 					if (!t || !t->IsAlive())
 						continue;
 					

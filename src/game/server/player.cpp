@@ -301,7 +301,7 @@ void CPlayer::TryRespawn() {
 	if (!GameServer()->m_pController->CanSpawn(m_Team, &SpawnPos))
 		return;
 	if (m_GameExp.m_LastFlag > 0)
-		SpawnPos = ((CGameControllerEXP*)GameServer()->m_pController)->m_Checkpoints[m_GameExp.m_LastFlag - 1]->GetPos();
+		SpawnPos = ((CGameControllerTimeRun*)GameServer()->m_pController)->m_Checkpoints[m_GameExp.m_LastFlag - 1]->GetPos();
 	m_Spawning = false;
 	m_pCharacter = new(m_ClientID) CCharacter(&GameServer()->m_World);
 	m_pCharacter->Spawn(this, SpawnPos);

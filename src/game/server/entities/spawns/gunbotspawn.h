@@ -6,7 +6,7 @@
 class CGunBotSpawn : public CBotSpawn {
 
 public:
-	CGunBotSpawn(CGameWorld *pWorld, vec2 Pos, CGameControllerEXP *pController);
+	CGunBotSpawn(CGameWorld *pWorld, vec2 Pos, CGameControllerTimeRun *pController);
 };
 
 #endif

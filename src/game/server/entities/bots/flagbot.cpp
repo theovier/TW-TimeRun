@@ -9,7 +9,7 @@ CFlagBot::CFlagBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_Skin = "cammostripes";
 
 	//todo find a better way
-	CGameControllerEXP * exp = (CGameControllerEXP*)GameServer()->m_pController;
+	CGameControllerTimeRun * exp = (CGameControllerTimeRun*)GameServer()->m_pController;
 	m_Flag = exp->RegisterNewCheckpoint(vec2(0, 0));
 	m_Flag->Grab(this);
 }
