@@ -125,7 +125,7 @@ void CGameControllerTimeRun::SaveFinishTime() {
 	AnnounceFinishTime(elapsedTime);
 	for (int i = 0; i < g_Config.m_SvMaxClients; i++) {
 		CPlayer* player = GameServer()->m_apPlayers[i];
-		if (player && !player->IsBot()) {
+		if (player && !player->IsBot() && player->GetTeam() > TEAM_SPECTATORS) {
 			GameServer()->SaveRank(g_Config.m_SvMap, Server()->ClientName(i), elapsedTime, player->m_Score);
 		}
 	}
