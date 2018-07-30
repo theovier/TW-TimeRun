@@ -202,6 +202,10 @@ int CGameControllerTimeRun::ClampTeam(int Team) {
 	return Team & 1;
 }
 
+bool CGameControllerTimeRun::IsTeamplay() const {
+	return true;
+}
+
 CCheckpoint* CGameControllerTimeRun::RegisterNewCheckpoint(vec2 Pos) {
 	m_Checkpoints[m_CurFlag++] = new CCheckpoint(&GameServer()->m_World, 0, Pos, m_CurFlag + 1);
 	return m_Checkpoints[m_CurFlag - 1];

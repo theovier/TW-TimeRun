@@ -22,6 +22,7 @@ public:
 
 private:
 	const char *GetDisplayName() override;
+	void InitTeeInfo();
 	bool m_MarkedForDestroy;
 };
 

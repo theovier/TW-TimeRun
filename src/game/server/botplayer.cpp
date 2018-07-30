@@ -8,9 +8,8 @@
 
 MACRO_ALLOC_POOL_ID_IMPL(CBotPlayer, MAX_CLIENTS)
 
-CBotPlayer::CBotPlayer(CGameContext *pGameServer, int ClientID, int Team) : CPlayer(pGameServer, ClientID, Team) {
-	CPlayer::CPlayer(pGameServer, ClientID, Team);
-	m_Team = TEAM_BLUE;
+CBotPlayer::CBotPlayer(CGameContext *pGameServer, int ClientID, int Team) : CPlayer(pGameServer, ClientID, TEAM_BLUE) {
+
 }
 
 void CBotPlayer::Tick() {
@@ -40,32 +39,39 @@ void CBotPlayer::InitBot(CBotSpawn *pSpawn) {
 	GameServer()->CreatePlayerSpawn(pSpawn->GetPos());
 	m_Spawn = pSpawn;
 	switch (m_Spawn->GetBotType()) {
-		case BOTTYPE_HAMMER:
-			m_pCharacter = new(m_ClientID) CHammerbot(&GameServer()->m_World);
-			break;
+	case BOTTYPE_HAMMER:
+		m_pCharacter = new(m_ClientID) CHammerbot(&GameServer()->m_World);
+		break;
 
-		case BOTTYPE_GUN:
-			m_pCharacter = new(m_ClientID) CGunbot(&GameServer()->m_World);
-			break;
+	case BOTTYPE_GUN:
+		m_pCharacter = new(m_ClientID) CGunbot(&GameServer()->m_World);
+		break;
 
-		case BOTTYPE_FLAGBEARER:
-			m_pCharacter = new(m_ClientID) CFlagBot(&GameServer()->m_World);
-			break;
+	case BOTTYPE_FLAGBEARER:
+		m_pCharacter = new(m_ClientID) CFlagBot(&GameServer()->m_World);
+		break;
 
-		case BOTTYPE_GATEKEEPER:
-			m_pCharacter = new(m_ClientID) CGatekeeperBot(&GameServer()->m_World);
-			break;
-			
-		case BOTTYPE_ENDBOSS:
-			m_pCharacter = new(m_ClientID) CBossBot(&GameServer()->m_World);
-			break;
+	case BOTTYPE_GATEKEEPER:
+		m_pCharacter = new(m_ClientID) CGatekeeperBot(&GameServer()->m_World);
+		break;
 
-		default:
-			break;
-		};
+	case BOTTYPE_ENDBOSS:
+		m_pCharacter = new(m_ClientID) CBossBot(&GameServer()->m_World);
+		break;
 
-	str_copy(m_TeeInfos.m_SkinName, ((CBotCharacter*)m_pCharacter)->GetSkinName(), sizeof(m_TeeInfos.m_SkinName));
+	default:
+		break;
+	};
+
+	InitTeeInfo();
 	m_pCharacter->Spawn(GameServer()->m_apPlayers[m_ClientID], pSpawn->GetPos());
+}
+
+void CBotPlayer::InitTeeInfo() {
+	str_copy(m_TeeInfos.m_SkinName, ((CBotCharacter*)m_pCharacter)->GetSkinName(), sizeof(m_TeeInfos.m_SkinName));
+	m_TeeInfos.m_UseCustomColor = 1;
+	m_TeeInfos.m_ColorBody = 10223467;
+	m_TeeInfos.m_ColorFeet = 10223467;
 }
 
 const char* CBotPlayer::GetDisplayName() {
