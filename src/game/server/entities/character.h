@@ -69,6 +69,7 @@ public:
 	float m_FrozenTimer;
 
 	vec2 m_OldPos;
+	vec2 m_PrevPos;
 	bool m_HittingDoor;
 	vec2 m_PushDirection;
 	void Teleport(vec2 To);

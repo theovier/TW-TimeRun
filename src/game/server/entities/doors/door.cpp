@@ -9,8 +9,6 @@ CDoor::CDoor(CGameWorld *pGameWorld, vec2 Pos, int Index) : CEntity(pGameWorld, 
 }
 
 void CDoor::Reset() {
-	if (m_Index == -1)
-		GameServer()->m_World.DestroyEntity(this);
 	GameServer()->TimeRunController()->SetDoorState(m_Index, DOOR_CLOSED);
 }
 

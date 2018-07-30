@@ -70,6 +70,8 @@ bool CCharacter::Spawn(CPlayer *pPlayer, vec2 Pos)
 
 	m_pPlayer = pPlayer;
 	m_Pos = Pos;
+	m_OldPos = Pos;
+	m_PrevPos = Pos;
 
 	m_Core.Reset();
 	m_Core.Init(&GameServer()->m_World.m_Core, GameServer()->Collision());
@@ -576,7 +578,7 @@ void CCharacter::Tick()
 		m_pPlayer->m_ForceBalanced = false;
 	}
 
-	int Tile = GameServer()->Collision()->GetIndex(m_Pos);
+	int Tile = GameServer()->Collision()->GetIndex(m_PrevPos, m_Pos);
 	OnOverlapTile(Tile);
 
 	if(m_Frozen && Server()->Tick() > m_FrozenTimer)
@@ -601,6 +603,9 @@ void CCharacter::Tick()
 		m_Core.m_HookState = HOOK_RETRACTED;
 		m_Core.m_HookPos = m_Pos;
 	}
+
+	// set Position just in case it was changed
+	m_Pos = m_Core.m_Pos;
 
 	// handle death-tiles and leaving gamelayer
 	if(GameServer()->Collision()->GetCollisionAt(m_Pos.x+m_ProximityRadius/3.f, m_Pos.y-m_ProximityRadius/3.f)&CCollision::COLFLAG_DEATH ||
@@ -629,6 +634,7 @@ void CCharacter::Tick()
 
 	// Previnput
 	m_PrevInput = m_Input;
+	m_PrevPos = m_Core.m_Pos;
 	return;
 }
 
@@ -731,18 +737,18 @@ void CCharacter::TickPaused()
 }
 
 void CCharacter::OnOverlapTile(int Tile) {
-	int collision = GameServer()->Collision()->GetCollision(Tile);
-	switch (collision) {
-		case CCollision::COFLAG_WEAPONSTRIP:
+	int collisionWith = GameServer()->Collision()->GetCollision(Tile);
+	switch (collisionWith) {
+		case TILE_WEAPONSTRIP:
 			OnOverlapWeaponStrip();
 			break;
-		case CCollision::COLFLAG_HEALING:
+		case TILE_HEALING:
 			OnOverlapHealingZone();
 			break;
-		case CCollision::COLFLAG_POISON:
+		case TILE_POISON:
 			OnOverlapPoisonZone();
 			break;
-		case CCollision::COFLAG_DOOR_TRIGGER_NEAREST:
+		case TILE_DOOR_TRIGGER_NEAREST:
 			OnOverlapDoorTrigger();
 			break;
 		default:

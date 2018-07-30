@@ -45,6 +45,7 @@ void CCollision::Init(class CLayers *pLayers)
 		case TILE_NOHOOK:
 			m_pTiles[i].m_Index = COLFLAG_SOLID|COLFLAG_NOHOOK;
 			break;
+		/*
 		case TILE_HEALING:
 			m_pTiles[i].m_Index = COLFLAG_HEALING;
 			break;
@@ -57,8 +58,15 @@ void CCollision::Init(class CLayers *pLayers)
 		case TILE_DOOR_TRIGGER_NEAREST:
 			m_pTiles[i].m_Index = COFLAG_DOOR_TRIGGER_NEAREST;
 			break;
+		*/
 		default:
 			m_pTiles[i].m_Index = 0;
+			break;
+		}
+
+		//custom tiles
+		if (Index >= TILE_HEALING && Index <= TILE_DOOR_TRIGGER_NEAREST) {
+			m_pTiles[i].m_Index = Index;
 		}
 	}
 }
@@ -68,7 +76,14 @@ int CCollision::GetTile(int x, int y)
 	int Nx = clamp(x/32, 0, m_Width-1);
 	int Ny = clamp(y/32, 0, m_Height-1);
 
-	return m_pTiles[Ny*m_Width+Nx].m_Index > 128 ? 0 : m_pTiles[Ny*m_Width+Nx].m_Index;
+	int index = m_pTiles[Ny*m_Width + Nx].m_Index;
+
+	if (index == COLFLAG_SOLID || index == (COLFLAG_SOLID | COLFLAG_NOHOOK) || index == COLFLAG_DEATH)
+		return index;
+	else
+		return 0;
+
+	//return m_pTiles[Ny*m_Width+Nx].m_Index > 128 ? 0 : m_pTiles[Ny*m_Width+Nx].m_Index;
 }
 
 bool CCollision::IsTileSolid(int x, int y)
@@ -87,7 +102,7 @@ int CCollision::IntersectLine(vec2 Pos0, vec2 Pos1, vec2 *pOutCollision, vec2 *p
 	{
 		float a = i/Distance;
 		vec2 Pos = mix(Pos0, Pos1, a);
-		if(CheckPoint(Pos.x, Pos.y) || (CheckDoors && IsDoor(Pos.x, Pos.y)))
+		if(CheckPoint(Pos.x, Pos.y))
 		{
 			if(pOutCollision)
 				*pOutCollision = Pos;
@@ -102,27 +117,6 @@ int CCollision::IntersectLine(vec2 Pos0, vec2 Pos1, vec2 *pOutCollision, vec2 *p
 	if(pOutBeforeCollision)
 		*pOutBeforeCollision = Pos1;
 	return 0;
-}
-
-void CCollision::SetDoor(int StartX, int StartY, int EndX, int EndY)
-{
-	int NStartX = clamp(StartX/32, 0, m_Width-1);
-	int NStartY = clamp(StartY/32, 0, m_Height-1);
-	int NEndX = clamp(EndX/32, 0, m_Width-1);
-	int NEndY = clamp(EndY/32, 0, m_Height-1);
-	
-	for(int nx = NStartX; nx <= NEndX; nx++)
-	{
-		for(int ny = NStartY; ny <= NEndY; ny++)
-		{
-			m_pTiles[ny*m_Width+nx].m_Index |= COLFLAG_NOHOOK|COLFLAG_DOOR;
-		}
-	}
-}
-
-int CCollision::IsDoor(int x, int y)
-{
-	return GetCollisionAt(x, y)&COLFLAG_DOOR;
 }
 
 // TODO: OPT: rewrite this smarter!
@@ -240,6 +234,36 @@ int CCollision::GetIndex(vec2 Pos) {
 	int nx = clamp((int)Pos.x / 32, 0, m_Width - 1);
 	int ny = clamp((int)Pos.y / 32, 0, m_Height - 1);
 	return ny * m_Width + nx;
+}
+
+int CCollision::GetIndex(vec2 PrevPos, vec2 Pos) {
+	float Distance = distance(PrevPos, Pos);
+
+	if (!Distance) {
+		int Nx = clamp((int)Pos.x / 32, 0, m_Width - 1);
+		int Ny = clamp((int)Pos.y / 32, 0, m_Height - 1);
+
+		if ((m_pTiles[Ny*m_Width + Nx].m_Index >= TILE_HEALING && m_pTiles[Ny*m_Width + Nx].m_Index <= TILE_DOOR_TRIGGER_NEAREST)) {
+			return Ny * m_Width + Nx;
+		}
+	}
+
+	float a = 0.0f;
+	vec2 Tmp = vec2(0, 0);
+	int Nx = 0;
+	int Ny = 0;
+
+	for (float f = 0; f < Distance; f++) {
+		a = f / Distance;
+		Tmp = mix(PrevPos, Pos, a);
+		Nx = clamp((int)Tmp.x / 32, 0, m_Width - 1);
+		Ny = clamp((int)Tmp.y / 32, 0, m_Height - 1);
+		if ((m_pTiles[Ny*m_Width + Nx].m_Index >= TILE_HEALING && m_pTiles[Ny*m_Width + Nx].m_Index <= TILE_DOOR_TRIGGER_NEAREST)) {
+			return Ny * m_Width + Nx;
+		}
+	}
+
+	return -1;
 }
 
 int CCollision::GetCollision(int Index) {

@@ -25,9 +25,8 @@ public:
 		COLFLAG_NOHOOK=4,
 		COLFLAG_HEALING=8,
 		COLFLAG_POISON=16,
-		COLFLAG_DOOR=32,
+		COFLAG_DOOR_TRIGGER_NEAREST = 32,
 		COFLAG_WEAPONSTRIP=64,
-		COFLAG_DOOR_TRIGGER_NEAREST=128,
 	};
 
 	CCollision();
@@ -38,14 +37,13 @@ public:
 	int GetWidth() { return m_Width; };
 	int GetHeight() { return m_Height; };
 	int IntersectLine(vec2 Pos0, vec2 Pos1, vec2 *pOutCollision, vec2 *pOutBeforeCollision, bool CheckDoors = false);
-	void SetDoor(int StartX, int StartY, int EndX, int EndY);
-	int IsDoor(int x, int y);
 	void MovePoint(vec2 *pInoutPos, vec2 *pInoutVel, float Elasticity, int *pBounces);
 	void MoveBox(vec2 *pInoutPos, vec2 *pInoutVel, vec2 Size, float Elasticity);
 	bool TestBox(vec2 Pos, vec2 Size);
 
 	//race
 	int GetIndex(vec2 Pos);
+	int GetIndex(vec2 PrevPos, vec2 Pos);
 	int GetCollision(int Index);
 
 };
