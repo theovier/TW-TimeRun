@@ -110,9 +110,8 @@ CSql::CSql()
 	char *pQuery = (char *)"CREATE TABLE IF NOT EXISTS Saves (" \
 		"ID INTEGER					PRIMARY KEY		AUTOINCREMENT," \
         "Map                        TEXT            NOT NULL," \
-        "Name                       TEXT            NOT NULL," \
-		"Time						INTEGER," \
-		"Kills					    INTEGER);";
+        "Names                       TEXT            NOT NULL," \
+		"Time						INTEGER);";
 
     sqlite3_exec(m_pDB, pQuery, 0, 0, 0);
 

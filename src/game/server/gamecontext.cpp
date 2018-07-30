@@ -22,7 +22,7 @@ void CQueryTop5::OnData()
 	{
 		i++;
 		int Time = GetInt(GetID("Time"));
-		str_format(aBuf, sizeof(aBuf), "%d.: '%s': %dm%ds (%d kills)", i, GetText(GetID("Name")), Time/60, Time%60, GetInt(GetID("Kills")));
+		str_format(aBuf, sizeof(aBuf), "%d.: '%s': %dm%ds", i, GetText(GetID("Names")), Time/60, Time%60);
 		m_pGameServer->SendChatTarget(m_ClientID, aBuf);
 	}
 }
@@ -37,7 +37,7 @@ void CQueryRank::OnData()
 	{
 		i++;
 		int Time = GetInt(GetID("Time"));
-		str_format(aBuf, sizeof(aBuf), "%d.: %dm%ds (%d kills)", i, Time/60, Time%60, GetInt(GetID("Kills")));
+		str_format(aBuf, sizeof(aBuf), "%d.: '%s': %dm%ds", i, GetText(GetID("Names")), Time / 60, Time % 60);
 		m_pGameServer->SendChatTarget(m_ClientID, aBuf);
 	}
 }
@@ -1795,9 +1795,9 @@ const char *CGameContext::NetVersion() { return GAME_NETVERSION; }
 
 IGameServer *CreateGameServer() { return new CGameContext; }
 
-void CGameContext::SaveRank(const char *pMap, const char *pName, int Time, int Kills)
+void CGameContext::SaveRank(const char *pMap, const char *pNames, int Time)
 {
-	char *pQueryBuf = sqlite3_mprintf("INSERT INTO Saves (Map, Name, Time, Kills) VALUES ('%q', '%q', '%d', '%d');", pMap, pName, Time, Kills);
+	char *pQueryBuf = sqlite3_mprintf("INSERT INTO Saves (Map, Names, Time) VALUES ('%q', '%q', '%d');", pMap, pNames, Time);
 	CQuery *pQuery = new CQuery();
 	pQuery->Query(m_pDatabase, pQueryBuf);
 	sqlite3_free(pQueryBuf);
@@ -1815,7 +1815,7 @@ void CGameContext::Top5(const char *pMap, int ClientID)
 
 void CGameContext::Rank(const char *pMap, const char *pName, int ClientID)
 {
-	char *pQueryBuf = sqlite3_mprintf("SELECT * FROM Saves WHERE Map='%q' AND Name='%q' ORDER BY Time ASC LIMIT 0,5", pMap, pName);
+	char *pQueryBuf = sqlite3_mprintf("SELECT * FROM Saves WHERE Map='%q' AND Names LIKE '<%%%q%%>' ORDER BY Time ASC LIMIT 0,5", pMap, pName);
 	CQueryRank *pQuery = new CQueryRank();
 	pQuery->m_ClientID = ClientID;
 	pQuery->m_pGameServer = this;

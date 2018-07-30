@@ -188,7 +188,7 @@ public:
 
 	// - SQL
 	CSql *m_pDatabase;
-	void SaveRank(const char *pMap, const char *pName, int Time, int Kills);
+	void SaveRank(const char *pMap, const char *pNames, int Time);
 	void Top5(const char *pMap, int ClientID);
 	void Rank(const char *pMap, const char *pName, int ClientID);
 };
