@@ -76,7 +76,7 @@ public:
 	virtual void EndRound();
 	void ChangeMap(const char *pToMap);
 
-	bool IsFriendlyFire(int ClientID1, int ClientID2);
+	virtual bool IsFriendlyFire(int ClientID1, int ClientID2);
 
 
 
@@ -132,7 +132,7 @@ public:
 	virtual int GetAutoTeam(int NotThisID);
 	virtual bool CanJoinTeam(int Team, int NotThisID);
 	bool CanChangeTeam(CPlayer *pPplayer, int JoinTeam);
-	int ClampTeam(int Team);
+	virtual int ClampTeam(int Team);
 
 	virtual void PostReset();
 

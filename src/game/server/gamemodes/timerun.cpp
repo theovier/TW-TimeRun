@@ -25,7 +25,7 @@
 
 CGameControllerTimeRun::CGameControllerTimeRun(class CGameContext *pGameServer) : IGameController(pGameServer) {
 	m_pGameType = "PvE";
-	m_GameFlags = GAMEFLAG_TEAMS|GAMEFLAG_FLAGS;
+	m_GameFlags = GAMEFLAG_FLAGS;
 
 	// force config
 	g_Config.m_SvMaxClients = 6;
@@ -178,6 +178,28 @@ void CGameControllerTimeRun::DoWincheck() {
 		GameServer()->SendBroadcast("The Boss has been defeated!", -1);
 		EndRound();
 	}
+}
+
+bool CGameControllerTimeRun::IsFriendlyFire(int ClientID1, int ClientID2) {
+	if (ClientID1 == ClientID2)
+		return false;
+
+	if (ClientID1 < 0 || ClientID2 < 0)
+		return false;
+
+	if (!GameServer()->m_apPlayers[ClientID1] || !GameServer()->m_apPlayers[ClientID2])
+		return false;
+
+	if (GameServer()->m_apPlayers[ClientID1]->GetTeam() == GameServer()->m_apPlayers[ClientID2]->GetTeam())
+		return true;
+
+	return false;
+}
+
+int CGameControllerTimeRun::ClampTeam(int Team) {
+	if (Team < 0)
+		return TEAM_SPECTATORS;
+	return Team & 1;
 }
 
 CCheckpoint* CGameControllerTimeRun::RegisterNewCheckpoint(vec2 Pos) {

@@ -70,6 +70,8 @@ public:
 	virtual void OnCharacterSpawn(class CCharacter *pChr) override;
 	virtual int OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) override;
 	virtual void DoWincheck() override;
+	virtual bool IsFriendlyFire(int ClientID1, int ClientID2);
+	virtual int ClampTeam(int Team);
 	CCheckpoint *RegisterNewCheckpoint(vec2 Pos);
 	int GetFreePlayerSlotID();
 	void RemoveBotsMarkedForDestroy();
