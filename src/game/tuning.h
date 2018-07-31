@@ -80,6 +80,8 @@ MACRO_TUNING_PARAM(HammerBotLife, bot_hammer_life, 10.0f)
 
 MACRO_TUNING_PARAM(FlagBotLife, bot_flag_life, 25.0f)
 
+MACRO_TUNING_PARAM(GatekeeperBotLife, bot_door_life, 25.0f)
+
 // boss
 MACRO_TUNING_PARAM(BossLife, boss_life, 200)
 MACRO_TUNING_PARAM(BossDistancelimit, boss_distancelimit, 1000.0f)

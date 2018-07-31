@@ -6,7 +6,7 @@ MACRO_ALLOC_POOL_ID_IMPL(CGatekeeperBot, MAX_CLIENTS)
 
 CGatekeeperBot::CGatekeeperBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	CBotCharacter::CBotCharacter(pWorld);
-	m_MaxHealth = m_Health = 1;
+	m_MaxHealth = m_Health = GameServer()->Tuning()->m_GatekeeperBotLife;
 	m_aWeapons[WEAPON_GUN].m_Got = true;
 	m_Skin = "limekitty";
 }
