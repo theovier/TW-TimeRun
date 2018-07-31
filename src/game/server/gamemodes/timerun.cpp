@@ -111,7 +111,6 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 
 void CGameControllerTimeRun::StartRound() {
 	IGameController::StartRound();
-	ResetDoorState();
 	m_BossDefeated = false;
 }
 
@@ -144,6 +143,7 @@ void CGameControllerTimeRun::AnnounceFinishTime(int FinishTime) {
 
 void CGameControllerTimeRun::ResetRound() {
 	IGameController::ResetGame();
+	ResetDoorState();
 }
 
 void CGameControllerTimeRun::PostReset() {
@@ -153,7 +153,6 @@ void CGameControllerTimeRun::PostReset() {
 			player->Reset();
 		}
 	}
-	ResetDoorState();
 }
 
 void CGameControllerTimeRun::OnCharacterSpawn(class CCharacter *pChr) {

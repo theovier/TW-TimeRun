@@ -16,7 +16,10 @@ void CGatekeeperBot::Handle() {
 }
 
 void CGatekeeperBot::OnDeath(CPlayer* Killer) {
-	GameServer()->TimeRunController()->SetDoorState(m_DoorIndex, DOOR_OPEN);
+	if (Killer != m_pPlayer) {
+		//make sure we were really killed, not just despawned by our botPlayer.
+		GameServer()->TimeRunController()->SetDoorState(m_DoorIndex, DOOR_OPEN);
+	}	
 }
 
 void CGatekeeperBot::SetDoorIndex(int DoorIndex) {
