@@ -123,10 +123,11 @@ void CGameControllerTimeRun::SaveFinishTime() {
 	int elapsedTime = (int) ((Server()->Tick() - m_RoundStartTick) / Server()->TickSpeed());
 	AnnounceFinishTime(elapsedTime);
 
-	std::string names = "<";
+	std::string names = "";
 	for (int i = 0; i < g_Config.m_SvMaxClients; i++) {
 		CPlayer* player = GameServer()->m_apPlayers[i];
 		if (player && !player->IsBot() && player->GetTeam() > TEAM_SPECTATORS) {
+			names += "<";
 			names += Server()->ClientName(i);
 			names += ">, ";
 		}
