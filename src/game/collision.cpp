@@ -45,20 +45,6 @@ void CCollision::Init(class CLayers *pLayers)
 		case TILE_NOHOOK:
 			m_pTiles[i].m_Index = COLFLAG_SOLID|COLFLAG_NOHOOK;
 			break;
-		/*
-		case TILE_HEALING:
-			m_pTiles[i].m_Index = COLFLAG_HEALING;
-			break;
-		case TILE_POISON:
-			m_pTiles[i].m_Index = COLFLAG_POISON;
-			break;
-		case TILE_WEAPONSTRIP:
-			m_pTiles[i].m_Index = COFLAG_WEAPONSTRIP;
-			break;
-		case TILE_DOOR_TRIGGER_NEAREST:
-			m_pTiles[i].m_Index = COFLAG_DOOR_TRIGGER_NEAREST;
-			break;
-		*/
 		default:
 			m_pTiles[i].m_Index = 0;
 			break;
@@ -71,8 +57,7 @@ void CCollision::Init(class CLayers *pLayers)
 	}
 }
 
-int CCollision::GetTile(int x, int y)
-{
+int CCollision::GetTile(int x, int y) {
 	int Nx = clamp(x/32, 0, m_Width-1);
 	int Ny = clamp(y/32, 0, m_Height-1);
 
@@ -82,8 +67,6 @@ int CCollision::GetTile(int x, int y)
 		return index;
 	else
 		return 0;
-
-	//return m_pTiles[Ny*m_Width+Nx].m_Index > 128 ? 0 : m_pTiles[Ny*m_Width+Nx].m_Index;
 }
 
 bool CCollision::IsTileSolid(int x, int y)
