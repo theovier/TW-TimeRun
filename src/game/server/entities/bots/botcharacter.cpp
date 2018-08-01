@@ -26,7 +26,7 @@ void CBotCharacter::MarkControllerForDestroy() {
 }
 
 void CBotCharacter::OnDeath(CPlayer* Killer) {	
-	if (Killer) {
+	if (Killer && Killer != m_pPlayer) {
 		CLootHandler::HandleLoot(&GameServer()->m_World, m_Pos, GetBotType());
 	}
 }
