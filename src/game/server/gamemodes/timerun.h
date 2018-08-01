@@ -59,6 +59,11 @@ public:
 		int m_State;
 	} m_Door[MAX_DOORS];
 
+
+	//used to delay the gameover after obtaining the win condition for some time.
+	float m_GameOverDelayTick;
+	int m_GameOverDelay;
+
 	virtual void Tick() override;
 	virtual bool OnEntity(int Index, vec2 Pos) override;
 	virtual void StartRound() override;

@@ -28,6 +28,8 @@ CGameControllerTimeRun::CGameControllerTimeRun(class CGameContext *pGameServer) 
 	m_GameFlags = GAMEFLAG_FLAGS;
 
 	m_WaitForRestartTime = g_Config.m_SvRestartTime;
+	m_GameOverDelayTick = -1;
+	m_GameOverDelay = g_Config.m_SvGameOverDelay;
 
 	// force config
 	g_Config.m_SvMaxClients = 6;
@@ -114,11 +116,12 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 void CGameControllerTimeRun::StartRound() {
 	IGameController::StartRound();
 	m_BossDefeated = false;
+	m_GameOverDelayTick = -1;
 }
 
 void CGameControllerTimeRun::EndRound() {
 	IGameController::EndRound();
-	SaveFinishTime();
+	m_GameOverDelayTick = -1;
 }
 
 void CGameControllerTimeRun::SaveFinishTime() {
@@ -156,6 +159,7 @@ void CGameControllerTimeRun::PostReset() {
 			player->Reset();
 		}
 	}
+	m_GameOverDelayTick = -1; //has to be reset here, otherwise it will be set to 0 by something?!
 }
 
 void CGameControllerTimeRun::OnCharacterSpawn(class CCharacter *pChr) {
@@ -180,9 +184,15 @@ int CGameControllerTimeRun::OnCharacterDeath(class CCharacter *pVictim, class CP
 	return 0;
 }
 
-void CGameControllerTimeRun::DoWincheck() {
-	if (m_BossDefeated && m_GameOverTick == -1 && !m_Warmup && !GameServer()->m_World.m_ResetRequested) {
+void CGameControllerTimeRun::DoWincheck() {	
+	if (m_BossDefeated && m_GameOverTick == -1 && m_GameOverDelayTick == -1 && !m_Warmup && !GameServer()->m_World.m_ResetRequested) {
 		GameServer()->SendBroadcast("The Boss has been defeated!", -1);
+		m_GameOverDelayTick = Server()->Tick();
+		SaveFinishTime();
+	}
+
+	//wait some time before actually ending the round and showing the scoreboard
+	if (m_BossDefeated && Server()->Tick() > m_GameOverDelayTick + Server()->TickSpeed() * m_GameOverDelay && m_GameOverDelayTick != -1) {
 		EndRound();
 	}
 }
