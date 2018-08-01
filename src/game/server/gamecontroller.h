@@ -53,6 +53,7 @@ protected:
 	int m_Warmup;
 	int m_UnpauseTimer;
 	int m_RoundCount;
+	int m_WaitForRestartTime;
 
 	int m_GameFlags;
 	int m_UnbalancedTick;
