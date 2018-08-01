@@ -27,7 +27,7 @@ CGameControllerTimeRun::CGameControllerTimeRun(class CGameContext *pGameServer) 
 	m_pGameType = "TR";
 	m_GameFlags = GAMEFLAG_FLAGS;
 
-	m_WaitForRestartTime = 5;
+	m_WaitForRestartTime = g_Config.m_SvRestartTime;
 
 	// force config
 	g_Config.m_SvMaxClients = 6;
