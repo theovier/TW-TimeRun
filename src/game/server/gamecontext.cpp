@@ -1625,7 +1625,11 @@ bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
 		Use(ClientID, "Potion");
 		return true;
 	}
-
+	else if (!strncmp(aMsg, "/restart", 8) || !strncmp(aMsg, "restart", 8))
+	{
+		StartVote("restart", "restart 5", "reset everything");
+		return true;
+	}
 	else if (!strncmp(aMsg, "/", 1))
 	{
 		char aBuf[256];
