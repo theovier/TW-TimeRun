@@ -211,6 +211,21 @@ bool CGameControllerTimeRun::IsTeamplay() const {
 	return true;
 }
 
+bool CGameControllerTimeRun::CanJoinTeam(int Team, int NotThisID) {
+	if (Team == TEAM_SPECTATORS || (GameServer()->m_apPlayers[NotThisID] && GameServer()->m_apPlayers[NotThisID]->GetTeam() != TEAM_SPECTATORS))
+		return true;
+
+	if (Team == TEAM_RED) {
+		int currentHumans = 0;
+		for (int i = 0; i < MAX_CLIENTS; i++)
+			if (GameServer()->m_apPlayers[i] && i != NotThisID)
+				if (GameServer()->m_apPlayers[i]->GetTeam() == TEAM_RED)
+					currentHumans++;
+		return currentHumans < g_Config.m_SvPlayerLimit;
+	}	
+	return false;
+}
+
 CCheckpoint* CGameControllerTimeRun::RegisterNewCheckpoint(vec2 Pos) {
 	m_Checkpoints[m_CurFlag++] = new CCheckpoint(&GameServer()->m_World, 0, Pos, m_CurFlag + 1);
 	return m_Checkpoints[m_CurFlag - 1];

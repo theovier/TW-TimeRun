@@ -73,6 +73,7 @@ public:
 	virtual bool IsFriendlyFire(int ClientID1, int ClientID2) override;
 	virtual int ClampTeam(int Team) override;
 	virtual bool IsTeamplay() const override;
+	virtual bool CanJoinTeam(int Team, int NotThisID);
 	virtual void OnPlayerInfoChange(class CPlayer *pP) override {};
 	CCheckpoint *RegisterNewCheckpoint(vec2 Pos);
 	int GetFreePlayerSlotID();

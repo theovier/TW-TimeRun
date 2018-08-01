@@ -85,6 +85,7 @@ MACRO_CONFIG_INT(SvVoteKickMin, sv_vote_kick_min, 0, 0, MAX_CLIENTS, CFGFLAG_SER
 MACRO_CONFIG_INT(SvVoteKickBantime, sv_vote_kick_bantime, 5, 0, 1440, CFGFLAG_SERVER, "The time to ban a player if kicked by vote. 0 makes it just use kick")
 
 
+MACRO_CONFIG_INT(SvPlayerLimit, sv_player_limit, 4, 1, MAX_CLIENTS, CFGFLAG_SERVER, "How many (human) players can join spawn simultaneously")
 MACRO_CONFIG_INT(SvPickupHealthGain, sv_pickup_health_gain, 1, 1, 10, CFGFLAG_SERVER, "The amount of lives you gain by picking up a heart")
 MACRO_CONFIG_INT(SvPickupShieldGain, sv_pickup_shield_gain, 1, 1, 10, CFGFLAG_SERVER, "The amount of shields you gain by picking up a shield")
 
