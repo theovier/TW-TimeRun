@@ -51,6 +51,7 @@ CCharacter::CCharacter(CGameWorld *pWorld)
 	m_Health = 0;
 	m_Armor = 0;
 	m_MaxHealth = 10;
+	m_MaxArmor = 10;
 }
 
 void CCharacter::Reset()
@@ -754,11 +755,8 @@ void CCharacter::OnOverlapWeaponStrip() {
 
 void CCharacter::OnOverlapHealingZone() {
 	if (Server()->Tick() > m_pPlayer->m_GameStats.m_RegenTimer) {
-		if (m_Health < m_MaxHealth) {
-			m_Health++;
-		}
-		else if (m_Armor < 10) {
-			m_Armor++;
+		if (!IncreaseHealth(1)) {
+			IncreaseArmor(1);
 		}
 		m_pPlayer->m_GameStats.m_RegenTimer = Server()->Tick() + Server()->TickSpeed() * GameServer()->Tuning()->m_RegenTimer;
 	}
@@ -792,9 +790,9 @@ bool CCharacter::IncreaseHealth(int Amount)
 
 bool CCharacter::IncreaseArmor(int Amount)
 {
-	if (m_Armor >= 10)
+	if (m_Armor >= m_MaxArmor)
 		return false;
-	m_Armor = clamp(m_Armor + Amount, 0, 10);
+	m_Armor = clamp(m_Armor + Amount, 0, m_MaxArmor);
 	return true;
 }
 

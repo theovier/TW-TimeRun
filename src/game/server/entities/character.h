@@ -80,6 +80,7 @@ public:
 	int m_Health;
 	int m_Armor;
 	int m_MaxHealth;
+	int m_MaxArmor;
 
 	int m_EmoteType;
 	int m_EmoteStop;
