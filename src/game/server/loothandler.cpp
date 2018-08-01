@@ -18,7 +18,7 @@ void CLootHandler::DropRandomLoot(CGameWorld *pGameWorld, vec2 Pos, int BotType)
 
 	std::map<int, float> droprates;
 	switch (BotType) {	
-		case 0:
+		case BOTTYPE_HAMMER:
 			droprates[LOOT_GUN] = 0.02f;
 			droprates[LOOT_GRENADE] = 0.08f;
 			droprates[LOOT_SHOTGUN] = 0.10f;
@@ -28,7 +28,7 @@ void CLootHandler::DropRandomLoot(CGameWorld *pGameWorld, vec2 Pos, int BotType)
 			droprates[LOOT_LASER] = 0.00f;
 			droprates[LOOT_NINJA] = 0.00f;
 			break;
-		case 1:
+		case BOTTYPE_GUN:
 			droprates[LOOT_GRENADE] = 0.01f;
 			droprates[LOOT_SHOTGUN] = 0.03f;
 			droprates[LOOT_GUN] = 0.16f;
@@ -38,7 +38,7 @@ void CLootHandler::DropRandomLoot(CGameWorld *pGameWorld, vec2 Pos, int BotType)
 			droprates[LOOT_LASER] = 0.00f;
 			droprates[LOOT_NINJA] = 0.00f;
 			break;
-		case 2:
+		case BOTTYPE_NINJA:
 			droprates[LOOT_HEALTH] = 0.0f;
 			droprates[LOOT_ARMOR] = 0.0f;
 			droprates[LOOT_POTION] = 0.00f;
@@ -48,7 +48,7 @@ void CLootHandler::DropRandomLoot(CGameWorld *pGameWorld, vec2 Pos, int BotType)
 			droprates[LOOT_LASER] = 0.00f;
 			droprates[LOOT_NINJA] = 0.20f;
 			break;
-		case 3:
+		case BOTTYPE_KAMIKAZE:
 			droprates[LOOT_HEALTH] = 0.01f;
 			droprates[LOOT_ARMOR] = 0.00f;
 			droprates[LOOT_POTION] = 0.01f;
