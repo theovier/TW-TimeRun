@@ -136,6 +136,13 @@ public:
 
 	CCharacter *m_pCharacter;
 
+	bool m_UseCustomColor;
+	bool m_IsRainbow;
+	int m_RainbowColor;
+	int m_RainbowColorNumber;
+	virtual void SetRainbow(bool active);
+	virtual void TickRainbow();
+
 protected:
 	CGameContext *m_pGameServer;
 

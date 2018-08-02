@@ -9,13 +9,14 @@
 MACRO_ALLOC_POOL_ID_IMPL(CBotPlayer, MAX_CLIENTS)
 
 CBotPlayer::CBotPlayer(CGameContext *pGameServer, int ClientID, int Team) : CPlayer(pGameServer, ClientID, TEAM_BLUE) {
-
+	m_UseCustomColor = true;
 }
 
 void CBotPlayer::Tick() {
 	m_Latency.m_Avg = 42;
 	m_Latency.m_Max = 42;
 	m_Latency.m_Min = 42;
+	TickRainbow();
 }
 
 void CBotPlayer::Reset() {

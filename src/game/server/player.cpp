@@ -23,6 +23,7 @@ CPlayer::CPlayer(CGameContext *pGameServer, int ClientID, int Team)
 	m_SpectatorID = SPEC_FREEVIEW;
 	m_LastActionTick = Server()->Tick();
 	m_TeamChangeTick = Server()->Tick();
+	m_UseCustomColor = m_TeeInfos.m_UseCustomColor;
 }
 
 CPlayer::~CPlayer()
@@ -91,6 +92,20 @@ void CPlayer::Tick()
 		++m_LastActionTick;
 		++m_TeamChangeTick;
  	}
+	TickRainbow();
+}
+
+void CPlayer::TickRainbow() {
+	if (m_IsRainbow) {
+		if (!m_TeeInfos.m_UseCustomColor)
+			m_TeeInfos.m_UseCustomColor = true;
+
+		m_RainbowColor = (m_RainbowColor + 1) % 256;
+		m_RainbowColorNumber = m_RainbowColor * 0x010000 + 0xff00;
+	}
+	else {
+		m_TeeInfos.m_UseCustomColor = m_UseCustomColor;
+	}
 }
 
 void CPlayer::PostTick()
@@ -143,8 +158,8 @@ void CPlayer::SnapIngame(int SnappingClient) {
 	pClientInfo->m_Country = Server()->ClientCountry(m_ClientID);
 	StrToInts(&pClientInfo->m_Skin0, 6, m_TeeInfos.m_SkinName);
 	pClientInfo->m_UseCustomColor = m_TeeInfos.m_UseCustomColor;
-	pClientInfo->m_ColorBody = m_TeeInfos.m_ColorBody;
-	pClientInfo->m_ColorFeet = m_TeeInfos.m_ColorFeet;
+	pClientInfo->m_ColorBody = m_IsRainbow ? m_RainbowColorNumber : m_TeeInfos.m_ColorBody;
+	pClientInfo->m_ColorFeet = m_IsRainbow ? m_RainbowColorNumber : m_TeeInfos.m_ColorFeet;
 
 	CNetObj_PlayerInfo *pPlayerInfo = static_cast<CNetObj_PlayerInfo *>(Server()->SnapNewItem(NETOBJTYPE_PLAYERINFO, m_ClientID, sizeof(CNetObj_PlayerInfo)));
 	if (!pPlayerInfo)
@@ -377,4 +392,8 @@ bool CPlayer::UsePotion() {
 		GameServer()->SendChatTarget(m_ClientID, "You haven't got a <Potion>!");
 
 	return false;
+}
+
+void CPlayer::SetRainbow(bool active) {
+	m_IsRainbow = active;
 }
