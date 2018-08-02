@@ -19,6 +19,8 @@ void CGatekeeperBot::OnDeath(CPlayer* Killer) {
 	if (Killer != m_pPlayer) {
 		//make sure we were really killed, not just despawned by our botPlayer.
 		GameServer()->TimeRunController()->SetDoorState(m_DoorIndex, DOOR_OPEN);
+		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, "You killed a gatekeeper - a door has been opened!");
+		GameServer()->CreateSoundGlobal(SOUND_HOOK_LOOP);
 	}	
 }
 
