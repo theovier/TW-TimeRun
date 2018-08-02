@@ -10,15 +10,21 @@ class CBossBot : public CBotCharacter {
 
 public:
 	CBossBot(CGameWorld *pWorld);
-	const char *GetDisplayName() override;
+	virtual void Tick() override;
 	virtual bool TakeDamage(vec2 Force, int Dmg, int From, int Weapon) override;
+	const char *GetDisplayName() override;
 protected:
+	virtual void Handle() {};
 	const int GetBotType() { return BOTTYPE_ENDBOSS; };
 private:
 	//after this amount of dmg taken the boss enrages
 	int m_EnrageDmgThreshold;
 	bool m_IsEnraged;
 	void Enrage();
+
+	bool m_InFight;
+
+	void SpamZZZ();
 };
 
 #endif

@@ -35,6 +35,10 @@ protected:
 	virtual void OnOverlapWeaponStrip() { };
 	virtual void OnOverlapDoorTrigger() { };
 
+	float m_EmoteInterval = 1.5f;
+	float m_EmoteTick;
+	virtual void SetEmoticon(int Emoticon);
+
 private:
 	void MarkControllerForDestroy();
 };

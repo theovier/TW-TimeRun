@@ -15,6 +15,14 @@ void CBotCharacter::Tick() {
 	Handle();
 }
 
+void CBotCharacter::SetEmoticon(int Emotiocon) {
+	if (m_pPlayer) {
+		GameServer()->SendEmoticon(m_pPlayer->GetCID(), Emotiocon);
+		m_pPlayer->m_LastEmote = Server()->Tick();
+		m_EmoteTick = Server()->Tick() + Server()->TickSpeed() * m_EmoteInterval;
+	}
+}
+
 void CBotCharacter::Die(int Killer, int Weapon) {
 	CCharacter::Die(Killer, Weapon);
 	OnDeath(GameServer()->m_apPlayers[Killer]);

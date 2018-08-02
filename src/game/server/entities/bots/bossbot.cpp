@@ -9,10 +9,27 @@ CBossBot::CBossBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_Skin = "twinbop";
 }
 
+void CBossBot::Tick() {
+	CBotCharacter::Tick();
+	if (!m_InFight) {
+		SpamZZZ();
+	}
+}
+
+void CBossBot::SpamZZZ() {
+	if (Server()->Tick() > m_EmoteTick + Server()->TickSpeed() * m_EmoteInterval) {
+		SetEmoticon(EMOTICON_ZZZ);
+	}
+}
+
 bool CBossBot::TakeDamage(vec2 Force, int Dmg, int From, int Weapon) {
 	bool tookDamage = CCharacter::TakeDamage(Force, Dmg, From, Weapon);
 	if (IsAlive() && m_Health < m_EnrageDmgThreshold && !m_IsEnraged) {
 		Enrage();
+	}
+	if (!m_InFight) {
+		m_InFight = true;
+		SetEmoticon(EMOTICON_EXCLAMATION);
 	}
 	return tookDamage;
 }
@@ -31,6 +48,7 @@ const char* CBossBot::GetDisplayName() {
 void CBossBot::Enrage() {
 	//do cool stuff.
 	GameServer()->SendBroadcast("Boss enrages!", -1);
+	SetEmoticon(EMOTICON_EXCLAMATION);
 	m_IsEnraged = true;
 	if (m_pPlayer) {
 		m_pPlayer->SetRainbow(true);
