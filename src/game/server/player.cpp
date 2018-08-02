@@ -135,6 +135,7 @@ void CPlayer::Reset() {
 	m_GameStats.m_Kills = 0;
 	m_GameStats.m_LastFlag = 0;
 	m_GameStats.m_Items.m_Potions = 0;
+	m_IsRainbow = false;
 	RemovePermaWeapons();
 }
 

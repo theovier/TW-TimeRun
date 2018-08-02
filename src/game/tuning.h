@@ -85,6 +85,7 @@ MACRO_TUNING_PARAM(GatekeeperBotLife, bot_door_life, 25.0f)
 // boss
 MACRO_TUNING_PARAM(BossLife, boss_life, 200)
 MACRO_TUNING_PARAM(BossDistancelimit, boss_distancelimit, 1000.0f)
+MACRO_TUNING_PARAM(BossEnrageDmgThreshold, boss_enrage_dmg, 5)
 
 // freezing
 MACRO_TUNING_PARAM(FreezerReload, freezer_reload, 1.5f)
