@@ -14,10 +14,18 @@ void CBossBot::Tick() {
 	if (!m_InFight) {
 		SpamZZZ();
 	}
+	if (m_IsEnraged) {
+		TickEnrage();
+	}
+}
+
+void CBossBot::TickEnrage() {
+	SetEmote(EMOTE_ANGRY, Server()->Tick() + Server()->TickSpeed());
 }
 
 void CBossBot::SpamZZZ() {
 	if (Server()->Tick() > m_EmoteTick + Server()->TickSpeed() * m_EmoteInterval) {
+		SetEmote(EMOTE_BLINK, Server()->Tick() + Server()->TickSpeed() * 2 * m_EmoteInterval);
 		SetEmoticon(EMOTICON_ZZZ);
 	}
 }
@@ -25,11 +33,12 @@ void CBossBot::SpamZZZ() {
 bool CBossBot::TakeDamage(vec2 Force, int Dmg, int From, int Weapon) {
 	bool tookDamage = CCharacter::TakeDamage(Force, Dmg, From, Weapon);
 	if (IsAlive() && m_Health < m_EnrageDmgThreshold && !m_IsEnraged) {
-		Enrage();
+		StartEnrage();
 	}
 	if (!m_InFight) {
 		m_InFight = true;
-		SetEmoticon(EMOTICON_EXCLAMATION);
+		SetEmoticon(EMOTICON_ZOMG);
+		SetEmote(EMOTE_ANGRY, Server()->Tick() + Server()->TickSpeed());
 	}
 	return tookDamage;
 }
@@ -45,10 +54,11 @@ const char* CBossBot::GetDisplayName() {
 	}
 }
 
-void CBossBot::Enrage() {
+void CBossBot::StartEnrage() {
 	//do cool stuff.
 	GameServer()->SendBroadcast("Boss enrages!", -1);
 	SetEmoticon(EMOTICON_EXCLAMATION);
+	
 	m_IsEnraged = true;
 	if (m_pPlayer) {
 		m_pPlayer->SetRainbow(true);

@@ -20,7 +20,8 @@ private:
 	//after this amount of dmg taken the boss enrages
 	int m_EnrageDmgThreshold;
 	bool m_IsEnraged;
-	void Enrage();
+	void StartEnrage();
+	void TickEnrage();
 
 	bool m_InFight;
 
