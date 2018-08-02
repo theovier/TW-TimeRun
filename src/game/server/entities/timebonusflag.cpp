@@ -21,6 +21,7 @@ void CTimeBonusFlag::Tick() {
 		char* c = new char[name.length() + 1];
 		GameServer()->SendBroadcast(strcpy(c, name.c_str()), -1);
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, "You collected a time bonus!");
+		GameServer()->CreateSoundGlobal(SOUND_CTF_RETURN);
 		m_Collected = true;
 	}
 }
