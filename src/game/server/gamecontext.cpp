@@ -1630,6 +1630,12 @@ bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
 		StartVote("restart", "restart 5", "reset everything");
 		return true;
 	}
+	else if (!strncmp(aMsg, "/pause", 6) || !strncmp(aMsg, "pause", 6))
+	{
+		CGameContext *pSelf = (CGameContext *)this;
+		pSelf->m_pController->TogglePause();
+		return true;
+	}
 	else if (!strncmp(aMsg, "/", 1))
 	{
 		char aBuf[256];
