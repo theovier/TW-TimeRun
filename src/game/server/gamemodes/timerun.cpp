@@ -121,6 +121,7 @@ void CGameControllerTimeRun::StartRound() {
 
 void CGameControllerTimeRun::EndRound() {
 	IGameController::EndRound();
+	GameServer()->CreateSoundGlobal(SOUND_CTF_CAPTURE);
 	m_GameOverDelayTick = -1;
 }
 
