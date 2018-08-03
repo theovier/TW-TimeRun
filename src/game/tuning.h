@@ -78,6 +78,8 @@ MACRO_TUNING_PARAM(GunBotLife, bot_gun_life, 15.0f)
 MACRO_TUNING_PARAM(HammerBotRespawnTime, bot_hammer_respawn_time, 10.0f)
 MACRO_TUNING_PARAM(HammerBotLife, bot_hammer_life, 10.0f)
 
+MACRO_TUNING_PARAM(FlagBotLife, bot_flag_life, 25.0f)
+
 MACRO_TUNING_PARAM(GatekeeperBotLife, bot_door_life, 25.0f)
 
 // boss
