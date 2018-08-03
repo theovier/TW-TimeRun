@@ -8,6 +8,6 @@ CHammerbot::CHammerbot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 }
 
 void CHammerbot::Aim(vec2 Target) {
-	dbg_msg("HAMMER", "aim at %f, %f", Target.x, Target.y);
+	
 }
 
