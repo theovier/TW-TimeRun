@@ -98,15 +98,15 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 	}
 	}
 	if (Index >= ENTITY_DOOR_1 && Index <= ENTITY_DOOR_32) {
-		CDoor *pDoor = new CDoor(&GameServer()->m_World, Pos, Index);
+		CDoor *pDoor = new CDoor(&GameServer()->m_World, Pos, Index-1);
 		return true;
 	}
 	else if (Index >= ENTITY_TRIGGER_DOOR_1 && Index <= ENTITY_TRIGGER_DOOR_29) {
-		CDoorTrigger *pTrigger = new CDoorTrigger(&GameServer()->m_World, Pos, Index - ENTITY_DOOR_32);
+		CDoorTrigger *pTrigger = new CDoorTrigger(&GameServer()->m_World, Pos, Index - 1 - ENTITY_DOOR_32);
 		return true;
 	}
 	else if (Index >= ENTITY_SPAWN_BOT_GATEKEEPER_DOOR_30 && Index <= ENTITY_SPAWN_BOT_GATEKEEPER_DOOR_32) {
-		m_BotSpawns[m_CurBotSpawn++] = new CGatekeeperBotSpawn(&GameServer()->m_World, Pos, this, Index - ENTITY_DOOR_32);
+		m_BotSpawns[m_CurBotSpawn++] = new CGatekeeperBotSpawn(&GameServer()->m_World, Pos, this, Index - 1 - ENTITY_DOOR_32);
 		return true;
 	}
 
@@ -116,7 +116,6 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 void CGameControllerTimeRun::StartRound() {
 	IGameController::StartRound();
 	m_BossDefeated = false;
-	m_GameOverDelayTick = -1;
 }
 
 void CGameControllerTimeRun::EndRound() {
@@ -160,7 +159,6 @@ void CGameControllerTimeRun::PostReset() {
 			player->Reset();
 		}
 	}
-	m_GameOverDelayTick = -1; //has to be reset here, otherwise it will be set to 0 by something?!
 }
 
 void CGameControllerTimeRun::OnCharacterSpawn(class CCharacter *pChr) {
