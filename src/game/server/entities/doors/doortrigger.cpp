@@ -13,7 +13,7 @@ void CDoorTrigger::Tick() {
 	if (pChr && pChr->IsAlive()) {
 		GameServer()->TimeRunController()->SetDoorState(m_DoorIndex, DOOR_OPEN);
 	}
-	else {
+	else if (GameServer()->TimeRunController()->GetDoorState(m_DoorIndex) == DOOR_OPEN) {
 		GameServer()->TimeRunController()->SetDoorState(m_DoorIndex, DOOR_CLOSED);
 	}
 
