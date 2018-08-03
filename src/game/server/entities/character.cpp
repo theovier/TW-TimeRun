@@ -750,7 +750,9 @@ void CCharacter::OnOverlapTile(int Tile) {
 }
 
 void CCharacter::OnOverlapWeaponStrip() {
-	m_pPlayer->RemovePermaWeapons();
+	if (m_pPlayer->RemovePermaWeapons()) {
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "All weapons were taken from you but hammer and gun.");
+	}
 }
 
 void CCharacter::OnOverlapHealingZone() {

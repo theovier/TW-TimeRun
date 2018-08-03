@@ -14,7 +14,7 @@ public:
 	void Reset() override;
 	void Snap(int SnappingClient) override;
 	void InitBot(CBotSpawn *pSpawn);
-	void RemovePermaWeapons() override {};
+	bool RemovePermaWeapons() override { return false; };
 	CBotSpawn* m_Spawn;
 	void MarkForDestroy();
 	const bool IsMarkedForDestroy() { return m_MarkedForDestroy; };
