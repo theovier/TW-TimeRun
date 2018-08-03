@@ -13,6 +13,7 @@ public:
 	CFlagBot(CGameWorld *pWorld);
 protected:
 	void Handle() override;
+	virtual bool ShouldDespawn() { return false; };
 	void OnDeath(CPlayer* Killer) override;
 private:
 	CCheckpoint* m_Flag;

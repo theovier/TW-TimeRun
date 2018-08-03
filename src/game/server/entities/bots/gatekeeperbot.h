@@ -7,9 +7,9 @@ public:
 	CGatekeeperBot(CGameWorld *pWorld);
 	void SetDoorIndex(int DoorIndex);
 protected:
-	void Handle() override;
+	void Aim(vec2 Target) override;
 	void OnDeath(CPlayer* Killer) override;
-
+	virtual bool ShouldDespawn() { return false; };
 	const int GetBotType() { return BOTTYPE_GATEKEEPER; };
 
 private:

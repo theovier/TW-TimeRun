@@ -7,7 +7,7 @@ CHammerbot::CHammerbot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_aWeapons[WEAPON_GUN].m_Got = false;
 }
 
-void CHammerbot::Handle() {
-	
+void CHammerbot::Aim(vec2 Target) {
+	dbg_msg("HAMMER", "aim at %f, %f", Target.x, Target.y);
 }
 

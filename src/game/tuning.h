@@ -72,6 +72,8 @@ MACRO_TUNING_PARAM(MineRespawnTime, mine_respawn_time, 15)
 MACRO_TUNING_PARAM(MineWarnRadius, mine_warn_radius, 400.0f)
 
 //bots
+MACRO_TUNING_PARAM(BotDespawnTime, bot_despawn_time, 60)
+
 MACRO_TUNING_PARAM(GunBotRespawnTime, bot_gun_respawn_time, 20.0f)
 MACRO_TUNING_PARAM(GunBotLife, bot_gun_life, 15.0f)
 

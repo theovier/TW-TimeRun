@@ -21,7 +21,7 @@ protected:
 	virtual void Move(vec2 Target);
 	virtual void SelectAppropriateWeapon(float distanceToTarget);
 	virtual void Fire(vec2 Target);
-	void Aim(vec2 Target);
+	virtual void Aim(vec2 Target);
 	void StopFire();
 	vec2 FindNearestTarget();
 
@@ -34,6 +34,13 @@ protected:
 	virtual void OnDeath(CPlayer* Killer);
 	virtual void OnOverlapWeaponStrip() { };
 	virtual void OnOverlapDoorTrigger() { };
+
+	//bots despawn if no player is around
+	virtual bool ShouldDespawn();
+	virtual void Despawn();
+	float m_DespawnTime = 60.0f;
+	float m_DespawnTick;
+
 
 	float m_EmoteInterval = 1.5f;
 	float m_EmoteTick;

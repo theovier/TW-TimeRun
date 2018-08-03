@@ -7,20 +7,25 @@ MACRO_ALLOC_POOL_ID_IMPL(CBotCharacter, MAX_CLIENTS)
 CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 	CCharacter::CCharacter(pWorld);
 	m_AggroRadius = 700.0f;
+	m_DespawnTime = GameServer()->Tuning()->m_BotDespawnTime;
 	m_MaxArmor = 0;
 }
 
 void CBotCharacter::Tick() {
 	CCharacter::Tick();
 	Handle();
+
+	if (ShouldDespawn()) {
+		Despawn();
+	}
 }
 
-void CBotCharacter::SetEmoticon(int Emotiocon) {
-	if (m_pPlayer) {
-		GameServer()->SendEmoticon(m_pPlayer->GetCID(), Emotiocon);
-		m_pPlayer->m_LastEmote = Server()->Tick();
-		m_EmoteTick = Server()->Tick() + Server()->TickSpeed() * m_EmoteInterval;
-	}
+bool CBotCharacter::ShouldDespawn() {
+	return Server()->Tick() > m_DespawnTick;
+}
+
+void CBotCharacter::Despawn() {
+	Die(m_pPlayer->GetCID(), WEAPON_GAME);
 }
 
 void CBotCharacter::Die(int Killer, int Weapon) {
@@ -42,11 +47,13 @@ void CBotCharacter::OnDeath(CPlayer* Killer) {
 
 void CBotCharacter::Handle() {
 	vec2 Target = FindTarget();
-	if (!Target) return;
-	Move(Target);
-	SelectAppropriateWeapon(distance(Target, m_Pos));
-	Aim(Target);
-	Fire(Target);
+	if (!(Target.x == -1 && Target.y == -1)) {
+		Move(Target);
+		SelectAppropriateWeapon(distance(Target, m_Pos));
+		Aim(Target);
+		Fire(Target);
+		m_DespawnTick = Server()->Tick() + Server()->TickSpeed() * m_DespawnTime;
+	}
 }
 
 void CBotCharacter::Move(vec2 Target) {
@@ -59,11 +66,11 @@ vec2 CBotCharacter::FindTarget() {
 }
 
 vec2 CBotCharacter::FindNearestTarget() {
-	CCharacter* TargetChr = GameServer()->m_World.ClosestCharacter(m_Pos, m_AggroRadius, NULL);
+	CCharacter* TargetChr = GameServer()->m_World.ClosestCharacter(m_Pos, m_AggroRadius, this);
 	if (TargetChr)
 		return TargetChr->m_Pos;
 	else
-		NULL;
+		return vec2(-1, -1);
 }
 
 void CBotCharacter::SelectAppropriateWeapon(float distanceToTarget) {
@@ -93,5 +100,12 @@ const char* CBotCharacter::GetDisplayName() {
 	return itoa(m_Health, numstr, 10);
 }
 
+void CBotCharacter::SetEmoticon(int Emotiocon) {
+	if (m_pPlayer) {
+		GameServer()->SendEmoticon(m_pPlayer->GetCID(), Emotiocon);
+		m_pPlayer->m_LastEmote = Server()->Tick();
+		m_EmoteTick = Server()->Tick() + Server()->TickSpeed() * m_EmoteInterval;
+	}
+}
 
 

@@ -5,7 +5,7 @@ class CHammerbot : public CBotCharacter {
 public:
 	CHammerbot(CGameWorld *pWorld);
 protected:
-	void Handle() override;
+	void Aim(vec2 Target) override;
 
 	const int GetBotType() { return BOTTYPE_HAMMER; };
 };

@@ -15,6 +15,7 @@ public:
 	const char *GetDisplayName() override;
 protected:
 	virtual void Handle() {};
+	virtual bool ShouldDespawn() { return false; };
 	const int GetBotType() { return BOTTYPE_ENDBOSS; };
 private:
 	//after this amount of dmg taken the boss enrages

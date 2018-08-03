@@ -11,7 +11,7 @@ CGatekeeperBot::CGatekeeperBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_Skin = "limekitty";
 }
 
-void CGatekeeperBot::Handle() {
+void CGatekeeperBot::Aim(vec2 Target) {
 
 }
 
