@@ -499,7 +499,9 @@ bool CCharacter::GiveWeapon(int Weapon, int Ammo)
 	{
 		m_aWeapons[Weapon].m_Got = true;
 		m_aWeapons[Weapon].m_Ammo = min(g_pData->m_Weapons.m_aId[Weapon].m_Maxammo, Ammo);
-		GetPlayer()->GiveWeaponPermanently(Weapon, Ammo);
+		if (GetPlayer()) {
+			GetPlayer()->GiveWeaponPermanently(Weapon, Ammo);
+		}
 		return true;
 	}
 	return false;
