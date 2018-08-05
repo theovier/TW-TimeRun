@@ -6,5 +6,6 @@ public:
 	CHammerbot(CGameWorld *pWorld);
 protected:
 
+	void Hook(vec2 Target) {};
 	const int GetBotType() { return BOTTYPE_HAMMER; };
 };
