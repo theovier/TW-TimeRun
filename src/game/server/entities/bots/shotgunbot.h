@@ -8,8 +8,5 @@ private:
 
 	const float m_ShotgunRange = 480.0f;
 	void SelectAppropriateWeapon(float distanceToTarget) override;
-	void Fire(vec2 Target) override;
-	void Hook(vec2 Target) override {};
-
 	const int GetBotType() { return BOTTYPE_SHOTGUN; };
 };
