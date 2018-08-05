@@ -13,7 +13,7 @@ CShotgunBot::CShotgunBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 void CShotgunBot::SelectAppropriateWeapon(float distanceToTarget) {
 	if (distanceToTarget < m_MeeleRange)
 		m_QueuedWeapon = WEAPON_HAMMER;
-	else if (distanceToTarget < m_ShotgunRange)
+	else if (distanceToTarget < m_ShotgunRange && m_aWeapons[WEAPON_SHOTGUN].m_Ammo > 0)
 		m_QueuedWeapon = WEAPON_SHOTGUN;
 	else
 		m_QueuedWeapon = WEAPON_GUN;
