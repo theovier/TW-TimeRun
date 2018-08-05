@@ -28,7 +28,7 @@ protected:
 
 	const float m_MeeleRange = 64.0f;
 	const float m_GunRange = 500.0f;
-	const float m_HookRange = 512.0f;
+	const float m_HookRange = 500.0f;
 	float m_AggroRadius;
 	float m_AttackTimer;
 	float m_AttackSpeed = 0.5f;
