@@ -6,8 +6,6 @@ public:
 	CGunbot(CGameWorld *pWorld);
 private:
 
-	float m_GunRange = 500.0f;
-
 	void Move(vec2 Target) override;
 	void SelectAppropriateWeapon(float distanceToTarget) override;
 	void Fire(vec2 Target) override;
