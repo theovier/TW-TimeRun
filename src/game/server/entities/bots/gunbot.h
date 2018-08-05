@@ -6,7 +6,6 @@ public:
 	CGunbot(CGameWorld *pWorld);
 private:
 
-	void Move(vec2 Target) override;
 	void SelectAppropriateWeapon(float distanceToTarget) override;
 	void Fire(vec2 Target) override;
 	void Hook(vec2 Target) override {};
