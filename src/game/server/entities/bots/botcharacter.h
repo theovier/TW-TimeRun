@@ -22,10 +22,12 @@ protected:
 	virtual void SelectAppropriateWeapon(float distanceToTarget);
 	virtual void Fire(vec2 Target);
 	virtual void Aim(vec2 Target);
+	virtual void Hook(vec2 Target);
 	void StopFire();
 	vec2 FindNearestTarget();
 
 	const float m_MeeleRange = 64.0f;
+	const float m_HookRange = 512.0f;
 	float m_AggroRadius;
 	float m_AttackTimer;
 

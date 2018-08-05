@@ -51,6 +51,7 @@ void CBotCharacter::Handle() {
 		Move(Target);
 		SelectAppropriateWeapon(distance(Target, m_Pos));
 		Aim(Target);
+		Hook(Target);
 		Fire(Target);
 		m_DespawnTick = Server()->Tick() + Server()->TickSpeed() * m_DespawnTime;
 	}
@@ -83,6 +84,12 @@ void CBotCharacter::Aim(vec2 Target) {
 	m_LatestInput.m_TargetY = Target.y;
 	m_Input.m_TargetX = Target.x;
 	m_Input.m_TargetY = Target.y;
+}
+
+void CBotCharacter::Hook(vec2 Target) {
+	if (!GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL, false) && distance(Target, m_Pos) < m_HookRange && Server()->Tick() % 10 == 0) {
+		m_Input.m_Hook ^= 1;	
+	}
 }
 
 void CBotCharacter::Fire(vec2 Target) {
