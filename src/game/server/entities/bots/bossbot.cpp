@@ -52,13 +52,28 @@ void CBossBot::StartEnrage() {
 	if (m_pPlayer) {
 		m_pPlayer->SetRainbow(true);
 	}
-	SummonMinions();
+	//SummonMinions();
+	FreezeAllPlayers();
 }
 
 void CBossBot::SummonMinions() {
 	//GameServer()->SendBroadcast("Boss calls for help!", -1);
+	
+	//todo check for collision.
 	GameServer()->TimeRunController()->SpawnBot(BOTTYPE_HAMMER, m_Pos - vec2(80.0f, 20.0f));
 	GameServer()->TimeRunController()->SpawnBot(BOTTYPE_HAMMER, m_Pos + vec2(80.0f, -20.0f));
+}
+
+void CBossBot::FreezeAllPlayers() {
+	CCharacter* apCloseChars[MAX_CLIENTS];
+	int closestChars = GameServer()->m_World.FindEntities(m_Pos, _FMAX, (CEntity**)apCloseChars, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);
+	for (int i = 0; i < closestChars; i++) {
+		CCharacter* character = apCloseChars[i];
+		CPlayer* controller = character->GetPlayer();
+		if (character->IsAlive() && !controller->IsBot()) {
+			character->Freeze(5.0f);
+		}
+	}
 }
 
 const char* CBossBot::GetDisplayName() {
