@@ -64,9 +64,9 @@ public:
 	bool IsAlive() const { return m_Alive; }
 	class CPlayer *GetPlayer() { return m_pPlayer; }
 
-	void Freeze();
-	bool m_Frozen;
-	float m_FrozenTimer;
+	void Freeze(float Duration);
+	void Unfreeze();
+
 
 	vec2 m_OldPos;
 	vec2 m_PrevPos;
@@ -151,6 +151,9 @@ protected:
 	virtual void OnOverlapHealingZone();
 	virtual void OnOverlapPoisonZone();
 	virtual void OnOverlapDoorTrigger();
+
+	bool m_Frozen;
+	float m_FrozenTimer;
 
 };
 

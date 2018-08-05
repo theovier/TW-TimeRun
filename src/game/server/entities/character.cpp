@@ -575,13 +575,8 @@ void CCharacter::Tick()
 	int Tile = GameServer()->Collision()->GetIndex(m_PrevPos, m_Pos);
 	OnOverlapTile(Tile);
 
-	if(m_Frozen && Server()->Tick() > m_FrozenTimer)
-	{
-		m_Frozen = false;
-		m_aWeapons[WEAPON_NINJA].m_Got = false;
-		m_ActiveWeapon = m_LastWeapon;
-		m_LastWeapon = -1;
-		m_QueuedWeapon = -1;
+	if(m_Frozen && Server()->Tick() > m_FrozenTimer) {
+		Unfreeze();
 	}
 
 	m_Core.m_Input = m_Input;
@@ -996,17 +991,23 @@ void CCharacter::Snap(int SnappingClient)
 	pCharacter->m_PlayerFlags = GetPlayer()->m_PlayerFlags;
 }
 
-void CCharacter::Freeze()
-{
+void CCharacter::Freeze(float Duration) {
 	m_Frozen = true;
-	m_FrozenTimer = Server()->Tick() + GameServer()->Tuning()->m_FreezerTimer*Server()->TickSpeed();
-	
+	m_FrozenTimer = Server()->Tick() + Server()->TickSpeed() * Duration;
 	m_Ninja.m_ActivationTick = Server()->Tick();
 	m_aWeapons[WEAPON_NINJA].m_Got = true;
 	m_aWeapons[WEAPON_NINJA].m_Ammo = -1;
 	m_LastWeapon = m_ActiveWeapon;
 	m_ActiveWeapon = WEAPON_NINJA;
-	}
+}
+
+void CCharacter::Unfreeze() {
+	m_Frozen = false;
+	m_aWeapons[WEAPON_NINJA].m_Got = false;
+	m_ActiveWeapon = m_LastWeapon;
+	m_LastWeapon = -1;
+	m_QueuedWeapon = -1;
+}
 
 void CCharacter::Teleport(vec2 To)
 {

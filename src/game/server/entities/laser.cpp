@@ -43,7 +43,7 @@ bool CLaser::HitCharacter(vec2 From, vec2 To)
 	else if(m_IsFreezer)
 	{
 		if(!GameServer()->m_pController->IsFriendlyFire(m_Owner, pHit->GetPlayer()->GetCID()))
-			pHit->Freeze();
+			pHit->Freeze(GameServer()->Tuning()->m_FreezerTimer);
 	}
 	else
 		pHit->TakeDamage(vec2(0.f, 0.f), g_pData->m_Weapons.m_aId[WEAPON_RIFLE].m_Damage, m_Owner, WEAPON_RIFLE);
