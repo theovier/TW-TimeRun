@@ -25,6 +25,7 @@ private:
 	void TickEnrage();
 	void SummonMinions();
 	void FreezeAllPlayers();
+	void OnEnterFight();
 	bool m_InFight;
 
 	void SpamZZZ();

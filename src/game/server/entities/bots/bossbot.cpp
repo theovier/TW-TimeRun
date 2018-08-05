@@ -36,11 +36,15 @@ bool CBossBot::TakeDamage(vec2 Force, int Dmg, int From, int Weapon) {
 		StartEnrage();
 	}
 	if (!m_InFight) {
-		m_InFight = true;
-		SetEmoticon(EMOTICON_ZOMG);
-		SetEmote(EMOTE_ANGRY, Server()->Tick() + Server()->TickSpeed());
+		OnEnterFight();
 	}
 	return tookDamage;
+}
+
+void CBossBot::OnEnterFight() {
+	m_InFight = true;
+	SetEmoticon(EMOTICON_ZOMG);
+	SetEmote(EMOTE_ANGRY, Server()->Tick() + Server()->TickSpeed());
 }
 
 void CBossBot::StartEnrage() {
