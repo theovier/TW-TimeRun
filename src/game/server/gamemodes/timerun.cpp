@@ -266,11 +266,19 @@ void CGameControllerTimeRun::RemoveBotsMarkedForDestroy() {
 	}
 }
 
-int CGameControllerTimeRun::SpawnBot(CBotSpawn *Spawn) {
+int CGameControllerTimeRun::SpawnRespawningBot(CBotSpawn *Spawn) {
 	int uniqueBotId = GetFreePlayerSlotID();
 	GameServer()->OnBotClientConnected(uniqueBotId);
 	CBotPlayer* botPlayer = (CBotPlayer*)GameServer()->m_apPlayers[uniqueBotId];
-	botPlayer->InitBot(Spawn);
+	botPlayer->SpawnWithFutureRespawn(Spawn);
+	return uniqueBotId;
+}
+
+int CGameControllerTimeRun::SpawnBot(int BotType, vec2 SpawnPos) {
+	int uniqueBotId = GetFreePlayerSlotID();
+	GameServer()->OnBotClientConnected(uniqueBotId);
+	CBotPlayer* botPlayer = (CBotPlayer*)GameServer()->m_apPlayers[uniqueBotId];
+	botPlayer->Spawn(BotType, SpawnPos);
 	return uniqueBotId;
 }
 

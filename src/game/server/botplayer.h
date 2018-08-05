@@ -13,7 +13,8 @@ public:
 	void Tick() override;
 	void Reset() override;
 	void Snap(int SnappingClient) override;
-	void InitBot(CBotSpawn *pSpawn);
+	void SpawnWithFutureRespawn(CBotSpawn *Spawn);
+	void Spawn(int BotType, vec2 SpawnPos);
 	bool RemovePermaWeapons() override { return false; };
 	CBotSpawn* m_Spawn;
 	void MarkForDestroy();

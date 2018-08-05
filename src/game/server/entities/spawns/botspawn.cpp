@@ -65,5 +65,5 @@ bool CBotSpawn::IsSpawnOccupied() {
 
 int CBotSpawn::Spawn() {
 	m_AlreadySpawned = true;
-	return m_Controller->SpawnBot(this);
+	return m_Controller->SpawnRespawningBot(this);
 }

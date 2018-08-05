@@ -33,14 +33,20 @@ void CBotPlayer::MarkForDestroy() {
 }
 
 void CBotPlayer::OnDisconnect(const char *pReason) {
-	m_Spawn->OnSpawnlingsDeath();
+	if (m_Spawn) {
+		m_Spawn->OnSpawnlingsDeath();
+	}
 	KillCharacter();
 }
 
-void CBotPlayer::InitBot(CBotSpawn *pSpawn) {
-	GameServer()->CreatePlayerSpawn(pSpawn->GetPos());
-	m_Spawn = pSpawn;
-	switch (m_Spawn->GetBotType()) {
+void CBotPlayer::SpawnWithFutureRespawn(CBotSpawn *Spawn) {
+	m_Spawn = Spawn;
+	CBotPlayer::Spawn(Spawn->GetBotType(), Spawn->GetPos());
+}
+
+void CBotPlayer::Spawn(int BotType, vec2 SpawnPos) {
+	GameServer()->CreatePlayerSpawn(SpawnPos);
+	switch (BotType) {
 	case BOTTYPE_HAMMER:
 		m_pCharacter = new(m_ClientID) CHammerbot(&GameServer()->m_World);
 		break;
@@ -70,7 +76,7 @@ void CBotPlayer::InitBot(CBotSpawn *pSpawn) {
 	};
 
 	InitTeeInfo();
-	m_pCharacter->Spawn(GameServer()->m_apPlayers[m_ClientID], pSpawn->GetPos());
+	m_pCharacter->Spawn(GameServer()->m_apPlayers[m_ClientID], SpawnPos);
 }
 
 void CBotPlayer::InitTeeInfo() {
