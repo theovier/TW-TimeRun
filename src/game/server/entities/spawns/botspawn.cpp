@@ -64,10 +64,6 @@ bool CBotSpawn::IsSpawnOccupied() {
 }
 
 int CBotSpawn::Spawn() {
-	int uniqueBotId = m_Controller->GetFreePlayerSlotID(); //todo: check that not -1 again?
-	GameServer()->OnBotClientConnected(uniqueBotId);
-	CBotPlayer* botPlayer = (CBotPlayer*) GameServer()->m_apPlayers[uniqueBotId];
-	botPlayer->InitBot(this);
 	m_AlreadySpawned = true;
-	return uniqueBotId;
+	return m_Controller->SpawnBot(this);
 }

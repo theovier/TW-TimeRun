@@ -266,6 +266,14 @@ void CGameControllerTimeRun::RemoveBotsMarkedForDestroy() {
 	}
 }
 
+int CGameControllerTimeRun::SpawnBot(CBotSpawn *Spawn) {
+	int uniqueBotId = GetFreePlayerSlotID();
+	GameServer()->OnBotClientConnected(uniqueBotId);
+	CBotPlayer* botPlayer = (CBotPlayer*)GameServer()->m_apPlayers[uniqueBotId];
+	botPlayer->InitBot(Spawn);
+	return uniqueBotId;
+}
+
 void CGameControllerTimeRun::RemoveBot(int ClientID) {
 	GameServer()->OnClientDrop(ClientID, "despawn");
 }

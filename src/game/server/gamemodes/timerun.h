@@ -83,6 +83,7 @@ public:
 	CCheckpoint *RegisterNewCheckpoint(vec2 Pos);
 	int GetFreePlayerSlotID();
 	void RemoveBotsMarkedForDestroy();
+	int SpawnBot(CBotSpawn *Spawn);
 	void RemoveBot(int ClientID);
 
 	int GetDoorState(int Index);
