@@ -23,7 +23,7 @@ private:
 	bool m_IsEnraged;
 	void StartEnrage();
 	void TickEnrage();
-
+	void SummonMinions();
 	bool m_InFight;
 
 	void SpamZZZ();

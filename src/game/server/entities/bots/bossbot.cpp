@@ -43,17 +43,6 @@ bool CBossBot::TakeDamage(vec2 Force, int Dmg, int From, int Weapon) {
 	return tookDamage;
 }
 
-const char* CBossBot::GetDisplayName() {
-	if (m_Health > 1) {
-		std::string name = "Boss (" + std::to_string(m_Health) + ")";
-		char* c = new char[name.length() + 1];
-		return strcpy(c, name.c_str());
-	}
-	else {
-		return "Boss";
-	}
-}
-
 void CBossBot::StartEnrage() {
 	//do cool stuff.
 	GameServer()->SendBroadcast("Boss enrages!", -1);
@@ -62,5 +51,23 @@ void CBossBot::StartEnrage() {
 	m_IsEnraged = true;
 	if (m_pPlayer) {
 		m_pPlayer->SetRainbow(true);
+	}
+	SummonMinions();
+}
+
+void CBossBot::SummonMinions() {
+	//GameServer()->SendBroadcast("Boss calls for help!", -1);
+	GameServer()->TimeRunController()->SpawnBot(BOTTYPE_HAMMER, m_Pos - vec2(80.0f, 20.0f));
+	GameServer()->TimeRunController()->SpawnBot(BOTTYPE_HAMMER, m_Pos + vec2(80.0f, -20.0f));
+}
+
+const char* CBossBot::GetDisplayName() {
+	if (m_Health > 1) {
+		std::string name = "Boss (" + std::to_string(m_Health) + ")";
+		char* c = new char[name.length() + 1];
+		return strcpy(c, name.c_str());
+	}
+	else {
+		return "Boss";
 	}
 }
