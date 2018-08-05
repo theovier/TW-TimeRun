@@ -1,5 +1,6 @@
 #include "botplayer.h"
 #include <game/server/entities/bots/hammerbot.h>
+#include <game/server/entities/bots/shotgunbot.h>
 #include <game/server/entities/bots/gunbot.h>
 #include <game/server/entities/bots/flagbot.h>
 #include <game/server/entities/bots/gatekeeperbot.h>
@@ -46,6 +47,10 @@ void CBotPlayer::InitBot(CBotSpawn *pSpawn) {
 
 	case BOTTYPE_GUN:
 		m_pCharacter = new(m_ClientID) CGunbot(&GameServer()->m_World);
+		break;
+
+	case BOTTYPE_SHOTGUN:
+		m_pCharacter = new(m_ClientID) CShotgunBot(&GameServer()->m_World);
 		break;
 
 	case BOTTYPE_FLAGBEARER:

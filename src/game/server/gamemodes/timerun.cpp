@@ -16,6 +16,7 @@
 #include <game/server/entities/bots/bossbot.h>
 #include <game/server/entities/spawns/hammerbotspawn.h>
 #include <game/server/entities/spawns/gunbotspawn.h>
+#include <game/server/entities/spawns/shotgunbotspawn.h>
 #include <game/server/entities/spawns/bossbotspawn.h>
 #include <game/server/entities/spawns/flagbotspawn.h>
 #include <game/server/entities/spawns/gatekeeperbotspawn.h>
@@ -54,6 +55,10 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 
 	case ENTITY_SPAWN_BOT_HAMMER:
 		m_BotSpawns[m_CurBotSpawn++] = new CHammerBotSpawn(&GameServer()->m_World, Pos, this);
+		return true;
+
+	case ENTITY_SPAWN_BOT_SHOTGUN:
+		m_BotSpawns[m_CurBotSpawn++] = new CShotgunBotSpawn(&GameServer()->m_World, Pos, this);
 		return true;
 
 	case ENTITY_SPAWN_BOT_GUN:
