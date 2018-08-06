@@ -12,6 +12,7 @@ public:
 	CBotCharacter(CGameWorld *pWorld);
 	void Tick() override;
 	void Die(int Killer, int Weapon) override;
+	void Stun(float Time);
 	virtual const char *GetDisplayName();
 	const virtual char* GetSkinName() { return m_Skin; };
 
@@ -45,13 +46,15 @@ protected:
 	float m_DespawnTime = 60.0f;
 	float m_DespawnTick;
 
-
 	float m_EmoteInterval = 1.5f;
 	float m_EmoteTick;
 	virtual void SetEmoticon(int Emoticon);
 
+	float m_StunTime;
+
 private:
 	void MarkControllerForDestroy();
+	void ResetInput();
 };
 
 #endif

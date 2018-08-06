@@ -13,11 +13,23 @@ CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 
 void CBotCharacter::Tick() {
 	CCharacter::Tick();
-	Handle();
 
+	if (m_StunTime > 0) {
+		ResetInput();
+		return;
+	}
+
+	Handle();
 	if (ShouldDespawn()) {
 		Despawn();
 	}
+}
+
+void CBotCharacter::ResetInput() {
+	m_Input.m_Direction = 0;
+	m_Input.m_Jump = 0;
+	m_Input.m_Hook = 0;
+	m_Input.m_Fire = 0;
 }
 
 bool CBotCharacter::ShouldDespawn() {
@@ -43,6 +55,11 @@ void CBotCharacter::OnDeath(CPlayer* Killer) {
 	if (Killer && Killer != m_pPlayer) {
 		CLootHandler::HandleLoot(&GameServer()->m_World, m_Pos, GetBotType());
 	}
+}
+
+void CBotCharacter::Stun(float Time) {
+	m_StunTime = max(m_StunTime, Time);
+	//todo: display emote.
 }
 
 void CBotCharacter::Handle() {
