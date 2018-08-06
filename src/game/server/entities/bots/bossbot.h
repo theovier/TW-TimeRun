@@ -18,6 +18,9 @@ protected:
 	virtual bool ShouldDespawn() { return false; };
 	const int GetBotType() { return BOTTYPE_ENDBOSS; };
 private:
+	bool m_InFight;
+	void OnEnterFight();
+
 	//after this amount of dmg taken the boss enrages
 	int m_EnrageDmgThreshold;
 	bool m_IsEnraged;
@@ -25,8 +28,8 @@ private:
 	void TickEnrage();
 	void SummonMinions();
 	void FreezeAllPlayers();
-	void OnEnterFight();
-	bool m_InFight;
+	void SpawnLightning();
+
 
 	void SpamZZZ();
 };

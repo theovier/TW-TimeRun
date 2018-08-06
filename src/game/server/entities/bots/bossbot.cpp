@@ -1,6 +1,9 @@
 #include "bossbot.h"
+#include <game/server/entities/lightning.h>
 
 MACRO_ALLOC_POOL_ID_IMPL(CBossBot, MAX_CLIENTS)
+
+#define RAD 0.017453292519943295769236907684886f
 
 CBossBot::CBossBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	CBotCharacter::CBotCharacter(pWorld);
@@ -21,6 +24,14 @@ void CBossBot::Tick() {
 
 void CBossBot::TickEnrage() {
 	SetEmote(EMOTE_ANGRY, Server()->Tick() + Server()->TickSpeed());
+	SpawnLightning();
+}
+
+void CBossBot::SpawnLightning() {
+	for (int i = 0; i < 2; i++) {
+		float Angle = frandom() * 360.0f * RAD;
+		new CLightning(GameWorld(), m_Pos, vec2(cosf(Angle), sinf(Angle)), 50, 50, GetPlayer()->GetCID(), 1);
+	}
 }
 
 void CBossBot::SpamZZZ() {
