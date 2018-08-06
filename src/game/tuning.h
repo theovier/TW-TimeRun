@@ -87,6 +87,9 @@ MACRO_TUNING_PARAM(GatekeeperBotLife, bot_door_life, 25.0f)
 MACRO_TUNING_PARAM(ShotgunBotRespawnTime, bot_shotgun_respawn_time, 20.0f)
 MACRO_TUNING_PARAM(ShotgunBotLife, bot_shotgun_life, 20.0f)
 
+MACRO_TUNING_PARAM(KamikazeBotRespawnTime, bot_kamikaze_respawn_time, 20.0f)
+MACRO_TUNING_PARAM(KamikazeBotLife, bot_kamikaze_life, 10)
+
 // boss
 MACRO_TUNING_PARAM(BossLife, boss_life, 200)
 MACRO_TUNING_PARAM(BossDistancelimit, boss_distancelimit, 1000.0f)
