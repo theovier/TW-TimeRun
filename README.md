@@ -29,4 +29,5 @@ Thanks to the authors of the original EXP modification for providing the codebas
 * [@choupom](https://github.com/Choupom) for developing the 0.5 EXP modification which this modification is based on.
 * [@xushTW](https://github.com/xushWT) for porting the EXP modification to version 0.6.
 * [@BotoX](https://github.com/BotoX) for the door system used in TimeRun.
+* [@Siile](https://github.com/Siile) for the lightning and weapon modifications used in TimeRun.
 
