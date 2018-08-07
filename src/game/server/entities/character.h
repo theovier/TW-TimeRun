@@ -151,9 +151,14 @@ protected:
 	virtual void OnOverlapHealingZone();
 	virtual void OnOverlapPoisonZone();
 	virtual void OnOverlapDoorTrigger();
+	virtual void OnOverlapDamageTile();
 
 	bool m_Frozen;
 	float m_FrozenTimer;
+
+	int m_DamageTileTick;
+	float m_DamageTileTime = 0.25f;
+	float m_DamageTileJumpHeight = -5.0f; //has to be negative to point up
 
 };
 

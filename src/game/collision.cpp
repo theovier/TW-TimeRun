@@ -51,7 +51,7 @@ void CCollision::Init(class CLayers *pLayers)
 		}
 
 		//custom tiles
-		if (Index >= TILE_HEALING && Index <= TILE_DOOR_TRIGGER_NEAREST) {
+		if (Index >= TILE_HEALING && Index <= TILE_DAMAGE) {
 			m_pTiles[i].m_Index = Index;
 		}
 	}
@@ -226,7 +226,7 @@ int CCollision::GetIndex(vec2 PrevPos, vec2 Pos) {
 		int Nx = clamp((int)Pos.x / 32, 0, m_Width - 1);
 		int Ny = clamp((int)Pos.y / 32, 0, m_Height - 1);
 
-		if ((m_pTiles[Ny*m_Width + Nx].m_Index >= TILE_HEALING && m_pTiles[Ny*m_Width + Nx].m_Index <= TILE_DOOR_TRIGGER_NEAREST)) {
+		if ((m_pTiles[Ny*m_Width + Nx].m_Index >= TILE_HEALING && m_pTiles[Ny*m_Width + Nx].m_Index <= TILE_DAMAGE)) {
 			return Ny * m_Width + Nx;
 		}
 	}
@@ -241,7 +241,7 @@ int CCollision::GetIndex(vec2 PrevPos, vec2 Pos) {
 		Tmp = mix(PrevPos, Pos, a);
 		Nx = clamp((int)Tmp.x / 32, 0, m_Width - 1);
 		Ny = clamp((int)Tmp.y / 32, 0, m_Height - 1);
-		if ((m_pTiles[Ny*m_Width + Nx].m_Index >= TILE_HEALING && m_pTiles[Ny*m_Width + Nx].m_Index <= TILE_DOOR_TRIGGER_NEAREST)) {
+		if ((m_pTiles[Ny*m_Width + Nx].m_Index >= TILE_HEALING && m_pTiles[Ny*m_Width + Nx].m_Index <= TILE_DAMAGE)) {
 			return Ny * m_Width + Nx;
 		}
 	}

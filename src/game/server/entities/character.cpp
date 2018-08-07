@@ -741,6 +741,9 @@ void CCharacter::OnOverlapTile(int Tile) {
 		case TILE_DOOR_TRIGGER_NEAREST:
 			OnOverlapDoorTrigger();
 			break;
+		case TILE_DAMAGE:
+			OnOverlapDamageTile();
+			break;
 		default:
 			break;
 	}
@@ -776,6 +779,23 @@ void CCharacter::OnOverlapDoorTrigger() {
 		if (GameServer()->TimeRunController()->GetDoorState(index) == DOOR_CLOSED) {
 			GameServer()->TimeRunController()->SetDoorState(index, DOOR_OPEN);
 		}
+	}
+}
+
+void CCharacter::OnOverlapDamageTile() {
+	if (Server()->Tick() > m_DamageTileTick) {
+		int tileAbove = GameServer()->Collision()->GetCollisionAt(m_Pos.x, m_Pos.y - 32);
+		bool isAboveSolid = tileAbove & CCollision::COLFLAG_SOLID;
+		bool isAboveDeath = tileAbove & CCollision::COLFLAG_DEATH;
+		bool isAboveNoHook = tileAbove & CCollision::COLFLAG_NOHOOK;
+		if (isAboveSolid  && isAboveDeath && isAboveNoHook) {
+			TakeDamage(vec2(0, 0), 1, -1, WEAPON_WORLD);
+		}
+		else {
+			TakeDamage(vec2(0, m_DamageTileJumpHeight), 1, -1, WEAPON_WORLD);
+			m_Core.m_Jumped = 0;
+		}
+		m_DamageTileTick = Server()->Tick() + Server()->TickSpeed() * m_DamageTileTime;
 	}
 }
 
