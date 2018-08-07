@@ -157,7 +157,7 @@ protected:
 	float m_FrozenTimer;
 
 	int m_DamageTileTick;
-	float m_DamageTileTime = 0.25f;
+	float m_DamageTileTime = 0.4f;
 	float m_DamageTileJumpHeight = -5.0f; //has to be negative to point up
 
 };

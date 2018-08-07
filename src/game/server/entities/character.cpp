@@ -788,13 +788,11 @@ void CCharacter::OnOverlapDamageTile() {
 		bool isAboveSolid = tileAbove & CCollision::COLFLAG_SOLID;
 		bool isAboveDeath = tileAbove & CCollision::COLFLAG_DEATH;
 		bool isAboveNoHook = tileAbove & CCollision::COLFLAG_NOHOOK;
-		if (isAboveSolid  && isAboveDeath && isAboveNoHook) {
-			TakeDamage(vec2(0, 0), 1, -1, WEAPON_WORLD);
-		}
-		else {
-			TakeDamage(vec2(0, m_DamageTileJumpHeight), 1, -1, WEAPON_WORLD);
+		if (!isAboveSolid  && !isAboveDeath && !isAboveNoHook) {
 			m_Core.m_Jumped = 0;
+			m_Core.m_Vel.y = m_DamageTileJumpHeight;
 		}
+		TakeDamage(vec2(0, 0), 1, -1, WEAPON_WORLD);
 		m_DamageTileTick = Server()->Tick() + Server()->TickSpeed() * m_DamageTileTime;
 	}
 }
