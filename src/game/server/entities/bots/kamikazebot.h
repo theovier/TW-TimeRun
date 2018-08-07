@@ -6,6 +6,7 @@ public:
 	CKamikazebot(CGameWorld *pWorld);
 protected:
 
+	void Tick() override;
 	void Hook(vec2 Target) {};
 	void SelectAppropriateWeapon(float distanceToTarget) override;
 	const int GetBotType() { return BOTTYPE_KAMIKAZE; };
