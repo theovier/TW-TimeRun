@@ -25,13 +25,6 @@ void CBotCharacter::Tick() {
 	}
 }
 
-void CBotCharacter::ResetInput() {
-	m_Input.m_Direction = 0;
-	m_Input.m_Jump = 0;
-	m_Input.m_Hook = 0;
-	m_Input.m_Fire = 0;
-}
-
 bool CBotCharacter::ShouldDespawn() {
 	return Server()->Tick() > m_DespawnTick;
 }

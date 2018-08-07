@@ -54,7 +54,6 @@ protected:
 
 private:
 	void MarkControllerForDestroy();
-	void ResetInput();
 };
 
 #endif
