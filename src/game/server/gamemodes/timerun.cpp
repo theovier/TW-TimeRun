@@ -98,6 +98,10 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 		m_Traps[m_CurTrap++] = new CUpwardsTrap(&GameServer()->m_World, Pos);
 		return true;
 
+	case ENTITY_TRAP_SPIN:
+		m_Traps[m_CurTrap++] = new CSpinTrap(&GameServer()->m_World, Pos);
+		return true;
+
 	case ENTITY_FLAGSTAND_RED:
 		m_Checkpoints[m_CurFlag++] = new CCheckpoint(&GameServer()->m_World, 0, Pos, m_CurFlag + 1);
 		return true;

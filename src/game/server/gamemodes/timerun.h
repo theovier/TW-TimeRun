@@ -7,6 +7,7 @@
 #include <game/server/entities/checkpoint.h>
 #include <game/server/entities/traps/trap.h>
 #include <game/server/entities/traps/upwardstrap.h>
+#include <game/server/entities/traps/spintrap.h>
 #include <game/server/entities/turrets/turret.h>
 #include <game/server/entities/turrets/gunturret.h>
 #include <game/server/entities/turrets/laserturret.h>
