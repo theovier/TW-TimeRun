@@ -104,7 +104,7 @@ public:
 		int m_Ammocost;
 		bool m_Got;
 
-	} m_aWeapons[NUM_WEAPONS+2];
+	} m_aWeapons[NUM_WEAPONS];
 
 	int m_ActiveWeapon;
 	int m_LastWeapon;
