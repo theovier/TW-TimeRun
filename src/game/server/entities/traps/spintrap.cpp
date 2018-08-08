@@ -25,6 +25,5 @@ void CSpinTrap::Spin() {
 }
 
 bool CSpinTrap::VictimInRange(vec2 victimPos) {
-	//check if a character is nearby first?
 	return true;
 }
