@@ -12,6 +12,6 @@ public:
 protected:
 	virtual bool VictimInRange(vec2 victimPos);
 	virtual void Spin();
-	const float angle = 45.0f;
+	float m_Angle;
 };
 #endif

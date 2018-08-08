@@ -5,7 +5,8 @@
 #define DEG2RAD( a ) ( (a) * (pi/180.0f) )
 
 CSpinTrap::CSpinTrap(CGameWorld *pGameWorld, vec2 Pos) : CTrap(pGameWorld, Pos) {
-	
+	m_FireSpeed = 0.25f;
+	m_Angle = 4.0f;
 }
 
 void CSpinTrap::Tick() {
@@ -14,7 +15,7 @@ void CSpinTrap::Tick() {
 }
 
 void CSpinTrap::Spin() {
-	float theta = DEG2RAD(angle);
+	float theta = DEG2RAD(m_Angle);
 	float cs = cos(theta);
 	float sn = sin(theta);
 	float px = m_Dir.x * cs - m_Dir.y * sn;

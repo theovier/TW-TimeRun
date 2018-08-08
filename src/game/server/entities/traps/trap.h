@@ -17,6 +17,7 @@ protected:
 	bool m_Active;
 	bool m_IgnoreBots = true;
 	float m_FireTick;
+	float m_FireSpeed;
 	float m_Range = 600.0f;
 	int m_Damage = 5;
 	bool m_Explosive = true;
