@@ -100,6 +100,7 @@ public:
 			Returns a pointer to the closest CCharacter or NULL if no CCharacter is close enough.
 	*/
 	class CCharacter *ClosestCharacter(vec2 Pos, float Radius, CEntity *ppNotThis);
+	class CCharacter *ClosestBotCharacter(vec2 Pos, float Radius, CEntity *ppNotThis);
 	class CEntity *ClosestEntity(int EntityType, vec2 Pos, CEntity *ppNotThis);
 
 	/*

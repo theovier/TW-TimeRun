@@ -250,6 +250,34 @@ CCharacter *CGameWorld::ClosestCharacter(vec2 Pos, float Radius, CEntity *pNotTh
 	return pClosest;
 }
 
+CCharacter *CGameWorld::ClosestBotCharacter(vec2 Pos, float Radius, CEntity *pNotThis) {
+	float ClosestRange = Radius * 2;
+	CCharacter *pClosest = 0;
+
+	CCharacter *p = (CCharacter *)GameServer()->m_World.FindFirst(ENTTYPE_CHARACTER);
+	for (; p; p = (CCharacter *)p->TypeNext())
+	{
+		if (p == pNotThis)
+			continue;
+
+		bool isBot = dynamic_cast<const CBotCharacter*>(p) != nullptr;
+		if (!isBot)
+			continue;
+
+		float Len = distance(Pos, p->m_Pos);
+		if (Len < p->m_ProximityRadius + Radius)
+		{
+			if (Len < ClosestRange)
+			{
+				ClosestRange = Len;
+				pClosest = p;
+			}
+		}
+	}
+
+	return pClosest;
+}
+
 CEntity *CGameWorld::ClosestEntity(int EntityType, vec2 Pos, CEntity *pNotThis) {
 	float ClosestRange = FLT_MAX;
 	CCharacter *pClosest = 0;
