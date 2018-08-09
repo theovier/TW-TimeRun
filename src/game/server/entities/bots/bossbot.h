@@ -29,7 +29,7 @@ private:
 	void SummonMinions();
 	void FreezeAllPlayers();
 	void SpawnLightning();
-
+	void HealSelf();
 
 	void SpamZZZ();
 };
