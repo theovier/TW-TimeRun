@@ -194,37 +194,6 @@ void CPickup::Snap(int SnappingClient)
 	pP->m_Subtype = RealSubtype(m_Subtype);
 }
 
-void CPickup::CreateRandomFromTurret(int TurretType, vec2 Pos)
-{
-	
-}
-
-void CPickup::MakeBossShield()
-{
-
-}
-
-const char *CPickup::GetWeaponName(int wid)
-{
-	if(wid == WEAPON_HAMMER)
-		return "HAMMER";
-	else if(wid == WEAPON_GUN)
-		return "GUN";
-	else if(wid == WEAPON_SHOTGUN)
-		return "SHOTGUN";
-	else if(wid == WEAPON_GRENADE)
-		return "GRENADE";
-	else if(wid == WEAPON_RIFLE)
-		return "LASER";
-	else if(wid == WEAPON_NINJA)
-		return "NINJA";
-	else if(wid == WEAPON_KAMIKAZE)
-		return "KAMIKAZE";
-	else if(wid == WEAPON_FREEZER)
-		return "FREEZER";
-	return "?";
-}
-
 int CPickup::RealPickup(int Type)
 {
 	if(Type == POWERUP_POTION)

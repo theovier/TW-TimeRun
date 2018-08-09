@@ -18,11 +18,8 @@ public:
 	virtual void Snap(int SnappingClient);
 
 	
-	const char *GetWeaponName(int wid);
 	int RealPickup(int Type);
 	int RealSubtype(int Type);
-	void CreateRandomFromTurret(int TurretType, vec2 Pos);
-	void MakeBossShield();
 
 protected:
 	int m_Type;
