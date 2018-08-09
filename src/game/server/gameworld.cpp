@@ -61,6 +61,22 @@ int CGameWorld::FindEntities(vec2 Pos, float Radius, CEntity **ppEnts, int Max, 
 	return Num;
 }
 
+int CGameWorld::FindEntities(vec2 Pos, CEntity **ppEnts, int Max, int Type) {
+	if (Type < 0 || Type >= NUM_ENTTYPES)
+		return 0;
+
+	int Num = 0;
+	for (CEntity *pEnt = m_apFirstEntityTypes[Type]; pEnt; pEnt = pEnt->m_pNextTypeEntity) {
+		if (ppEnts)
+			ppEnts[Num] = pEnt;
+		Num++;
+		if (Num == Max)
+			break;
+	}
+
+	return Num;
+}
+
 void CGameWorld::InsertEntity(CEntity *pEnt)
 {
 #ifdef CONF_DEBUG

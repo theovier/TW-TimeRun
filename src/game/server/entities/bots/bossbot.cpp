@@ -83,7 +83,7 @@ void CBossBot::SummonMinions() {
 
 void CBossBot::FreezeAllPlayers() {
 	CCharacter* apCloseChars[MAX_CLIENTS];
-	int closestChars = GameServer()->m_World.FindEntities(m_Pos, _FMAX, (CEntity**)apCloseChars, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);
+	int closestChars = GameServer()->m_World.FindEntities(m_Pos, (CEntity**)apCloseChars, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);
 	for (int i = 0; i < closestChars; i++) {
 		CCharacter* character = apCloseChars[i];
 		CPlayer* controller = character->GetPlayer();

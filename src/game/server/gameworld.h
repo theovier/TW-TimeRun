@@ -70,6 +70,7 @@ public:
 			Number of entities found and added to the ents array.
 	*/
 	int FindEntities(vec2 Pos, float Radius, CEntity **ppEnts, int Max, int Type);
+	int FindEntities(vec2 Pos, CEntity **ppEnts, int Max, int Type);
 
 	/*
 		Function: interserct_CCharacter
