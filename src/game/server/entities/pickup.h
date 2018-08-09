@@ -29,7 +29,7 @@ protected:
 
 	void TickAnims();
 	void TickPotionAnim();
-	void TickPickup();
+	virtual void TickPickup();
 	virtual void HandleRespawn(int RespawnTime);
 };
 
