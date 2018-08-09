@@ -12,8 +12,7 @@ CDrop::CDrop(CGameWorld *pGameWorld, vec2 Pos, int Type, int SubType) : CPickup(
 }
 
 void CDrop::Reset() {
-	CPickup::Reset();
-	GameWorld()->DestroyEntity(this);
+	Despawn();
 }
 
 void CDrop::Tick() {
@@ -32,7 +31,7 @@ void CDrop::Despawn() {
 }
 
 void CDrop::HandleRespawn(int RespawnTime) {
-	GameServer()->m_World.DestroyEntity(this);
+	GameWorld()->DestroyEntity(this);
 }
 
 void CDrop::Snap(int SnappingClient) {
