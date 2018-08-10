@@ -97,13 +97,13 @@ void CBossBot::HealSelf() {
 	//todo check if height is enough
 	
 	vec2 startLeft = m_Pos - vec2(100.0f, 150.0f);
-	CMovingBossPickup* leftHeart = new CMovingBossPickup(&GameServer()->m_World, startLeft, m_Pos, 3.25f, POWERUP_HEALTH);
+	CMovingBossPickup* leftHeart = new CMovingBossPickup(&GameServer()->m_World, startLeft, (CEntity*)this, 3.25f, POWERUP_HEALTH);
 
 	vec2 startMiddle = m_Pos - vec2(0, 150.0f);
-	CMovingBossPickup* middleHeart = new CMovingBossPickup(&GameServer()->m_World, startMiddle, m_Pos, 3, POWERUP_HEALTH);
+	CMovingBossPickup* middleHeart = new CMovingBossPickup(&GameServer()->m_World, startMiddle, (CEntity*)this, 3, POWERUP_HEALTH);
 
 	vec2 startRight = m_Pos + vec2(100.0f, -150.0f);
-	CMovingBossPickup* rightHeart = new CMovingBossPickup(&GameServer()->m_World, startRight, m_Pos, 3.25f, POWERUP_HEALTH);
+	CMovingBossPickup* rightHeart = new CMovingBossPickup(&GameServer()->m_World, startRight, (CEntity*)this, 3.25f, POWERUP_HEALTH);
 }
 
 const char* CBossBot::GetDisplayName() {

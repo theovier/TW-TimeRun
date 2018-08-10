@@ -7,9 +7,13 @@
 class CMovingBossPickup : public CMovingPickup {
 
 public:
-	CMovingBossPickup(CGameWorld *pGameWorld, vec2 From, vec2 To, float Duration, int Type, int SubType = 0);
+	CMovingBossPickup(CGameWorld *pGameWorld, vec2 From, CEntity *Target, float Duration, int Type, int SubType = 0);
+	virtual void Tick() override;
 
 protected:
 	virtual void TickPickup() override;
+
+private:
+	CEntity* m_Target;
 };
 #endif

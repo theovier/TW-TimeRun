@@ -1,8 +1,15 @@
 #include <game/server/gamecontext.h>
 #include "movingbosspickup.h"
 
-CMovingBossPickup::CMovingBossPickup(CGameWorld *pGameWorld, vec2 From, vec2 To, float Duration, int Type, int SubType) : CMovingPickup(pGameWorld, From, To, Duration, Type, SubType) {
+CMovingBossPickup::CMovingBossPickup(CGameWorld *pGameWorld, vec2 From, CEntity *Target, float Duration, int Type, int SubType) : CMovingPickup(pGameWorld, From, Target->GetPos(), Duration, Type, SubType) {
+	m_Target = Target;
+}
 
+void CMovingBossPickup::Tick() {
+	vec2 targetPos = m_Target->GetPos();
+	m_Dir = vec2(targetPos.x - m_From.x, targetPos.y - m_From.y);
+	m_Destination = targetPos;
+	CMovingPickup::Tick();
 }
 
 void CMovingBossPickup::TickPickup() {

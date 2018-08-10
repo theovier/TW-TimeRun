@@ -3,6 +3,7 @@
 
 CMovingPickup::CMovingPickup(CGameWorld *pGameWorld, vec2 From, vec2 To, float Duration, int Type, int SubType) : CPickup(pGameWorld, Type, SubType) {
 	m_Pos = From;
+	m_From = From;
 	m_Destination = To;
 	m_MovementSpeed = 1 / (Server()->TickSpeed() * Duration);
 	m_Dir = vec2(To.x - From.x, To.y - From.y);

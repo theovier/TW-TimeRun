@@ -12,15 +12,16 @@ public:
 	virtual void Tick();
 
 protected:
+	vec2 m_From;
 	vec2 m_Dir;
 	vec2 m_Destination;
 	float m_MovementSpeed;
 	virtual void TickMovement();
 	virtual void Move();
-
+	
 private:
-	bool m_DestinationReached;
 	const bool HasReachedDestination() { return (int)m_Pos.x == (int)m_Destination.x && (int)m_Pos.y == (int)m_Destination.y; };
+	bool m_DestinationReached;
 	void Despawn();
 };
 #endif
