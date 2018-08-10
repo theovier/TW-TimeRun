@@ -2,7 +2,7 @@
 #define GAME_SERVER_ENTITIES_MOVINGBOSSPICKUP_H
 
 #include <game/server/entity.h>
-#include <game/server/entities/movingpickup.h>
+#include "movingpickup.h"
 
 class CMovingBossPickup : public CMovingPickup {
 

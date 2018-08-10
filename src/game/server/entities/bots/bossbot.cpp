@@ -1,6 +1,6 @@
 #include "bossbot.h"
 #include <game/server/entities/lightning.h>
-#include <game/server/entities/movingbosspickup.h>
+#include <game/server/entities/loot/movingbosspickup.h>
 
 MACRO_ALLOC_POOL_ID_IMPL(CBossBot, MAX_CLIENTS)
 
