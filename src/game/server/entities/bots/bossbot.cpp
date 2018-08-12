@@ -119,7 +119,7 @@ void CBossBot::EnterMinionPhase() {
 void CBossBot::EnterHealPhase() {
 	m_CurrentPhase = PHASE_HEAL;
 	GameServer()->SendBroadcast("Heal Phase", -1);
-	FreezeAllPlayers(5.0f);
+	FreezeAllPlayers(7.0f);
 	HealSelf();
 }
 
@@ -153,18 +153,16 @@ void CBossBot::FreezeAllPlayers(float time) {
 }
 
 void CBossBot::HealSelf() {
-	//todo check for collision?
-	//todo fancy spawn effect?
-	//todo slow down
+	SetEmoticon(EMOTICON_HEARTS);
 	
-	vec2 startLeft = m_Pos - vec2(100.0f, 150.0f);
-	CMovingBossPickup* leftHeart = new CMovingBossPickup(&GameServer()->m_World, startLeft, (CEntity*)this, 3.25f, POWERUP_HEALTH);
+	vec2 startLeft = m_Pos - vec2(150.0f, 200.0f);
+	CMovingBossPickup* leftHeart = new CMovingBossPickup(&GameServer()->m_World, startLeft, (CEntity*)this, 7, POWERUP_HEALTH);
 
-	vec2 startMiddle = m_Pos - vec2(0, 150.0f);
-	CMovingBossPickup* middleHeart = new CMovingBossPickup(&GameServer()->m_World, startMiddle, (CEntity*)this, 3, POWERUP_HEALTH);
+	vec2 startMiddle = m_Pos - vec2(0, 200.0f);
+	CMovingBossPickup* middleHeart = new CMovingBossPickup(&GameServer()->m_World, startMiddle, (CEntity*)this, 7, POWERUP_HEALTH);
 
-	vec2 startRight = m_Pos + vec2(100.0f, -150.0f);
-	CMovingBossPickup* rightHeart = new CMovingBossPickup(&GameServer()->m_World, startRight, (CEntity*)this, 3.25f, POWERUP_HEALTH);
+	vec2 startRight = m_Pos - vec2(-150.0f, 200.0f);
+	CMovingBossPickup* rightHeart = new CMovingBossPickup(&GameServer()->m_World, startRight, (CEntity*)this, 7, POWERUP_HEALTH);
 }
 
 void CBossBot::SpawnLightning() {
