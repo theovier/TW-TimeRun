@@ -10,7 +10,9 @@ CBossBot::CBossBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	CBotCharacter::CBotCharacter(pWorld);
 	m_CurrentPhase = PHASE_IDLE;
 	m_MaxHealth = m_Health = GameServer()->Tuning()->m_BossLife;
-	m_EnrageDmgThreshold = GameServer()->Tuning()->m_BossEnrageDmgThreshold;
+	m_MinionPhaseHPThreshold = GameServer()->Tuning()->m_BossPhaseMinionThreshold;
+	m_HealPhaseHPThreshold = GameServer()->Tuning()->m_BossPhaseHealThreshold;
+	m_EnragePhaseHPThreshold = GameServer()->Tuning()->m_BossPhaseEnrageThreshold;
 	m_Skin = "twinbop";
 }
 
@@ -92,13 +94,13 @@ void CBossBot::EnterNextPhase() {
 		OnEnterFight();
 		EnterSimplePhase();
 	}
-	else if (m_CurrentPhase == PHASE_SIMPLE && m_Health <= m_MinionPhaseDmgThreshold) {
+	else if (m_CurrentPhase == PHASE_SIMPLE && m_Health <= m_MinionPhaseHPThreshold) {
 		EnterMinionPhase();
 	}
-	else if (m_CurrentPhase == PHASE_MINIONS && m_Health <= m_HealPhaseDmgThreshold) {
+	else if (m_CurrentPhase == PHASE_MINIONS && m_Health <= m_HealPhaseHPThreshold) {
 		EnterHealPhase();
 	}
-	else if (m_CurrentPhase == PHASE_HEAL && m_Health <= m_EnrageDmgThreshold) {
+	else if (m_CurrentPhase == PHASE_HEAL && m_Health <= m_EnragePhaseHPThreshold) {
 		EnterEnragePhase();
 	}
 }

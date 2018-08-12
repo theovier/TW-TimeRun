@@ -93,8 +93,11 @@ MACRO_TUNING_PARAM(KamikazeBotLife, bot_kamikaze_life, 10)
 // boss
 MACRO_TUNING_PARAM(BossLife, boss_life, 200)
 MACRO_TUNING_PARAM(BossDistancelimit, boss_distancelimit, 1000.0f)
-MACRO_TUNING_PARAM(BossEnrageDmgThreshold, boss_enrage_dmg, 5)
-MACRO_TUNING_PARAM(BossSelfHeal, boss_selfheal, 25.0f)
+
+MACRO_TUNING_PARAM(BossPhaseMinionThreshold, boss_phase_minion_hp, 150) //when the HP fall below this point, the boss enters the minion phase
+MACRO_TUNING_PARAM(BossPhaseHealThreshold, boss_phase_heal_hp, 100) //when the HP fall below this point, the boss enters the heal phase
+MACRO_TUNING_PARAM(BossPhaseEnrageThreshold, boss_phase_enrage_hp, 50) //when the HP fall below this point, the boss enrages
+MACRO_TUNING_PARAM(BossSelfHeal, boss_selfheal, 25.0f) //how much 1 heart heals the boss.
 
 // freezing
 MACRO_TUNING_PARAM(FreezerReload, freezer_reload, 1.5f)

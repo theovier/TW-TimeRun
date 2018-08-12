@@ -36,9 +36,10 @@ private:
 	void TickHealPhase();
 	void TickEnrage();
 
-	int m_MinionPhaseDmgThreshold = 15; //when the HP fall below this point, the boss enteres the heal phase
-	int m_HealPhaseDmgThreshold = 10; //when the HP fall below this point, the boss enteres the heal phase
-	int m_EnrageDmgThreshold; //when the HP fall below this point, the boss enrages
+	int m_MinionPhaseHPThreshold; //when the HP fall below this point, the boss enteres the minion phase
+	int m_HealPhaseHPThreshold; //when the HP fall below this point, the boss enteres the heal phase
+	int m_EnragePhaseHPThreshold; //when the HP fall below this point, the boss enrages
+
 	void OnEnterFight();
 	void EnterNextPhase();
 	void EnterSimplePhase();
