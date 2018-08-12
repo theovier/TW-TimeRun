@@ -359,18 +359,23 @@ void CPlayer::LoadPermaWeapons() {
 
 bool CPlayer::RemovePermaWeapons() {
 	//keep hammer and gun
-	m_pCharacter->m_ActiveWeapon = WEAPON_HAMMER;
-
 	bool removed = false;
 	for (int i = 2; i < NUM_WEAPONS; i++) {
 		if (m_GameStats.m_PermaWeapons[i].m_Got) {
 			removed = true;
 		}
-		m_GameStats.m_PermaWeapons[i].m_Got = m_pCharacter->m_aWeapons[i].m_Got = false;
-		m_GameStats.m_PermaWeapons[i].m_StartAmmo = m_pCharacter->m_aWeapons[i].m_Ammo = 0;
 		m_GameStats.m_PermaWeapons[i].m_Got = false;
 		m_GameStats.m_PermaWeapons[i].m_StartAmmo = 0;
+		if (m_pCharacter) {
+			m_pCharacter->m_aWeapons[i].m_Got = false;
+			m_pCharacter->m_aWeapons[i].m_Ammo = 0;
+		}
 	}
+
+	if (m_pCharacter) {
+		m_pCharacter->m_ActiveWeapon = WEAPON_HAMMER;
+	}
+
 	return removed;
 }
 
