@@ -3,6 +3,7 @@
 
 CMovingBossPickup::CMovingBossPickup(CGameWorld *pGameWorld, vec2 From, CEntity *Target, float Duration, int Type, int SubType) : CMovingPickup(pGameWorld, From, Target->GetPos(), Duration, Type, SubType) {
 	m_Target = Target;
+	GameServer()->CreateExplosion(From, -1, -1, true);
 }
 
 void CMovingBossPickup::Tick() {
