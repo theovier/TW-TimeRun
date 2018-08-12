@@ -89,6 +89,12 @@ public:
 	class CCharacter *IntersectCharacter(vec2 Pos0, vec2 Pos1, float Radius, vec2 &NewPos, class CEntity *pNotThis = 0);
 
 	/*
+		Function: IsCharacterNearby
+			Returns true if a character is within the radius of the given position.
+	*/
+	bool IsCharacterNearby(vec2 Pos, float Radius, class CEntity *pNotThis = 0);
+
+	/*
 		Function: closest_CCharacter
 			Finds the closest CCharacter to a specific point.
 
