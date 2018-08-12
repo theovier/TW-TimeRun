@@ -113,11 +113,14 @@ void CBossBot::EnterSimplePhase() {
 void CBossBot::EnterMinionPhase() {
 	m_CurrentPhase = PHASE_MINIONS;
 	GameServer()->SendBroadcast("Minion Phase", -1);
+	SummonMinions();
 }
 
 void CBossBot::EnterHealPhase() {
 	m_CurrentPhase = PHASE_HEAL;
 	GameServer()->SendBroadcast("Heal Phase", -1);
+	FreezeAllPlayers();
+	HealSelf();
 }
 
 void CBossBot::EnterEnragePhase() {
@@ -130,7 +133,7 @@ void CBossBot::EnterEnragePhase() {
 }
 
 void CBossBot::SummonMinions() {
-	//GameServer()->SendBroadcast("Boss calls for help!", -1);
+	GameServer()->SendBroadcast("Boss calls for help!", -1);
 	
 	//todo check for collision.
 	GameServer()->TimeRunController()->SpawnBot(BOTTYPE_HAMMER, m_Pos - vec2(80.0f, 20.0f));
