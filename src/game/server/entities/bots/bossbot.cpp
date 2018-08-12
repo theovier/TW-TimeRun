@@ -134,10 +134,10 @@ void CBossBot::EnterEnragePhase() {
 
 void CBossBot::SummonMinions() {
 	GameServer()->SendBroadcast("Boss calls for help!", -1);
-	
-	//todo check for collision.
-	GameServer()->TimeRunController()->SpawnBot(BOTTYPE_HAMMER, m_Pos - vec2(80.0f, 20.0f));
-	GameServer()->TimeRunController()->SpawnBot(BOTTYPE_HAMMER, m_Pos + vec2(80.0f, -20.0f));
+	for (int i = 0; i < 3; i++) {
+		vec2 spawnPos = GameWorld()->FindEmptySpot(m_Pos, 150, m_ProximityRadius + 5, 10);
+		GameServer()->TimeRunController()->SpawnBot(BOTTYPE_HAMMER, spawnPos);
+	}
 }
 
 void CBossBot::FreezeAllPlayers() {
@@ -153,7 +153,9 @@ void CBossBot::FreezeAllPlayers() {
 }
 
 void CBossBot::HealSelf() {
-	//todo check if height is enough
+	//todo check for collision?
+	//todo fancy spawn effect?
+	//todo slow down
 	
 	vec2 startLeft = m_Pos - vec2(100.0f, 150.0f);
 	CMovingBossPickup* leftHeart = new CMovingBossPickup(&GameServer()->m_World, startLeft, (CEntity*)this, 3.25f, POWERUP_HEALTH);

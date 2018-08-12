@@ -243,6 +243,32 @@ bool CGameWorld::IsCharacterNearby(vec2 Pos, float Radius, class CEntity *pNotTh
 	return false;
 }
 
+vec2 CGameWorld::FindEmptySpot(vec2 Pos, float Radius, float MinDistance, int MaxTries) {
+	int tries = 0;
+	while (true) {
+		int x = frandom() * Radius;
+		int y = frandom() * Radius;
+		if (frandom() < 0.5f) x *= -1;
+		if (frandom() < 0.5f) y *= -1;
+		vec2 possibleSpot = Pos + vec2(x, y);
+
+		bool charNearBy = IsCharacterNearby(possibleSpot, MinDistance);
+		if (IsCharacterNearby(possibleSpot, MinDistance) ||
+			GameServer()->Collision()->GetCollisionAt(possibleSpot.x + MinDistance / 3.f, possibleSpot.y - MinDistance / 3.f)&CCollision::COLFLAG_SOLID ||
+			GameServer()->Collision()->GetCollisionAt(possibleSpot.x + MinDistance / 3.f, possibleSpot.y + MinDistance / 3.f)&CCollision::COLFLAG_SOLID ||
+			GameServer()->Collision()->GetCollisionAt(possibleSpot.x - MinDistance / 3.f, possibleSpot.y - MinDistance / 3.f)&CCollision::COLFLAG_SOLID ||
+			GameServer()->Collision()->GetCollisionAt(possibleSpot.x - MinDistance / 3.f, possibleSpot.y + MinDistance / 3.f)&CCollision::COLFLAG_SOLID)
+		{
+			if (++tries == MaxTries) {
+				return vec2(0, 0);
+			}
+		}
+		else {
+			return possibleSpot;
+		}
+	}
+}
+
 CCharacter *CGameWorld::ClosestCharacter(vec2 Pos, float Radius, CEntity *pNotThis)
 {
 	// Find other players

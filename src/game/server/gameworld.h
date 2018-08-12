@@ -94,6 +94,9 @@ public:
 	*/
 	bool IsCharacterNearby(vec2 Pos, float Radius, class CEntity *pNotThis = 0);
 
+	//finds a position within the radius (if possible) where collisions and characters are at least MinDistance away.
+	vec2 FindEmptySpot(vec2 Pos, float Radius, float MinDistance, int MaxTries);
+
 	/*
 		Function: closest_CCharacter
 			Finds the closest CCharacter to a specific point.
