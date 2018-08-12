@@ -10,28 +10,46 @@ class CBossBot : public CBotCharacter {
 
 public:
 	CBossBot(CGameWorld *pWorld);
+	const char *GetDisplayName() override;
 	virtual void Tick() override;
 	virtual bool TakeDamage(vec2 Force, int Dmg, int From, int Weapon) override;
-	const char *GetDisplayName() override;
+	
 protected:
 	virtual void Handle() {};
 	virtual bool ShouldDespawn() { return false; };
 	const int GetBotType() { return BOTTYPE_ENDBOSS; };
-private:
-	bool m_InFight;
-	void OnEnterFight();
 
-	//after this amount of dmg taken the boss enrages
-	int m_EnrageDmgThreshold;
-	bool m_IsEnraged;
-	void StartEnrage();
+private:
+	enum PHASES {
+		PHASE_IDLE,
+		PHASE_SIMPLE,
+		PHASE_MINIONS,
+		PHASE_HEAL,
+		PHASE_ENRAGE
+	};
+	int m_CurrentPhase;
+
+	void TickCurrentPhase();
+	void TickIdlePhase();
+	void TickSimplePhase();
+	void TickMinionPhase();
+	void TickHealPhase();
 	void TickEnrage();
+
+	int m_MinionPhaseDmgThreshold = 15; //when the HP fall below this point, the boss enteres the heal phase
+	int m_HealPhaseDmgThreshold = 10; //when the HP fall below this point, the boss enteres the heal phase
+	int m_EnrageDmgThreshold; //when the HP fall below this point, the boss enrages
+	void OnEnterFight();
+	void EnterNextPhase();
+	void EnterSimplePhase();
+	void EnterMinionPhase();
+	void EnterHealPhase();
+	void EnterEnragePhase();
+	
 	void SummonMinions();
 	void FreezeAllPlayers();
-	void SpawnLightning();
 	void HealSelf();
-
-	void SpamZZZ();
+	void SpawnLightning();
 };
 
 #endif
