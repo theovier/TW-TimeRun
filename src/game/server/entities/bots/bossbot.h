@@ -48,7 +48,7 @@ private:
 	void EnterEnragePhase();
 	
 	void SummonMinions(int amount);
-	void FreezeAllPlayers();
+	void FreezeAllPlayers(float time);
 	void HealSelf();
 	void SpawnLightning();
 };

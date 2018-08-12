@@ -119,7 +119,7 @@ void CBossBot::EnterMinionPhase() {
 void CBossBot::EnterHealPhase() {
 	m_CurrentPhase = PHASE_HEAL;
 	GameServer()->SendBroadcast("Heal Phase", -1);
-	FreezeAllPlayers();
+	FreezeAllPlayers(5.0f);
 	HealSelf();
 }
 
@@ -140,14 +140,14 @@ void CBossBot::SummonMinions(int amount) {
 	}
 }
 
-void CBossBot::FreezeAllPlayers() {
+void CBossBot::FreezeAllPlayers(float time) {
 	CCharacter* apCloseChars[MAX_CLIENTS];
 	int closestChars = GameServer()->m_World.FindEntities(m_Pos, (CEntity**)apCloseChars, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);
 	for (int i = 0; i < closestChars; i++) {
 		CCharacter* character = apCloseChars[i];
 		CPlayer* controller = character->GetPlayer();
 		if (character->IsAlive() && !controller->IsBot()) {
-			character->Freeze(5.0f);
+			character->Freeze(time);
 		}
 	}
 }
