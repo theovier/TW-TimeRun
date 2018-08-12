@@ -667,7 +667,7 @@ void CGameContext::OnClientDrop(int ClientID, const char *pReason)
 		}
 	}
 	if (onlyBotPlayerRemaining) {
-		Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", "No players left, resetting game");
+		Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", "No players remaining, resetting game");
 		TimeRunController()->ResetRound();
 	}
 }
