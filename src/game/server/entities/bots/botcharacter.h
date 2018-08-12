@@ -11,8 +11,9 @@ class CBotCharacter : public CCharacter {
 public:
 	CBotCharacter(CGameWorld *pWorld);
 	void Tick() override;
+	virtual bool TakeDamage(vec2 Force, int Dmg, int From, int Weapon);
 	void Die(int Killer, int Weapon) override;
-	void Stun(float Time);
+	void Stun(float Seconds);
 	virtual const char *GetDisplayName();
 	const virtual char* GetSkinName() { return m_Skin; };
 
@@ -51,6 +52,8 @@ protected:
 	virtual void SetEmoticon(int Emoticon);
 
 	float m_StunTime;
+	float m_StunTick;
+	void OnStunned();
 
 private:
 	void MarkControllerForDestroy();

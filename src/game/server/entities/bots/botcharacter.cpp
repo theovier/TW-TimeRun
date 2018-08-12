@@ -13,16 +13,23 @@ CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 
 void CBotCharacter::Tick() {
 	CCharacter::Tick();
-
-	if (m_StunTime > 0) {
-		ResetInput();
-		return;
-	}
-
 	Handle();
+	if (Server()->Tick() < m_StunTick) {
+		OnStunned();
+	}
 	if (ShouldDespawn()) {
 		Despawn();
 	}
+}
+
+void CBotCharacter::OnStunned() {
+	StopFire();
+	if (m_Core.m_Vel.y > 0.0f) {
+		m_Core.m_Vel = vec2(0.0f, m_Core.m_Vel.y);
+	}
+	else {
+		m_Core.m_Vel = vec2(0.0f, 0.0f);
+	}		
 }
 
 bool CBotCharacter::ShouldDespawn() {
@@ -31,6 +38,14 @@ bool CBotCharacter::ShouldDespawn() {
 
 void CBotCharacter::Despawn() {
 	Die(m_pPlayer->GetCID(), WEAPON_GAME);
+}
+
+bool CBotCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon) {
+	bool dmgTaken = CCharacter::TakeDamage(Force, Dmg, From, Weapon);
+	if (From != WEAPON_WORLD) {
+		Stun(1.5f);
+	}
+	return dmgTaken;
 }
 
 void CBotCharacter::Die(int Killer, int Weapon) {
@@ -50,9 +65,10 @@ void CBotCharacter::OnDeath(CPlayer* Killer) {
 	}
 }
 
-void CBotCharacter::Stun(float Time) {
-	m_StunTime = max(m_StunTime, Time);
-	//todo: display emote.
+void CBotCharacter::Stun(float Seconds) {
+	m_StunTime = max(m_StunTime, Seconds);
+	m_StunTick = Server()->Tick() + Server()->TickSpeed() * m_StunTime;
+	SetEmote(EMOTE_SURPRISE, m_StunTick);
 }
 
 void CBotCharacter::Handle() {
