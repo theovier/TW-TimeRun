@@ -113,7 +113,7 @@ void CBossBot::EnterSimplePhase() {
 void CBossBot::EnterMinionPhase() {
 	m_CurrentPhase = PHASE_MINIONS;
 	GameServer()->SendBroadcast("Minion Phase", -1);
-	SummonMinions();
+	SummonMinions(3);
 }
 
 void CBossBot::EnterHealPhase() {
@@ -132,9 +132,9 @@ void CBossBot::EnterEnragePhase() {
 	}
 }
 
-void CBossBot::SummonMinions() {
+void CBossBot::SummonMinions(int amount) {
 	GameServer()->SendBroadcast("Boss calls for help!", -1);
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < amount; i++) {
 		vec2 spawnPos = GameWorld()->FindEmptySpot(m_Pos, 150, m_ProximityRadius + 5, 10);
 		GameServer()->TimeRunController()->SpawnBot(BOTTYPE_HAMMER, spawnPos);
 	}
