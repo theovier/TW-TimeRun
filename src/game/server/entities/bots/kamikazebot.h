@@ -13,6 +13,7 @@ protected:
 	virtual void Fire(vec2 Target);
 	void Hook(vec2 Target) {};
 	void SelectAppropriateWeapon(float distanceToTarget) override;
+	void OnDeath(CPlayer* Killer);
 	const int GetBotType() { return BOTTYPE_KAMIKAZE; };
 	
 	float m_TriggerRange;

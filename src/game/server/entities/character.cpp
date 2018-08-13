@@ -246,8 +246,6 @@ void CCharacter::HandleWeaponSwitch()
 	if(m_LatestInput.m_WantedWeapon)
 		WantedWeapon = m_Input.m_WantedWeapon-1;
 
-	if(WantedWeapon == WEAPON_NINJA)
-		WantedWeapon = WEAPON_KAMIKAZE;
 	else if(WantedWeapon == WEAPON_RIFLE && m_aWeapons[WEAPON_FREEZER].m_Got)
 		WantedWeapon = WEAPON_FREEZER;
 
@@ -425,14 +423,6 @@ void CCharacter::FireWeapon()
 			m_Ninja.m_OldVelAmount = length(m_Core.m_Vel);
 
 			GameServer()->CreateSound(m_Pos, SOUND_NINJA_FIRE);
-		} break;
-
-		case WEAPON_KAMIKAZE:
-		{
-			GameServer()->CreateExplosion(m_Pos, m_pPlayer->GetCID(), WEAPON_KAMIKAZE, false);
-			GameServer()->CreateSound(m_Pos, SOUND_GRENADE_EXPLODE);
-			if(m_Alive)
-				Die(m_pPlayer->GetCID(), WEAPON_NINJA);
 		} break;
 		
 		case WEAPON_FREEZER:
@@ -981,9 +971,7 @@ void CCharacter::Snap(int SnappingClient)
 	pCharacter->m_Health = 0;
 	pCharacter->m_Armor = 0;
 
-	if(m_ActiveWeapon == WEAPON_KAMIKAZE)
-		pCharacter->m_Weapon = WEAPON_NINJA;
-	else if(m_ActiveWeapon == WEAPON_FREEZER)
+	if(m_ActiveWeapon == WEAPON_FREEZER)
 		pCharacter->m_Weapon = WEAPON_RIFLE;
 	else
 		pCharacter->m_Weapon = m_ActiveWeapon;

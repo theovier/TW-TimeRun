@@ -7,19 +7,25 @@ CKamikazebot::CKamikazebot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_TriggerRange = GameServer()->Tuning()->m_KamikazeBotTriggerRadius;
 	m_ExplosionDelay = GameServer()->Tuning()->m_KamikazeBotExplosionDelay;
 	m_ExplosionTick = -1;
-	GiveWeapon(WEAPON_KAMIKAZE, -1);
+	GiveNinja();
 }
 
 void CKamikazebot::Tick() {
 	CBotCharacter::Tick();
 	m_AttackTick = Server()->Tick();
 	if (Server()->Tick() > m_ExplosionTick && m_ExplosionTick != -1) {
-		Explode();
+		Die(m_pPlayer->GetCID(), WEAPON_NINJA);
 	}
 }
 
+void CKamikazebot::OnDeath(CPlayer* Killer) {
+	CBotCharacter::OnDeath(Killer);
+	Explode();
+}
+
 void CKamikazebot::SelectAppropriateWeapon(float distanceToTarget) {
-	SetWeapon(WEAPON_KAMIKAZE);
+	SetWeapon(WEAPON_NINJA);
+	m_Ninja.m_ActivationTick = Server()->Tick();
 }
 
 void CKamikazebot::Fire(vec2 Target) {
@@ -36,8 +42,8 @@ void CKamikazebot::Fire(vec2 Target) {
 }
 
 void CKamikazebot::Explode() {
-	m_LatestInput.m_Fire = 1;
-	m_Input.m_Fire = 1;
+	GameServer()->CreateExplosion(m_Pos, m_pPlayer->GetCID(), WEAPON_NINJA, false);
+	GameServer()->CreateSound(m_Pos, SOUND_GRENADE_EXPLODE);
 }
 
 

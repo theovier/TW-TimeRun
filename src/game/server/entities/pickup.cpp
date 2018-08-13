@@ -203,9 +203,7 @@ int CPickup::RealPickup(int Type)
 
 int CPickup::RealSubtype(int Type)
 {
-	if(Type == WEAPON_KAMIKAZE)
-		Type = WEAPON_NINJA;
-	else if(Type == WEAPON_FREEZER)
+	if(Type == WEAPON_FREEZER)
 		Type = WEAPON_RIFLE;
 	return Type;
 }
