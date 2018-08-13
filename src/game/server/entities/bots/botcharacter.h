@@ -55,6 +55,8 @@ protected:
 	float m_StunTick;
 	void OnStunned();
 
+	float m_ShotgunKnockback;
+
 private:
 	void MarkControllerForDestroy();
 };

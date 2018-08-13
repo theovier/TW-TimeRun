@@ -9,6 +9,7 @@ CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 	m_AggroRadius = 700.0f;
 	m_DespawnTime = GameServer()->Tuning()->m_BotDespawnTime;
 	m_MaxArmor = 0;
+	m_ShotgunKnockback = 5.0f;
 }
 
 void CBotCharacter::Tick() {
@@ -41,11 +42,10 @@ void CBotCharacter::Despawn() {
 }
 
 bool CBotCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon) {
-	bool dmgTaken = CCharacter::TakeDamage(Force, Dmg, From, Weapon);
-	if (From != WEAPON_WORLD) {
-		Stun(1.5f);
+	if (Weapon == WEAPON_SHOTGUN) {
+		Force *= m_ShotgunKnockback;
 	}
-	return dmgTaken;
+	return CCharacter::TakeDamage(Force, Dmg, From, Weapon);
 }
 
 void CBotCharacter::Die(int Killer, int Weapon) {
