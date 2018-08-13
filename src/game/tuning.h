@@ -90,6 +90,8 @@ MACRO_TUNING_PARAM(ShotgunBotLife, bot_shotgun_life, 20.0f)
 
 MACRO_TUNING_PARAM(KamikazeBotRespawnTime, bot_kamikaze_respawn_time, 20.0f)
 MACRO_TUNING_PARAM(KamikazeBotLife, bot_kamikaze_life, 10)
+MACRO_TUNING_PARAM(KamikazeBotTriggerRadius, bot_kamikaze_trigger_radius, 150)
+MACRO_TUNING_PARAM(KamikazeBotExplosionDelay, bot_kamikaze_explosion_delay, 1.5f)
 
 // boss
 MACRO_TUNING_PARAM(BossLife, boss_life, 200)
