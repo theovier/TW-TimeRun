@@ -29,7 +29,7 @@ protected:
 	vec2 FindNearestTarget();
 
 	float m_Range;
-	const float m_MeeleRange = 64.0f;
+	const float m_MeeleRange = 64.0f + 36.0f;
 	const float m_GunRange = 500.0f;
 	const float m_HookRange = 500.0f;
 	float m_AggroRadius;

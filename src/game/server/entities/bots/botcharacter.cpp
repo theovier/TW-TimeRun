@@ -6,6 +6,7 @@ MACRO_ALLOC_POOL_ID_IMPL(CBotCharacter, MAX_CLIENTS)
 
 CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 	CCharacter::CCharacter(pWorld);
+	m_DespawnTick = -1;
 	m_AggroRadius = 700.0f;
 	m_DespawnTime = GameServer()->Tuning()->m_BotDespawnTime;
 	m_MaxArmor = 0;
@@ -19,7 +20,9 @@ CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 
 void CBotCharacter::Tick() {
 	CCharacter::Tick();
-	Handle();
+	if (Server()->Tick() % 3 == 0) {
+		Handle();
+	}
 	if (Server()->Tick() < m_StunTick) {
 		OnStunned();
 	}
@@ -39,7 +42,7 @@ void CBotCharacter::OnStunned() {
 }
 
 bool CBotCharacter::ShouldDespawn() {
-	return Server()->Tick() > m_DespawnTick;
+	return m_DespawnTick != -1 && Server()->Tick() > m_DespawnTick;
 }
 
 void CBotCharacter::Despawn() {
