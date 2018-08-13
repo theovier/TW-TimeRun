@@ -7,6 +7,7 @@ CKamikazebot::CKamikazebot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_TriggerRange = GameServer()->Tuning()->m_KamikazeBotTriggerRadius;
 	m_ExplosionDelay = GameServer()->Tuning()->m_KamikazeBotExplosionDelay;
 	m_ExplosionTick = -1;
+	m_StunChance = 0;
 	GiveNinja();
 }
 
