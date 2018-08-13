@@ -15,6 +15,7 @@ public:
 private:
 	int m_Index;
 	bool m_Dropped = false;
+	float m_RegenerationRadius;
 	void SaveProgress(CCharacter* beneficiary, CPlayer* controller);
 	void Regenerate(CCharacter* beneficiary, CPlayer* controller);
 	bool RegenerateHealth(CCharacter* beneficiary);

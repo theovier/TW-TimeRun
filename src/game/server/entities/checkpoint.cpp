@@ -6,6 +6,7 @@
 CCheckpoint::CCheckpoint(CGameWorld *pGameWorld, int Team, vec2 StandPos, int Index) : CFlag(pGameWorld, Team, StandPos) {
 	CFlag::CFlag(pGameWorld, Team, StandPos);
 	m_Index = Index;
+	m_RegenerationRadius = GameServer()->Tuning()->m_CheckpointRegenRadius;
 }
 
 void CCheckpoint::Tick() {
@@ -26,7 +27,7 @@ void CCheckpoint::Tick() {
 	}
 	else {
 		CCharacter* apCloseChars[MAX_CLIENTS];
-		int closestChars = GameServer()->m_World.FindEntities(m_Pos, ms_PhysSize, (CEntity**)apCloseChars, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);
+		int closestChars = GameServer()->m_World.FindEntities(m_Pos, m_RegenerationRadius, (CEntity**)apCloseChars, MAX_CLIENTS, CGameWorld::ENTTYPE_CHARACTER);
 		for (int i = 0; i < closestChars; i++) {
 			CCharacter* character = apCloseChars[i];
 			CPlayer* controller = character->GetPlayer();
