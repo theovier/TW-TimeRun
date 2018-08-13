@@ -57,7 +57,7 @@ bool CBotCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon) {
 	bool tookDamage = CCharacter::TakeDamage(Force, Dmg, From, Weapon);
 	
 	//apply stun effects after takeDamage, so the emotion stays.
-	if (frandom() < m_StunChance && Weapon != WEAPON_SHOTGUN) {
+	if (frandom() < m_StunChance && Weapon != WEAPON_SHOTGUN && From != WEAPON_WORLD) {
 		Stun(m_StunDuration);
 	}
 	return tookDamage;
