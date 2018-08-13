@@ -7,7 +7,7 @@ public:
 private:
 
 	void SelectAppropriateWeapon(float distanceToTarget) override;
+	void Move(vec2 Target) override;
 	void Hook(vec2 Target) override {};
-
 	const int GetBotType() { return BOTTYPE_GUN; };
 };
