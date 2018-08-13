@@ -13,6 +13,7 @@ CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 	m_StunChance = 0.3f;
 	m_StunChance = clamp(m_StunChance, 0.0f, 1.0f);
 	m_StunDuration = 0.75f;
+	m_HammerDamage = 2;
 }
 
 void CBotCharacter::Tick() {
