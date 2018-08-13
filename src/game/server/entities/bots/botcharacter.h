@@ -53,6 +53,8 @@ protected:
 
 	float m_StunTime;
 	float m_StunTick;
+	float m_StunChance; //1 = always stunned on hit. 0 = never stunned on hit.
+	float m_StunDuration;
 	void OnStunned();
 
 	float m_ShotgunKnockback;

@@ -10,6 +10,9 @@ CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 	m_DespawnTime = GameServer()->Tuning()->m_BotDespawnTime;
 	m_MaxArmor = 0;
 	m_ShotgunKnockback = 5.0f;
+	m_StunChance = 0.3f;
+	m_StunChance = clamp(m_StunChance, 0.0f, 1.0f);
+	m_StunDuration = 0.75f;
 }
 
 void CBotCharacter::Tick() {
@@ -42,10 +45,17 @@ void CBotCharacter::Despawn() {
 }
 
 bool CBotCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon) {
+	//apply knockbacks
 	if (Weapon == WEAPON_SHOTGUN) {
 		Force *= m_ShotgunKnockback;
 	}
-	return CCharacter::TakeDamage(Force, Dmg, From, Weapon);
+	bool tookDamage = CCharacter::TakeDamage(Force, Dmg, From, Weapon);
+	
+	//apply stun effects after takeDamage, so the emotion stays.
+	if (frandom() < m_StunChance && Weapon != WEAPON_SHOTGUN) {
+		Stun(m_StunDuration);
+	}
+	return tookDamage;
 }
 
 void CBotCharacter::Die(int Killer, int Weapon) {
