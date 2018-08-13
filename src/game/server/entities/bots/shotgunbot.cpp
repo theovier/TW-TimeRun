@@ -7,6 +7,7 @@ CShotgunBot::CShotgunBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	CBotCharacter::CBotCharacter(pWorld);
 	m_MaxHealth = m_Health = GameServer()->Tuning()->m_ShotgunBotLife;
 	GiveWeapon(WEAPON_SHOTGUN, 15);
+	m_Range = m_ShotgunRange;
 	m_Skin = "redbopp";
 }
 

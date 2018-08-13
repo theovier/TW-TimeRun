@@ -9,6 +9,7 @@ CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 	m_AggroRadius = 700.0f;
 	m_DespawnTime = GameServer()->Tuning()->m_BotDespawnTime;
 	m_MaxArmor = 0;
+	m_Range = m_MeeleRange;
 	m_ShotgunKnockback = 5.0f;
 	m_StunChance = 0.3f;
 	m_StunChance = clamp(m_StunChance, 0.0f, 1.0f);
@@ -150,7 +151,7 @@ void CBotCharacter::Fire(vec2 Target) {
 	StopFire();
 	bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL, false);
 	if (HasLineOfSight) {
-		bool InRange = distance(Target, m_Pos) < m_MeeleRange;
+		bool InRange = distance(Target, m_Pos) < m_Range;
 		bool FinishedReloading = m_ReloadTimer == 0;
 		bool ReadyToAttack = Server()->Tick() - m_AttackTimer > 0;
 		bool CanFire = InRange && FinishedReloading && ReadyToAttack;

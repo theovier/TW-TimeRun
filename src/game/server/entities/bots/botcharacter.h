@@ -28,6 +28,7 @@ protected:
 	void StopFire();
 	vec2 FindNearestTarget();
 
+	float m_Range;
 	const float m_MeeleRange = 64.0f;
 	const float m_GunRange = 500.0f;
 	const float m_HookRange = 500.0f;
