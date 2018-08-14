@@ -78,7 +78,7 @@ void CBossBot::TickEnrage() {
 
 bool CBossBot::TakeDamage(vec2 Force, int Dmg, int From, int Weapon) {
 	bool tookDamage = CCharacter::TakeDamage(Force, Dmg, From, Weapon);
-	if (IsAlive()) {
+	if (IsAlive() && tookDamage) {
 		EnterNextPhase();
 	}
 	return tookDamage;
