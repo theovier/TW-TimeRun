@@ -7,6 +7,7 @@ class CKamikazebot : public CBotCharacter {
 
 public:
 	CKamikazebot(CGameWorld *pWorld);
+	void GiveNinja() override;
 
 protected:
 	void Tick() override;
