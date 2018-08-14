@@ -31,23 +31,15 @@ void CGunbot::Move(vec2 Target) {
 	//stand still if we have LOS + range. But just now always.
 	bool hasLOS = !GameServer()->Collision()->IntersectLine(Target, m_Pos, NULL, NULL);
 	bool inRange = distance(Target, m_Pos) < m_Range;
-	bool rng = frandom() > 0.35f;
-	if (hasLOS && inRange && rng) {
-		return;
+	if (hasLOS && inRange) {
+		if (Server()->Tick() > m_StillstandTick) {
+			m_StandStill = frandom() < m_StillstandChance;
+			m_StillstandTick = Server()->Tick() + Server()->TickSpeed() * m_StillstandTime;
+		}
+		if (m_StandStill) {
+			return;
+		}
 	}
-
-	bool Jumping = (bool)m_Input.m_Jump;
-	if (m_Pos.x < Target.x)
-		m_Input.m_Direction = 1;
-	else if (m_Pos.x > Target.x)
-		m_Input.m_Direction = -1;
-
-	vec2 FuturePos = vec2(m_Pos.x + m_Input.m_Direction * 100, m_Pos.y);
-
-	if ((GameServer()->Collision()->IntersectLine(m_Pos, FuturePos, NULL, NULL, false) || m_Pos.y > Target.y) && !Jumping)
-	{
-		if (IsGrounded() || m_Core.m_Vel.y > -0.3f)
-			m_Input.m_Jump = 1;
-	}
+	CBotCharacter::Move(Target);
 }
 
