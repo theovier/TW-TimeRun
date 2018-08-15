@@ -27,7 +27,9 @@ protected:
 	virtual void Hook(vec2 Target);
 	void StopFire();
 	class CCharacter* FindNearestTarget();
-	class CCharacter* Target;
+	class CCharacter* m_Target;
+	float m_ChangeTargetTick;
+	float m_ChangeTargetTime = 2.0f;
 
 	float m_Range;
 	const float m_MeeleRange = 64.0f + 36.0f;

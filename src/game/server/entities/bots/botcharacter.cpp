@@ -87,9 +87,9 @@ void CBotCharacter::Stun(float Seconds) {
 }
 
 void CBotCharacter::Handle() {
-	Target = FindTarget();
-	if (Target) {
-		vec2 TargetPos = Target->GetPos();
+	m_Target = FindTarget();
+	if (m_Target) {
+		vec2 TargetPos = m_Target->GetPos();
 		Move(TargetPos);
 		SelectAppropriateWeapon(distance(TargetPos, m_Pos));
 		Aim(TargetPos);
@@ -122,7 +122,14 @@ void CBotCharacter::Move(vec2 Target) {
 
 class CCharacter* CBotCharacter::FindTarget() {
 	//default implementation
-	return FindNearestTarget();
+	if (Server()->Tick() > m_ChangeTargetTick) {
+		m_ChangeTargetTick = Server()->Tick() + Server()->TickSpeed() * m_ChangeTargetTime;
+		return FindNearestTarget();
+	}
+	if (!m_Target) {
+		return FindNearestTarget();
+	}
+	return m_Target;
 }
 
 class CCharacter* CBotCharacter::FindNearestTarget() {
