@@ -49,6 +49,7 @@ MACRO_TUNING_PARAM(PlayerHooking, player_hooking, 1)
 // custom
 
 // misc
+MACRO_TUNING_PARAM(ReloadTime, reload_time, 1.0f)
 MACRO_TUNING_PARAM(RespawnTimer, respawn_timer, 20.0f)
 MACRO_TUNING_PARAM(RegenTimer, regen_timer, 1.0f)
 MACRO_TUNING_PARAM(PoisonTimer, poison_timer, 1.0f)

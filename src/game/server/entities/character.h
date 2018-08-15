@@ -131,7 +131,7 @@ protected:
 	virtual void PlayReloadSound();
 	bool m_Reloading;
 	float m_ReloadStopTick;
-	float m_ReloadTime = 1.0f; //reload duration in seconds
+	float m_ReloadTime; //reload duration in seconds
 	int m_LastReloadSound;
 
 

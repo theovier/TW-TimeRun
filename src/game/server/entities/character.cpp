@@ -53,6 +53,7 @@ CCharacter::CCharacter(CGameWorld *pWorld)
 	m_MaxHealth = 10;
 	m_MaxArmor = 10;
 	m_HammerDamage = g_pData->m_Weapons.m_Hammer.m_pBase->m_Damage;
+	m_ReloadTime = GameServer()->Tuning()->m_ReloadTime;
 }
 
 void CCharacter::Reset()
