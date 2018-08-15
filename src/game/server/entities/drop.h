@@ -14,9 +14,12 @@ public:
 	
 private:
 	float m_Lifetime;
-
 	bool ShouldDespawn();
 	void Despawn();
+
+	float m_FlashTime; //time in seconds drops flash before despawning
+	bool ShouldFlash();
+	void Flash();
 
 protected:
 	virtual void HandleRespawn(int RespawnTime);

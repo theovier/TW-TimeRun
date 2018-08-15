@@ -8,6 +8,7 @@ CDrop::CDrop(CGameWorld *pGameWorld, vec2 Pos, int Type, int SubType) : CPickup(
 	CPickup::CPickup(pGameWorld, Type, SubType);
 	m_Pos = Pos;
 	m_Lifetime = Server()->Tick();
+	m_FlashTime = GameServer()->Tuning()->m_DropFlashTime;
 	m_SpawnTick = -1;
 }
 
@@ -17,9 +18,20 @@ void CDrop::Reset() {
 
 void CDrop::Tick() {
 	CPickup::Tick();
+	if (ShouldFlash()) {
+		Flash();
+	}
 	if (ShouldDespawn()) {
 		Despawn();
 	}
+}
+
+bool CDrop::ShouldFlash() {
+	return Server()->Tick() > m_Lifetime + Server()->TickSpeed() * max(GameServer()->Tuning()->m_PickupLifetime - m_FlashTime, 1.0f);
+}
+
+void CDrop::Flash() {
+	Server()->Tick() % 10 == 0 ? m_SpawnTick = 999 : m_SpawnTick = -1;
 }
 
 bool CDrop::ShouldDespawn() {
