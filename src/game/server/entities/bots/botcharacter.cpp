@@ -87,7 +87,7 @@ void CBotCharacter::Stun(float Seconds) {
 }
 
 void CBotCharacter::Handle() {
-	CCharacter* Target = FindTarget();
+	Target = FindTarget();
 	if (Target) {
 		vec2 TargetPos = Target->GetPos();
 		Move(TargetPos);
