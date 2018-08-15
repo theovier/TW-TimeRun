@@ -1,3 +1,4 @@
+#include <game/server/entities/superexplosion.h>
 #include "kamikazebot.h"
 
 MACRO_ALLOC_POOL_ID_IMPL(CKamikazebot, MAX_CLIENTS)
@@ -8,6 +9,7 @@ CKamikazebot::CKamikazebot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_ExplosionDelay = GameServer()->Tuning()->m_KamikazeBotExplosionDelay;
 	m_ExplosionTick = -1;
 	m_StunChance = 0;
+	m_ExplosionSize = 1;
 	GiveNinja();
 }
 
@@ -52,7 +54,8 @@ void CKamikazebot::Fire(vec2 Target) {
 }
 
 void CKamikazebot::Explode() {
-	GameServer()->CreateExplosion(m_Pos, m_pPlayer->GetCID(), WEAPON_NINJA, false);
+	CSuperexplosion* boom = new CSuperexplosion(&GameServer()->m_World, m_Pos, m_pPlayer->GetCID(), WEAPON_NINJA, m_ExplosionSize);
+	GameServer()->m_World.InsertEntity(boom);
 	GameServer()->CreateSound(m_Pos, SOUND_GRENADE_EXPLODE);
 }
 

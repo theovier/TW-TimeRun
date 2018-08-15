@@ -22,5 +22,8 @@ protected:
 	float m_ExplosionDelay;
 	virtual void Explode();
 
+private:
+	int m_ExplosionSize;
+
 
 };
