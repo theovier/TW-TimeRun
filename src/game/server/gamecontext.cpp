@@ -460,6 +460,8 @@ static const char *s_apHints[] = {
 		"You may vote to restart the game by typing \"/restart\".",
 		"Check out \"/cmdlist\"!",
 		"Blue flags offer time bonus!",
+		"Shields are ammo clips. You can reload with them!",
+		"You may reload by typing \"/reload\".",
 		"Try out \"/top5\" and \"/rank\"!",
 };
 
@@ -1592,6 +1594,7 @@ bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
 		SendChatTarget(ClientID, "'/top5': View the top 5 players.");
 		SendChatTarget(ClientID, "'/items': Get info about the items.");
 		SendChatTarget(ClientID, "'/restart': Votes to restart the game.");
+		SendChatTarget(ClientID, "'/reload': Reloads the current weapon if possible.");
 		SendChatTarget(ClientID, "'/bind': Learn how to bind a key to use an item.");
 		SendChatTarget(ClientID, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		return true;
@@ -1628,6 +1631,15 @@ bool CGameContext::CheckCommand(int ClientID, int Team, const char *aMsg)
 	else if (!strncmp(aMsg, "/restart", 8) || !strncmp(aMsg, "restart", 8))
 	{
 		StartVote("restart", "restart 5", "reset everything");
+		return true;
+	}
+	else if (!strncmp(aMsg, "/reload", 7) || !strncmp(aMsg, "reload", 7))
+	{
+		CPlayer *p = m_apPlayers[ClientID];
+		CCharacter *c = p->GetCharacter();
+		if (c && c->CanReload()) {
+			c->StartReload();
+		}
 		return true;
 	}
 	else if (!strncmp(aMsg, "/pause", 6) || !strncmp(aMsg, "pause", 6))

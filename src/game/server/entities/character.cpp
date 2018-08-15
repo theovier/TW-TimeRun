@@ -258,7 +258,7 @@ void CCharacter::HandleWeaponSwitch()
 
 void CCharacter::FireWeapon()
 {
-	if(m_ReloadTimer != 0 || m_Frozen)
+	if(m_ReloadTimer != 0 || m_Frozen || m_Reloading)
 		return;
 
 	DoWeaponSwitch();
@@ -277,6 +277,9 @@ void CCharacter::FireWeapon()
 	if(FullAuto && (m_LatestInput.m_Fire&1) && m_aWeapons[m_ActiveWeapon].m_Ammo)
 		WillFire = true;
 
+	if (CanReload() && FullAuto && (m_LatestInput.m_Fire & 1) && !m_aWeapons[m_ActiveWeapon].m_Ammo)
+		StartReload();
+
 	if(!WillFire)
 		return;
 
@@ -289,6 +292,9 @@ void CCharacter::FireWeapon()
 		{
 			GameServer()->CreateSound(m_Pos, SOUND_WEAPON_NOAMMO);
 			m_LastNoAmmoSound = Server()->Tick();
+		}
+		if (CanReload()) {
+			StartReload();
 		}
 		return;
 	}
@@ -443,11 +449,43 @@ void CCharacter::FireWeapon()
 		m_ReloadTimer = g_pData->m_Weapons.m_aId[m_ActiveWeapon].m_Firedelay * Server()->TickSpeed() / 1000;
 }
 
+bool const CCharacter::CanReload() {
+	return !m_Reloading && m_Armor > 0 && m_ActiveWeapon != WEAPON_GUN;
+}
+
+void CCharacter::StartReload() {
+	m_Reloading = true;
+	m_ReloadStopTick = Server()->Tick() + Server()->TickSpeed() * m_ReloadTime;
+}
+
+void CCharacter::StopReload() {
+	m_Armor--;
+	m_aWeapons[m_ActiveWeapon].m_Ammo = g_pData->m_Weapons.m_aId[m_ActiveWeapon].m_Maxammo;
+	m_Reloading = false;
+}
+
+void CCharacter::HandleReload() {
+	if (m_Reloading) {
+		PlayReloadSound();
+		if (Server()->Tick() > m_ReloadStopTick) {
+			StopReload();
+		}
+	}
+}
+
+void CCharacter::PlayReloadSound() {
+	if (m_LastReloadSound <= Server()->Tick()) {
+		GameServer()->CreateSound(m_Pos, SOUND_WEAPON_NOAMMO);
+		m_LastReloadSound = Server()->Tick() + 10;
+	}
+}
+
 void CCharacter::HandleWeapons()
 {
 	//ninja
 	HandleNinja();
-
+	HandleReload();
+	
 	// check reload timer
 	if(m_ReloadTimer)
 	{
@@ -866,28 +904,7 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon)
 		GameServer()->CreateDamageInd(m_Pos, 0, Dmg);
 	}
 
-	if(Dmg)
-	{
-		if(m_Armor)
-		{
-			if(Dmg > 1)
-			{
-				m_Health--;
-				Dmg--;
-			}
-
-			if(Dmg > m_Armor)
-			{
-				Dmg -= m_Armor;
-				m_Armor = 0;
-			}
-			else
-			{
-				m_Armor -= Dmg;
-				Dmg = 0;
-			}
-		}
-
+	if(Dmg)	{
 		m_Health -= Dmg;
 	}
 

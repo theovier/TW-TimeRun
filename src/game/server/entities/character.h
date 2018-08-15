@@ -39,6 +39,9 @@ public:
 	void HandleWeaponSwitch();
 	void DoWeaponSwitch();
 
+	virtual const bool CanReload();
+	virtual void StartReload();
+
 	void HandleWeapons();
 	void HandleNinja();
 
@@ -46,6 +49,8 @@ public:
 	void OnDirectInput(CNetObj_PlayerInput *pNewInput);
 	void ResetInput();
 	void FireWeapon();
+
+
 
 	virtual void Die(int Killer, int Weapon);
 	virtual bool TakeDamage(vec2 Force, int Dmg, int From, int Weapon);
@@ -119,6 +124,16 @@ protected:
 	// weapon info
 	CEntity *m_apHitObjects[10];
 	int m_NumObjectsHit;
+
+	
+	virtual void StopReload();
+	virtual void HandleReload();
+	virtual void PlayReloadSound();
+	bool m_Reloading;
+	float m_ReloadStopTick;
+	float m_ReloadTime = 1.0f; //reload duration in seconds
+	int m_LastReloadSound;
+
 
 	int m_ReloadTimer;
 	int m_AttackTick;
