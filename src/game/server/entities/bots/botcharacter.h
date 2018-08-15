@@ -19,14 +19,14 @@ public:
 
 protected:
 	virtual void Handle();
-	virtual vec2 FindTarget();
+	virtual class CCharacter* FindTarget();
 	virtual void Move(vec2 Target);
 	virtual void SelectAppropriateWeapon(float distanceToTarget);
 	virtual void Fire(vec2 Target);
 	virtual void Aim(vec2 Target);
 	virtual void Hook(vec2 Target);
 	void StopFire();
-	vec2 FindNearestTarget();
+	class CCharacter* FindNearestTarget();
 
 	float m_Range;
 	const float m_MeeleRange = 64.0f + 36.0f;

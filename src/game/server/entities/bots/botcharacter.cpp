@@ -87,13 +87,14 @@ void CBotCharacter::Stun(float Seconds) {
 }
 
 void CBotCharacter::Handle() {
-	vec2 Target = FindTarget();
-	if (!(Target.x == -1 && Target.y == -1)) {
-		Move(Target);
-		SelectAppropriateWeapon(distance(Target, m_Pos));
-		Aim(Target);
-		Hook(Target);
-		Fire(Target);
+	CCharacter* Target = FindTarget();
+	if (Target) {
+		vec2 TargetPos = Target->GetPos();
+		Move(TargetPos);
+		SelectAppropriateWeapon(distance(TargetPos, m_Pos));
+		Aim(TargetPos);
+		Hook(TargetPos);
+		Fire(TargetPos);
 		m_DespawnTick = Server()->Tick() + Server()->TickSpeed() * m_DespawnTime;
 	}
 }
@@ -119,17 +120,19 @@ void CBotCharacter::Move(vec2 Target) {
 	}
 }
 
-vec2 CBotCharacter::FindTarget() {
+class CCharacter* CBotCharacter::FindTarget() {
 	//default implementation
 	return FindNearestTarget();
 }
 
-vec2 CBotCharacter::FindNearestTarget() {
-	CCharacter* TargetChr = GameServer()->m_World.ClosestCharacter(m_Pos, m_AggroRadius, this);
-	if (TargetChr)
-		return TargetChr->m_Pos;
-	else
-		return vec2(-1, -1);
+class CCharacter* CBotCharacter::FindNearestTarget() {
+	CCharacter* Target = GameServer()->m_World.ClosestCharacterInLOS(m_Pos, m_AggroRadius, this);
+	if (Target) {
+		return Target;
+	}
+	else {
+		return GameServer()->m_World.ClosestCharacter(m_Pos, m_AggroRadius, this); //can be null.
+	}
 }
 
 void CBotCharacter::SelectAppropriateWeapon(float distanceToTarget) {
