@@ -351,6 +351,21 @@ CCharacter *CGameWorld::AnyClosestCharacter(vec2 Pos, float Radius, CEntity *pNo
 	return pClosest;
 }
 
+CCharacter *CGameWorld::ClosestCharacterInLOS(vec2 Pos, float Radius, CEntity *pNotThis) {
+	CCharacter *pClosest = 0;
+	CCharacter *p = (CCharacter *)GameServer()->m_World.ClosestCharacter(Pos, Radius, pNotThis);
+	for (; p; p = (CCharacter *)p->TypeNext()) {
+		if (GameServer()->Collision()->IntersectLine(Pos, p->GetPos(), NULL, NULL)) {
+			continue;
+		}
+		else {
+			pClosest = p;
+			break;
+		}
+	}
+	return pClosest;
+}
+
 CEntity *CGameWorld::ClosestEntity(int EntityType, vec2 Pos, CEntity *pNotThis) {
 	float ClosestRange = FLT_MAX;
 	CCharacter *pClosest = 0;

@@ -112,6 +112,7 @@ public:
 	class CCharacter *ClosestCharacter(vec2 Pos, float Radius, CEntity *ppNotThis);
 	class CCharacter *ClosestBotCharacter(vec2 Pos, float Radius, CEntity *ppNotThis);
 	class CCharacter *AnyClosestCharacter(vec2 Pos, float Radius, CEntity *ppNotThis);
+	class CCharacter *ClosestCharacterInLOS(vec2 Pos, float Radius, CEntity *ppNotThis);
 	class CEntity *ClosestEntity(int EntityType, vec2 Pos, CEntity *ppNotThis);
 
 	/*
