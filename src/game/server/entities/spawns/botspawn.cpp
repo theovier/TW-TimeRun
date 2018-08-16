@@ -27,7 +27,7 @@ void CBotSpawn::OnSpawnlingsDeath() {
 }
 
 void CBotSpawn::Tick() {
-	if (Server()->Tick() > m_RespawnTick && CanSpawn()) {
+	if (CanSpawn()) {
 		Spawn();
 	}
 }
@@ -41,7 +41,8 @@ bool CBotSpawn::CanSpawn() {
 	bool freeSlot = m_Controller->GetFreePlayerSlotID() != -1;
 	bool playerNearby = IsPlayerNearby();
 	bool isSpawnFree = !IsSpawnOccupied();
-	return freeSlot && playerNearby && isSpawnFree && !m_AlreadySpawned;
+	bool readyToSpawn = Server()->Tick() > m_RespawnTick;
+	return freeSlot && playerNearby && isSpawnFree && !m_AlreadySpawned && readyToSpawn;
 }
 
 bool CBotSpawn::IsPlayerNearby() {
