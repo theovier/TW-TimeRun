@@ -92,9 +92,12 @@ void CBotCharacter::Handle() {
 		vec2 TargetPos = m_Target->GetPos();
 		Move(TargetPos);
 		SelectAppropriateWeapon(distance(TargetPos, m_Pos));
-		Aim(TargetPos);
-		Hook(TargetPos);
-		Fire(TargetPos);
+		bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, TargetPos, NULL, NULL);
+		if (HasLineOfSight) {
+			Aim(TargetPos);
+			Hook(TargetPos);
+			Fire(TargetPos);
+		}
 		m_DespawnTick = Server()->Tick() + Server()->TickSpeed() * m_DespawnTime;
 	}
 }
@@ -155,33 +158,27 @@ void CBotCharacter::Aim(vec2 Target) {
 }
 
 void CBotCharacter::Hook(vec2 Target) {
-	bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL);
-	if (HasLineOfSight) {
-		bool InRange = distance(Target, m_Pos) < m_HookRange;
-		bool ReadyToHook = Server()->Tick() - m_HookTick > 0;
-		bool CanHook = InRange && ReadyToHook;
+	bool InRange = distance(Target, m_Pos) < m_HookRange;
+	bool ReadyToHook = Server()->Tick() - m_HookTick > 0;
+	bool CanHook = InRange && ReadyToHook;
 
-		if (CanHook) {
-			m_Input.m_Hook ^= 1;
-			m_HookTick = Server()->Tick() + Server()->TickSpeed() * m_HookInterval;
-		}
+	if (CanHook) {
+		m_Input.m_Hook ^= 1;
+		m_HookTick = Server()->Tick() + Server()->TickSpeed() * m_HookInterval;
 	}
 }
 
 void CBotCharacter::Fire(vec2 Target) {
 	StopFire();
-	bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL);
-	if (HasLineOfSight) {
-		bool InRange = distance(Target, m_Pos) < m_Range;
-		bool FinishedReloading = m_ReloadTimer == 0;
-		bool ReadyToAttack = Server()->Tick() - m_AttackTimer > 0;
-		bool CanFire = InRange && FinishedReloading && ReadyToAttack;
+	bool InRange = distance(Target, m_Pos) < m_Range;
+	bool FinishedReloading = m_ReloadTimer == 0;
+	bool ReadyToAttack = Server()->Tick() - m_AttackTimer > 0;
+	bool CanFire = InRange && FinishedReloading && ReadyToAttack;
 
-		if (CanFire) {
-			m_LatestInput.m_Fire = 1;
-			m_Input.m_Fire = 1;
-			m_AttackTimer = Server()->Tick() + m_AttackSpeed * Server()->TickSpeed();
-		}
+	if (CanFire) {
+		m_LatestInput.m_Fire = 1;
+		m_Input.m_Fire = 1;
+		m_AttackTimer = Server()->Tick() + m_AttackSpeed * Server()->TickSpeed();
 	}
 }
 
