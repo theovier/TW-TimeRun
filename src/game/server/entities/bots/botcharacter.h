@@ -41,6 +41,7 @@ protected:
 	float m_AttackSpeed = 0.5f;
 	float m_HookTick;
 	float m_HookInterval = 2.0f;
+	float m_HookDuration = 1.2f;
 
 	const char* m_Skin = "default";
 	const virtual int GetBotType() { return BOTTYPE_HAMMER; };

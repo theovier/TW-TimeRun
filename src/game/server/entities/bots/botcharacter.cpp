@@ -158,6 +158,10 @@ void CBotCharacter::Aim(vec2 Target) {
 }
 
 void CBotCharacter::Hook(vec2 Target) {
+	//unhook if needed.
+	if (Server()->Tick() - m_HookTick > m_HookDuration && m_Core.m_HookState == HOOK_GRABBED) {
+		m_Input.m_Hook = 0;
+	}
 	bool InRange = distance(Target, m_Pos) < m_HookRange;
 	bool ReadyToHook = Server()->Tick() - m_HookTick > 0;
 	bool CanHook = InRange && ReadyToHook;
