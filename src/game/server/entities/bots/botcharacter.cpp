@@ -155,8 +155,16 @@ void CBotCharacter::Aim(vec2 Target) {
 }
 
 void CBotCharacter::Hook(vec2 Target) {
-	if (!GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL) && distance(Target, m_Pos) < m_HookRange && Server()->Tick() % 10 == 0) {
-		m_Input.m_Hook ^= 1;	
+	bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL);
+	if (HasLineOfSight) {
+		bool InRange = distance(Target, m_Pos) < m_HookRange;
+		bool ReadyToHook = Server()->Tick() - m_HookTick > 0;
+		bool CanHook = InRange && ReadyToHook;
+
+		if (CanHook) {
+			m_Input.m_Hook ^= 1;
+			m_HookTick = Server()->Tick() + Server()->TickSpeed() * m_HookInterval;
+		}
 	}
 }
 
