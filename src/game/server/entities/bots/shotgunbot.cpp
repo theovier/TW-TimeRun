@@ -16,9 +16,6 @@ CShotgunBot::CShotgunBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 
 void CShotgunBot::Handle() {
 	CBotCharacter::Handle();
-	if (!m_aWeapons[m_ActiveWeapon].m_Ammo && CanReload()) {
-		StartReload();
-	}
 }
 
 void CShotgunBot::SelectAppropriateWeapon(float distanceToTarget) {

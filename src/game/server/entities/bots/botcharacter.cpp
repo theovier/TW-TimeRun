@@ -92,6 +92,7 @@ void CBotCharacter::Handle() {
 		vec2 TargetPos = m_Target->GetPos();
 		Move(TargetPos);
 		SelectAppropriateWeapon(distance(TargetPos, m_Pos));
+		ReloadOnDemand();
 		bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, TargetPos, NULL, NULL);
 		if (HasLineOfSight) {
 			Aim(TargetPos);
@@ -147,6 +148,12 @@ class CCharacter* CBotCharacter::FindNearestTarget() {
 
 void CBotCharacter::SelectAppropriateWeapon(float distanceToTarget) {
 	// implement in subclass
+}
+
+void CBotCharacter::ReloadOnDemand() {
+	if (!m_aWeapons[m_ActiveWeapon].m_Ammo && CanReload()) {
+		StartReload();
+	}
 }
 
 void CBotCharacter::Aim(vec2 Target) {
