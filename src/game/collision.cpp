@@ -75,7 +75,7 @@ bool CCollision::IsTileSolid(int x, int y)
 }
 
 // TODO: rewrite this smarter!
-int CCollision::IntersectLine(vec2 Pos0, vec2 Pos1, vec2 *pOutCollision, vec2 *pOutBeforeCollision, bool CheckDoors)
+int CCollision::IntersectLine(vec2 Pos0, vec2 Pos1, vec2 *pOutCollision, vec2 *pOutBeforeCollision)
 {
 	float Distance = distance(Pos0, Pos1);
 	int End(Distance+1);

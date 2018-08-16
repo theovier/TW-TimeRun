@@ -44,7 +44,7 @@ void CMine::SetEmotes() {
 }
 
 void CMine::SetEmote(CCharacter* passenger) {
-	if (!passenger || passenger->GetPlayer()->IsBot() || GameServer()->Collision()->IntersectLine(m_Pos, passenger->GetPos(), NULL, NULL, false)) {
+	if (!passenger || passenger->GetPlayer()->IsBot() || GameServer()->Collision()->IntersectLine(m_Pos, passenger->GetPos(), NULL, NULL)) {
 		return;
 	}
 	passenger->m_EmoteType = EMOTE_SURPRISE;

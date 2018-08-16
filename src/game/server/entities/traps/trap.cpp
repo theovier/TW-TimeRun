@@ -58,7 +58,7 @@ bool CTrap::VictimInHorizontalRange(vec2 victimPos) {
 }
 
 bool CTrap::HasLineOfSight(vec2 victimPos) {
-	return !GameServer()->Collision()->IntersectLine(m_Pos, victimPos, NULL, NULL, false);
+	return !GameServer()->Collision()->IntersectLine(m_Pos, victimPos, NULL, NULL);
 }
 
 void CTrap::Fire(CCharacter* at) {

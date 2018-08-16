@@ -113,7 +113,7 @@ void CBotCharacter::Move(vec2 Target) {
 	FuturePos.x = m_Pos.x + m_Input.m_Direction * 100;
 	FuturePos.y = m_Pos.y;
 
-	if ((GameServer()->Collision()->IntersectLine(m_Pos, FuturePos, NULL, NULL, false) || m_Pos.y > Target.y) && !Jumping)
+	if ((GameServer()->Collision()->IntersectLine(m_Pos, FuturePos, NULL, NULL) || m_Pos.y > Target.y) && !Jumping)
 	{
 		if (IsGrounded() || m_Core.m_Vel.y > -0.3f)
 			m_Input.m_Jump = 1;
@@ -155,14 +155,14 @@ void CBotCharacter::Aim(vec2 Target) {
 }
 
 void CBotCharacter::Hook(vec2 Target) {
-	if (!GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL, false) && distance(Target, m_Pos) < m_HookRange && Server()->Tick() % 10 == 0) {
+	if (!GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL) && distance(Target, m_Pos) < m_HookRange && Server()->Tick() % 10 == 0) {
 		m_Input.m_Hook ^= 1;	
 	}
 }
 
 void CBotCharacter::Fire(vec2 Target) {
 	StopFire();
-	bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL, false);
+	bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL);
 	if (HasLineOfSight) {
 		bool InRange = distance(Target, m_Pos) < m_Range;
 		bool FinishedReloading = m_ReloadTimer == 0;

@@ -42,7 +42,7 @@ void CKamikazebot::SelectAppropriateWeapon(float distanceToTarget) {
 
 void CKamikazebot::Fire(vec2 Target) {
 	StopFire();
-	bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL, false);
+	bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, Target, NULL, NULL);
 	if (HasLineOfSight) {
 		bool InRange = distance(Target, m_Pos) < m_TriggerRange;
 		bool CanFire = InRange && m_ExplosionTick == -1;
