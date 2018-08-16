@@ -33,7 +33,7 @@ void CBotSpawn::Tick() {
 }
 
 void CBotSpawn::Reset() {
-	m_RespawnTick = 0;
+	m_RespawnTick = -1;
 	m_AlreadySpawned = false;
 }
 
