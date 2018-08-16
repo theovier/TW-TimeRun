@@ -177,7 +177,8 @@ void CBotCharacter::Fire(vec2 Target) {
 	bool InRange = distance(Target, m_Pos) < m_Range;
 	bool FinishedReloading = m_ReloadTimer == 0;
 	bool ReadyToAttack = Server()->Tick() - m_AttackTimer > 0;
-	bool CanFire = InRange && FinishedReloading && ReadyToAttack;
+	bool NotReloading = !m_Reloading;
+	bool CanFire = InRange && FinishedReloading && ReadyToAttack && NotReloading;
 
 	if (CanFire) {
 		m_LatestInput.m_Fire = 1;
