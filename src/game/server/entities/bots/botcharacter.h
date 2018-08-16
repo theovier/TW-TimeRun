@@ -16,6 +16,7 @@ public:
 	void Stun(float Seconds);
 	virtual const char *GetDisplayName();
 	const virtual char* GetSkinName() { return m_Skin; };
+	virtual const bool CanReload() override { return true; };
 
 protected:
 	virtual void Handle();
