@@ -68,6 +68,12 @@ protected:
 
 	float m_ShotgunKnockback;
 
+	vec2 m_AimOffset;
+	vec2 m_MaxAimOffset = vec2(0.0f, 0.0f);
+	float m_ChangeAimOffsetTick;
+	float m_AimOffsetChangeTime = 0.5f;
+	virtual void AdjustAimOffset();
+
 private:
 
 };

@@ -6,7 +6,7 @@ public:
 	CShotgunBot(CGameWorld *pWorld);
 
 protected:
-	virtual void Handle() override;
+	
 
 private:
 
@@ -14,7 +14,9 @@ private:
 	const int m_MaxShotgunAmmo = 2;
 
 	void SelectAppropriateWeapon(float distanceToTarget) override;
-	virtual void Aim(vec2 Target) override;
-	virtual void StopReload() override;
+	void Handle() override;
+	void Aim(vec2 Target) override;
+	void StopReload() override;
 	const int GetBotType() { return BOTTYPE_SHOTGUN; };
+
 };

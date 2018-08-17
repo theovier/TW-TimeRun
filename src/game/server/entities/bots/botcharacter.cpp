@@ -151,11 +151,25 @@ void CBotCharacter::ReloadOnDemand() {
 }
 
 void CBotCharacter::Aim(vec2 Target) {
-	Target -= m_Pos;
+	if (Server()->Tick() > m_ChangeAimOffsetTick) {
+		AdjustAimOffset();
+	}
+	Target = Target - m_Pos - m_AimOffset;
 	m_LatestInput.m_TargetX = Target.x;
 	m_LatestInput.m_TargetY = Target.y;
 	m_Input.m_TargetX = Target.x;
 	m_Input.m_TargetY = Target.y;
+}
+
+void CBotCharacter::AdjustAimOffset() {
+	m_AimOffset = vec2(frandom() * m_MaxAimOffset.x, frandom() * m_MaxAimOffset.y);
+	if (frandom() < 0.5f) {
+		m_AimOffset.x *= -1;
+	}
+	if (frandom() < 0.5f) {
+		m_AimOffset.y *= -1;
+	}
+	m_ChangeAimOffsetTick = Server()->Tick() + Server()->TickSpeed() * m_AimOffsetChangeTime;
 }
 
 void CBotCharacter::Hook(vec2 Target) {

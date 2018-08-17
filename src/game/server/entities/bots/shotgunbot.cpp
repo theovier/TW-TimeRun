@@ -14,13 +14,13 @@ CShotgunBot::CShotgunBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_Skin = "redbopp";
 }
 
-void CShotgunBot::Handle() {
-	CBotCharacter::Handle();
-}
-
 void CShotgunBot::SelectAppropriateWeapon(float distanceToTarget) {
 	if (distanceToTarget < m_ShotgunRange)
 		m_QueuedWeapon = WEAPON_SHOTGUN;
+}
+
+void CShotgunBot::Handle() {
+	CBotCharacter::Handle();
 }
 
 void CShotgunBot::Aim(vec2 Target) {
