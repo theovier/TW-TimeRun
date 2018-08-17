@@ -12,6 +12,7 @@ CBotCharacter::CBotCharacter(CGameWorld *pWorld) : CCharacter(pWorld) {
 	m_MaxArmor = 0;
 	m_Range = m_MeeleRange;
 	m_ShotgunKnockback = 5.0f;
+	m_HookTick = Server()->Tick() + Server()->TickSpeed() * m_HookInterval;
 	m_StunChance = 0.3f;
 	m_StunChance = clamp(m_StunChance, 0.0f, 1.0f);
 	m_StunDuration = 0.75f;
