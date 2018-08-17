@@ -20,7 +20,6 @@ void CBotPlayer::Tick() {
 	m_Latency.m_Min = 42;
 	TickRainbow();
 
-
 	if (m_pCharacter) {
 		if (!m_pCharacter->IsAlive()) {
 			delete m_pCharacter;
@@ -32,12 +31,12 @@ void CBotPlayer::Tick() {
 
 void CBotPlayer::PostTick() {
 	if (m_MarkedForDestroy) {
-		GameServer()->OnClientDrop(m_ClientID, "despawn");
+		Reset();
 	}
 }
 
 void CBotPlayer::Reset() {
-	MarkForDestroy();
+	GameServer()->OnClientDrop(m_ClientID, "despawn");
 }
 
 void CBotPlayer::Snap(int SnappingClient) {
