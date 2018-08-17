@@ -12,6 +12,7 @@ CShotgunBot::CShotgunBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_HookDuration = 0.6f;
 	m_HookInterval = 5.0f;
 	m_Skin = "redbopp";
+	m_DropChance = 0.75f;
 }
 
 void CShotgunBot::SelectAppropriateWeapon(float distanceToTarget) {

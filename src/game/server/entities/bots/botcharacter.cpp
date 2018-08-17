@@ -70,7 +70,7 @@ void CBotCharacter::Die(int Killer, int Weapon) {
 }
 
 void CBotCharacter::OnDeath(CPlayer* Killer) {	
-	if (Killer && Killer != m_pPlayer) {
+	if (Killer && Killer != m_pPlayer && frandom() < m_DropChance) {
 		CLootHandler::HandleLoot(&GameServer()->m_World, m_Pos, GetBotType());
 	}
 }

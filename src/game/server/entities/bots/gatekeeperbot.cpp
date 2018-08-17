@@ -8,6 +8,7 @@ CGatekeeperBot::CGatekeeperBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	CBotCharacter::CBotCharacter(pWorld);
 	m_MaxHealth = m_Health = GameServer()->Tuning()->m_GatekeeperBotLife;
 	m_aWeapons[WEAPON_GUN].m_Got = true;
+	m_DropChance = 0.8f;
 	m_Skin = "limekitty";
 }
 

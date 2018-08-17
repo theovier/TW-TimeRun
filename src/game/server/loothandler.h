@@ -29,8 +29,6 @@ private:
 		NUM_LOOT
 	};
 
-	//chance that something drops at all in %
-	static const int OverallDropChance = 35;
 	static const int DefaultLootId = 0;
 
 	static void DropRandomLoot(CGameWorld *pGameWorld, vec2 Pos, int BotType);

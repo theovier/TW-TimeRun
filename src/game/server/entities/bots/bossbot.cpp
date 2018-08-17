@@ -13,6 +13,7 @@ CBossBot::CBossBot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_MinionPhaseHPThreshold = GameServer()->Tuning()->m_BossPhaseMinionThreshold;
 	m_HealPhaseHPThreshold = GameServer()->Tuning()->m_BossPhaseHealThreshold;
 	m_EnragePhaseHPThreshold = GameServer()->Tuning()->m_BossPhaseEnrageThreshold;
+	m_DropChance = 0;
 	m_Skin = "twinbop";
 }
 

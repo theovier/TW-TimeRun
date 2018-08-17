@@ -10,6 +10,7 @@ CKamikazebot::CKamikazebot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	m_ExplosionTick = -1;
 	m_StunChance = 0;
 	m_ExplosionSize = 1;
+	m_DropChance = 1;
 	GiveNinja();
 }
 

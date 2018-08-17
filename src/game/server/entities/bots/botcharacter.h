@@ -74,6 +74,8 @@ protected:
 	float m_AimOffsetChangeTime = 0.5f;
 	virtual void AdjustAimOffset();
 
+	float m_DropChance = 1; //chance to drop anything (from 0-1)
+
 private:
 
 };

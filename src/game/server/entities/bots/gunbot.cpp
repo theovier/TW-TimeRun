@@ -9,6 +9,7 @@ CGunbot::CGunbot(CGameWorld *pWorld) : CBotCharacter(pWorld) {
 	GiveWeapon(WEAPON_GUN, -1);
 	m_Range = m_GunRange;
 	m_Skin = "brownbear";
+	m_DropChance = 0.8f;
 }
 
 void CGunbot::SelectAppropriateWeapon(float distanceToTarget) {
