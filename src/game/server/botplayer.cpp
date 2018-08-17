@@ -19,6 +19,15 @@ void CBotPlayer::Tick() {
 	m_Latency.m_Max = 42;
 	m_Latency.m_Min = 42;
 	TickRainbow();
+
+
+	if (m_pCharacter) {
+		if (!m_pCharacter->IsAlive()) {
+			delete m_pCharacter;
+			m_pCharacter = 0;
+			m_MarkedForDestroy = true;
+		}
+	}
 }
 
 void CBotPlayer::PostTick() {

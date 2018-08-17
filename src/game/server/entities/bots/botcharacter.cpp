@@ -66,12 +66,6 @@ bool CBotCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon) {
 void CBotCharacter::Die(int Killer, int Weapon) {
 	CCharacter::Die(Killer, Weapon);
 	OnDeath(GameServer()->m_apPlayers[Killer]);
-	MarkControllerForDestroy();
-}
-
-void CBotCharacter::MarkControllerForDestroy() {
-	CBotPlayer* botController = (CBotPlayer*) m_pPlayer;
-	botController->MarkForDestroy();
 }
 
 void CBotCharacter::OnDeath(CPlayer* Killer) {	

@@ -69,7 +69,7 @@ protected:
 	float m_ShotgunKnockback;
 
 private:
-	void MarkControllerForDestroy();
+
 };
 
 #endif
