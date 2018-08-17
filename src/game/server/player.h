@@ -27,7 +27,7 @@ public:
 
 	virtual void Tick();
 	virtual void Reset();
-	void PostTick();
+	virtual void PostTick();
 	virtual void Snap(int SnappingClient);
 
 	void OnDirectInput(CNetObj_PlayerInput *NewInput);

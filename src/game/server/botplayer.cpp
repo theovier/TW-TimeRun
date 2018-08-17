@@ -21,6 +21,12 @@ void CBotPlayer::Tick() {
 	TickRainbow();
 }
 
+void CBotPlayer::PostTick() {
+	if (m_MarkedForDestroy) {
+		GameServer()->OnClientDrop(m_ClientID, "despawn");
+	}
+}
+
 void CBotPlayer::Reset() {
 	MarkForDestroy();
 }

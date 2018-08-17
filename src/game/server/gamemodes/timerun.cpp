@@ -44,7 +44,6 @@ CGameControllerTimeRun::CGameControllerTimeRun(class CGameContext *pGameServer) 
 
 void CGameControllerTimeRun::Tick() {
 	IGameController::Tick();
-	RemoveBotsMarkedForDestroy();
 }
 
 bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
@@ -262,19 +261,6 @@ int CGameControllerTimeRun::GetFreePlayerSlotID() {
 	return -1;
 }
 
-void CGameControllerTimeRun::RemoveBotsMarkedForDestroy() {
-	for (int i = g_Config.m_SvMaxClients; i < MAX_CLIENTS; i++) {
-		CPlayer* Player = GameServer()->m_apPlayers[i];
-
-		if (Player && Player->IsBot()) {
-			CBotPlayer* botPlayer = (CBotPlayer*)Player;
-			if (botPlayer && botPlayer->IsMarkedForDestroy()) {
-				RemoveBot(i);
-			}
-		}
-	}
-}
-
 int CGameControllerTimeRun::SpawnRespawningBot(CBotSpawn *Spawn) {
 	int uniqueBotId = GetFreePlayerSlotID();
 	GameServer()->OnBotClientConnected(uniqueBotId);
@@ -289,10 +275,6 @@ int CGameControllerTimeRun::SpawnBot(int BotType, vec2 SpawnPos) {
 	CBotPlayer* botPlayer = (CBotPlayer*)GameServer()->m_apPlayers[uniqueBotId];
 	botPlayer->Spawn(BotType, SpawnPos);
 	return uniqueBotId;
-}
-
-void CGameControllerTimeRun::RemoveBot(int ClientID) {
-	GameServer()->OnClientDrop(ClientID, "despawn");
 }
 
 int CGameControllerTimeRun::GetDoorState(int Index) {

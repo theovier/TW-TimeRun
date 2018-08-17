@@ -11,6 +11,7 @@ public:
 	CBotPlayer(CGameContext *pGameServer, int ClientID, int Team);
 
 	void Tick() override;
+	void PostTick() override;
 	void Reset() override;
 	void Snap(int SnappingClient) override;
 	void SpawnWithFutureRespawn(CBotSpawn *Spawn);

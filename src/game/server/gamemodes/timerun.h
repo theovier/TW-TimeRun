@@ -83,10 +83,8 @@ public:
 	virtual void OnPlayerInfoChange(class CPlayer *pP) override {};
 	CCheckpoint *RegisterNewCheckpoint(vec2 Pos);
 	int GetFreePlayerSlotID();
-	void RemoveBotsMarkedForDestroy();
 	int SpawnRespawningBot(CBotSpawn *Spawn);
 	int SpawnBot(int BotType, vec2 SpawnPos);
-	void RemoveBot(int ClientID);
 
 	int GetDoorState(int Index);
 	void SetDoorState(int Index, int State);
