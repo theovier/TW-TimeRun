@@ -25,6 +25,9 @@ void CBotPlayer::Tick() {
 			delete m_pCharacter;
 			m_pCharacter = 0;
 			m_MarkedForDestroy = true;
+			if (m_Spawn) {
+				m_Spawn->OnSpawnlingsDeath();
+			}
 		}
 	}
 }
@@ -48,9 +51,6 @@ void CBotPlayer::MarkForDestroy() {
 }
 
 void CBotPlayer::OnDisconnect(const char *pReason) {
-	if (m_Spawn) {
-		m_Spawn->OnSpawnlingsDeath();
-	}
 	KillCharacter();
 }
 
