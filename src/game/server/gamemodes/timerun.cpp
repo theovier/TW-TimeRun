@@ -67,7 +67,7 @@ bool CGameControllerTimeRun::OnEntity(int Index, vec2 Pos) {
 		return true;
 
 	case ENTITY_SPAWN_BOT_GUN:
-		m_BotSpawns[m_CurBotSpawn++] = new CGrenadeBotSpawn(&GameServer()->m_World, Pos, this);
+		m_BotSpawns[m_CurBotSpawn++] = new CGunBotSpawn(&GameServer()->m_World, Pos, this);
 		return true;
 
 	case ENTITY_SPAWN_BOT_KAMIKAZE:
