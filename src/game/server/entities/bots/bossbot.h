@@ -17,6 +17,7 @@ public:
 protected:
 	virtual void Handle() {};
 	virtual bool ShouldDespawn() { return false; };
+	virtual void OnDeath(CPlayer* Killer);
 	const int GetBotType() { return BOTTYPE_ENDBOSS; };
 
 private:

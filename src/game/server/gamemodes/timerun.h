@@ -92,5 +92,7 @@ public:
 
 	void SubtractGameTime(int Seconds);
 
+	void OnBossDefeated();
+
 };
 #endif

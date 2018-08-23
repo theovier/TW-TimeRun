@@ -181,17 +181,8 @@ void CGameControllerTimeRun::OnCharacterSpawn(class CCharacter *pChr) {
 
 int CGameControllerTimeRun::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon) {
 	IGameController::OnCharacterDeath(pVictim, pKiller, Weapon);
-
 	if (pKiller && pKiller->GetTeam() != pVictim->GetPlayer()->GetTeam()) {
 		pKiller->m_Score++;
-	}
-	if (Weapon == WEAPON_GAME) {
-		//boss was probably killed by reset. dont end the game.
-		return 0;
-	}
-	bool isBoss = dynamic_cast<const CBossBot*>(pVictim) != nullptr;
-	if (isBoss) {
-		m_BossDefeated = true;
 	}
 	return 0;
 }
@@ -299,3 +290,6 @@ void CGameControllerTimeRun::SubtractGameTime(int Seconds) {
 	m_RoundStartTick = clamp(float(m_RoundStartTick), 0.0f, (float)Server()->Tick());
 }
 
+void CGameControllerTimeRun::OnBossDefeated() {
+	m_BossDefeated = true;
+}

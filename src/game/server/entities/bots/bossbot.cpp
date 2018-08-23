@@ -28,6 +28,12 @@ const char* CBossBot::GetDisplayName() {
 	}
 }
 
+void CBossBot::OnDeath(CPlayer* Killer) {
+	if (Killer != m_pPlayer) {
+		GameServer()->TimeRunController()->OnBossDefeated();
+	}
+}
+
 void CBossBot::Tick() {
 	CBotCharacter::Tick();
 	TickCurrentPhase();
