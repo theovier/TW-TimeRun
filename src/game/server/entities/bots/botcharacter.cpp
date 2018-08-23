@@ -32,6 +32,12 @@ void CBotCharacter::Tick() {
 	}
 }
 
+void CBotCharacter::TickDefered() {
+	m_Core.Move();
+	m_Core.Quantize();
+	m_Pos = m_Core.m_Pos;
+}
+
 void CBotCharacter::OnStunned() {
 	StopFire();
 	if (m_Core.m_Vel.y > 0.0f) {

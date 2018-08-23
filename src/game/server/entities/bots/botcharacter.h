@@ -11,6 +11,7 @@ class CBotCharacter : public CCharacter {
 public:
 	CBotCharacter(CGameWorld *pWorld);
 	void Tick() override;
+	void TickDefered() override;
 	virtual bool TakeDamage(vec2 Force, int Dmg, int From, int Weapon);
 	void Die(int Killer, int Weapon) override;
 	void Stun(float Seconds);
