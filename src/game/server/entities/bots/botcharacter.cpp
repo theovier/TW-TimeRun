@@ -137,13 +137,13 @@ void CBotCharacter::MoveRandomly() {
 	else
 		m_Input.m_Jump = 0;
 
-	if (Server()->Tick() > m_RandomMovementTick) {
+	if (Server()->Tick() > m_ChangeDirectionTick) {
 		//movement
 		if (frandom() < m_ChanceMoveRight)
 			m_Input.m_Direction = 1;
 		else 
 			m_Input.m_Direction =-1;
-		m_RandomMovementTick = Server()->Tick() + Server()->TickSpeed() * m_ChangeRandomMovementInterval;
+		m_ChangeDirectionTick = Server()->Tick() + Server()->TickSpeed() * m_ChangeRandomMovementInterval;
 	}
 }
 
