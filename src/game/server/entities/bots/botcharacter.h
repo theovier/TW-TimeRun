@@ -28,6 +28,7 @@ protected:
 	virtual void Hook(vec2 Target);
 	virtual void ReloadOnDemand();
 	void StopFire();
+	void StopMovement();
 	class CCharacter* FindNearestTarget();
 	class CCharacter* m_Target;
 	float m_ChangeTargetTick;
