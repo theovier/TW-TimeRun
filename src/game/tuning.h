@@ -90,6 +90,9 @@ MACRO_TUNING_PARAM(GatekeeperBotLife, bot_door_life, 25.0f)
 MACRO_TUNING_PARAM(ShotgunBotRespawnTime, bot_shotgun_respawn_time, 20.0f)
 MACRO_TUNING_PARAM(ShotgunBotLife, bot_shotgun_life, 20.0f)
 
+MACRO_TUNING_PARAM(GrenadeBotRespawnTime, bot_grenade_respawn_time, 20.0f)
+MACRO_TUNING_PARAM(GrenadeBotLife, bot_grenade_life, 15.0f)
+
 MACRO_TUNING_PARAM(KamikazeBotRespawnTime, bot_kamikaze_respawn_time, 20.0f)
 MACRO_TUNING_PARAM(KamikazeBotLife, bot_kamikaze_life, 10)
 MACRO_TUNING_PARAM(KamikazeBotTriggerRadius, bot_kamikaze_trigger_radius, 150)

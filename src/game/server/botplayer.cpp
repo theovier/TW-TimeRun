@@ -1,6 +1,7 @@
 #include "botplayer.h"
 #include <game/server/entities/bots/hammerbot.h>
 #include <game/server/entities/bots/shotgunbot.h>
+#include <game/server/entities/bots/grenadebot.h>
 #include <game/server/entities/bots/gunbot.h>
 #include <game/server/entities/bots/kamikazebot.h>
 #include <game/server/entities/bots/flagbot.h>
@@ -76,6 +77,10 @@ void CBotPlayer::Spawn(int BotType, vec2 SpawnPos) {
 
 	case BOTTYPE_SHOTGUN:
 		m_pCharacter = new(m_ClientID) CShotgunBot(&GameServer()->m_World);
+		break;
+
+	case BOTTYPE_GRENADE:
+		m_pCharacter = new(m_ClientID) CGrenadeBot(&GameServer()->m_World);
 		break;
 
 	case BOTTYPE_FLAGBEARER:
