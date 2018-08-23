@@ -355,12 +355,12 @@ CCharacter *CGameWorld::ClosestCharacterInLOS(vec2 Pos, float Radius, CEntity *p
 	CCharacter *pClosest = 0;
 	CCharacter *p = (CCharacter *)GameServer()->m_World.ClosestCharacter(Pos, Radius, pNotThis);
 	for (; p; p = (CCharacter *)p->TypeNext()) {
-		if (GameServer()->Collision()->IntersectLine(Pos, p->GetPos(), NULL, NULL)) {
-			continue;
-		}
-		else {
+		if (GameServer()->Collision()->HasLineOfSight(Pos, p->GetPos())) {
 			pClosest = p;
 			break;
+		}
+		else {
+			continue;
 		}
 	}
 	return pClosest;

@@ -30,7 +30,7 @@ void CGunbot::Move(vec2 Target) {
 	m_Input.m_Jump = 0;
 
 	//stand still if we have LOS + range. But just now always.
-	bool hasLOS = !GameServer()->Collision()->IntersectLine(Target, m_Pos, NULL, NULL);
+	bool hasLOS = GameServer()->Collision()->HasLineOfSight(Target, m_Pos);
 	bool inRange = distance(Target, m_Pos) < m_Range;
 	if (hasLOS && inRange) {
 		if (Server()->Tick() > m_StillstandTick) {

@@ -88,7 +88,7 @@ void CBotCharacter::Handle() {
 		Move(TargetPos);
 		SelectAppropriateWeapon(distance(TargetPos, m_Pos));
 		ReloadOnDemand();
-		bool HasLineOfSight = !GameServer()->Collision()->IntersectLine(m_Pos, TargetPos, NULL, NULL);
+		bool HasLineOfSight = GameServer()->Collision()->HasLineOfSight(m_Pos, TargetPos);
 		if (HasLineOfSight) {
 			Aim(TargetPos);
 			Hook(TargetPos);
