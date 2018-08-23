@@ -103,7 +103,7 @@ int CCollision::IntersectLine(vec2 Pos0, vec2 Pos1, vec2 *pOutCollision, vec2 *p
 }
 
 bool CCollision::HasLineOfSight(vec2 Pos0, vec2 Pos1) {
-	!IntersectLine(Pos0, Pos0, NULL, NULL);
+	return !IntersectLine(Pos0, Pos0, NULL, NULL);
 }
 
 // TODO: OPT: rewrite this smarter!
