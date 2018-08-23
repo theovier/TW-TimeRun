@@ -91,14 +91,17 @@ void CBotCharacter::Handle() {
 	m_Target = FindTarget();
 	if (m_Target) {
 		vec2 TargetPos = m_Target->GetPos();
-		Move(TargetPos);
 		SelectAppropriateWeapon(distance(TargetPos, m_Pos));
 		ReloadOnDemand();
 		bool HasLineOfSight = GameServer()->Collision()->HasLineOfSight(m_Pos, TargetPos);
 		if (HasLineOfSight) {
+			Move(TargetPos);
 			Aim(TargetPos);
 			Hook(TargetPos);
 			Fire(TargetPos);
+		}
+		else {
+			MoveRandomly();
 		}
 		m_DespawnTick = Server()->Tick() + Server()->TickSpeed() * m_DespawnTime;
 	}
@@ -125,6 +128,23 @@ void CBotCharacter::Move(vec2 Target) {
 void CBotCharacter::StopMovement() {
 	m_Input.m_Direction = 0;
 	m_Input.m_Jump = 0;
+}
+
+void CBotCharacter::MoveRandomly() {
+	//jumping
+	if (frandom() < m_ChanceJump)
+		m_Input.m_Jump = 1;
+	else
+		m_Input.m_Jump = 0;
+
+	if (Server()->Tick() > m_RandomMovementTick) {
+		//movement
+		if (frandom() < m_ChanceMoveRight)
+			m_Input.m_Direction = 1;
+		else 
+			m_Input.m_Direction =-1;
+		m_RandomMovementTick = Server()->Tick() + Server()->TickSpeed() * m_ChangeRandomMovementInterval;
+	}
 }
 
 class CCharacter* CBotCharacter::FindTarget() {

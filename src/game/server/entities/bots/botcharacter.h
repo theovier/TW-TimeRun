@@ -30,10 +30,16 @@ protected:
 	virtual void ReloadOnDemand();
 	void StopFire();
 	void StopMovement();
+	void MoveRandomly();
 	class CCharacter* FindNearestTarget();
 	class CCharacter* m_Target;
+
 	float m_ChangeTargetTick;
 	float m_ChangeTargetTime = 2.0f;
+	float m_RandomMovementTick;
+	float m_ChangeRandomMovementInterval = 0.75f;
+	const float m_ChanceMoveRight = 0.5;
+	const float m_ChanceJump = 0.5f;
 
 	float m_Range;
 	const float m_MeeleRange = 64.0f + 36.0f;
