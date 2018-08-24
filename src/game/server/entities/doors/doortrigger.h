@@ -9,9 +9,17 @@ public:
 	virtual void Tick();
 
 private:
+
+	virtual void TickOverlap();
+	virtual void TickAnimation();
+
 	int m_DoorIndex;
 	float m_AnimationTick;
 	float m_AnimationTime = 1.0f;
+
+	bool m_LastTickCharacterNearby;
+	void OnOverlapStart();
+	void OnOverlapStop();
 
 };
 
